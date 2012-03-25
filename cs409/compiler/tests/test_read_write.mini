@@ -1,0 +1,5 @@
+program testreadwrite;
+	int var;
+	read var;
+	write var;
+endprogram;

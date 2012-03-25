@@ -1,0 +1,25 @@
+\mychapter{Future Work}
+
+\section{Synchronous Relaxation}
+
+We feel that there is little work left to do on the SR algorithm.  The promise of our work is in the potential improvements that could be made with the Time Warp algorithm.  However, should Time Warp fail, this would be the most promising path for further research, so any work should not be scrapped, but rather shelved until a later date.
+
+\section{Time Warp}
+
+\subsection{Debugging and Validation}
+This is by far the first and most important thing that will need to be done to this algorithm.  Only once this step is completed can any future work proceed.  To do this first the difference in results between runs must be identified and suppressed or eliminated.  Secondly, the validity of the results should be sought.  This step could prove to be difficult, as the original SR algorithm should always produce different results then the TW algorithm.  Because of this, the validity of results will nearly always been in question, and should be studied with veracity until we are certain.  Time to complete: 10-30 hours.
+
+\subsection{Garbage Collection and Memory Management}
+Right now, there is no garbage collection implemented in the TW algorithm.  Since this algorithm is very memory intensive, garbage collection would be a good thing.  To do this we would need to call a routine every time the GVT is calculated that will delete all of the events that occur before the GVT.  This will free memory for the next GVT cycle.  Also, if user-space memory management was implemented, we could reuse the memory to keep from reallocating the same chunks thus providing more speed to the algorithm. Time to complete: 10-20 hours.
+
+\subsection{Logical Processes}
+One of the primary goals of the TW algorithm was to add more processor independence to the KMC algorithm.  Thus far, the algorithm has seemed to do this, and now the limiting factor is the problem size and physical hardware restrictions such as memory.  However, we can go a step farther and apply a concept called logical processes to the algorithm to produce a truly processor independent implementation.
+
+Logical processes essentially encapsulate a single KMC process.  Currently, each node on a cluster will execute one process.  With logical processes each node will execute tens, hundreds, or thousands of similar processes in such a way as to simulate the running of just one process on a single node.  To accomplish this, there must be a middle-ware layer between the program and the message passing interface.  This middle layer handles both external MPI communication with other nodes, and interval node communication between logical processes on the same node.  The goal of this middle layer is to make it as transparent as possible, the calling thread should not know if the process that will be receiving the message is local logical process or a remote (on another node) logical thread.
+
+To complete this task a variety of things will need to be completed.  First a formal study of the middle-ware layer as exposed by the BGTW simulation library should be undertake to judge the usefulness of this established code base.  Secondly, any changed that will need to be made to the algorithm should be performed and then the simulation revalidated to ensure that the algorithm is still correct.  Thirdly, the middle-ware layer should be integrated into the existing algorithm and validated.  This last step will produce the final logical process version of the TW algorithm. Time to complete: 20-50 hours.
+
+\section{General}
+
+\subsection{2D Decomposition}
+The current algorithms work with at 1D decomposition or strip lattice where there is at most only two neighboring lattices any given lattice.  This is limiting however in total scale of problem, as to increase the total area we must increase the height and width of the lattice.  Eventually the number of boundary events exchanged over a single boundary will slow the overall execution down.  At this point it will be beneficial to split a single sub-lattice into a 2D map of adjoining lattices.  We can then scale the problem up further till we reach the same limiting factor as before.  Time to complete: 20-40 hours.

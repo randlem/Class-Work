@@ -1,0 +1,369 @@
+matrix_omp_mpi.c(89) : (col. 4) remark: OpenMP DEFINED LOOP WAS PARALLELIZED.
+matrix_omp_mpi.c(87) : (col. 3) remark: OpenMP DEFINED REGION WAS PARALLELIZED.
+3 nodes -----------------------
+333833500 1334333000
+Initlization time = 0.028173
+Data distro time  = 0.022009
+Processing time   = 56.663567
+Data gather time  = 0.053934
+------------------------------
+TOTAL             = 56.767681
+-------------------------------
+5 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028172
+Data distro time  = 0.029518
+Processing time   = 37.653942
+Data gather time  = 0.096399
+------------------------------
+TOTAL             = 37.808029
+-------------------------------
+7 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028169
+Data distro time  = 0.033158
+Processing time   = 25.212681
+Data gather time  = 0.078082
+------------------------------
+TOTAL             = 25.352091
+-------------------------------
+9 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028170
+Data distro time  = 0.035631
+Processing time   = 18.919689
+Data gather time  = 0.120281
+------------------------------
+TOTAL             = 19.103771
+-------------------------------
+11 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028169
+Data distro time  = 0.036679
+Processing time   = 15.162835
+Data gather time  = 0.083632
+------------------------------
+TOTAL             = 15.311315
+-------------------------------
+13 nodes --------------------
+OMP abort: __kmp_allocate: out of heap memory (malloc returned zero)
+mpiexec: Warning: main: task 7 died with signal 6 (Aborted).
+-------------------------------
+15 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028168
+Data distro time  = 0.038094
+Processing time   = 10.731045
+Data gather time  = 0.115993
+------------------------------
+TOTAL             = 10.913300
+-------------------------------
+17 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028271
+Data distro time  = 0.038695
+Processing time   = 9.605413
+Data gather time  = 0.149673
+------------------------------
+TOTAL             = 9.822051
+-------------------------------
+19 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028170
+Data distro time  = 0.039210
+Processing time   = 8.563139
+Data gather time  = 0.099491
+------------------------------
+TOTAL             = 8.730010
+-------------------------------
+21 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028168
+Data distro time  = 0.039722
+Processing time   = 7.917237
+Data gather time  = 0.094003
+------------------------------
+TOTAL             = 8.079131
+-------------------------------
+23 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028169
+Data distro time  = 0.039908
+Processing time   = 7.180139
+Data gather time  = 0.093627
+------------------------------
+TOTAL             = 7.341843
+-------------------------------
+25 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028371
+Data distro time  = 0.040567
+Processing time   = 6.781632
+Data gather time  = 0.139433
+------------------------------
+TOTAL             = 6.990004
+-------------------------------
+27 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028068
+Data distro time  = 0.040674
+Processing time   = 6.156691
+Data gather time  = 0.094625
+------------------------------
+TOTAL             = 6.320058
+-------------------------------
+29 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028369
+Data distro time  = 0.041370
+Processing time   = 5.715151
+Data gather time  = 0.095512
+------------------------------
+TOTAL             = 5.880402
+-------------------------------
+31 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028072
+Data distro time  = 0.041607
+Processing time   = 5.284474
+Data gather time  = 0.095660
+------------------------------
+TOTAL             = 5.449813
+-------------------------------
+33 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028169
+Data distro time  = 0.042173
+Processing time   = 5.042576
+Data gather time  = 0.103470
+------------------------------
+TOTAL             = 5.216389
+-------------------------------
+35 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028370
+Data distro time  = 0.042248
+Processing time   = 4.618733
+Data gather time  = 0.105394
+------------------------------
+TOTAL             = 4.794745
+-------------------------------
+37 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028167
+Data distro time  = 0.042793
+Processing time   = 4.433578
+Data gather time  = 0.105655
+------------------------------
+TOTAL             = 4.610195
+-------------------------------
+39 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028273
+Data distro time  = 0.043409
+Processing time   = 4.148744
+Data gather time  = 0.103273
+------------------------------
+TOTAL             = 4.323699
+-------------------------------
+41 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028170
+Data distro time  = 0.043915
+Processing time   = 4.021030
+Data gather time  = 0.098628
+------------------------------
+TOTAL             = 4.191744
+-------------------------------
+43 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028174
+Data distro time  = 0.043824
+Processing time   = 3.786103
+Data gather time  = 0.111333
+------------------------------
+TOTAL             = 3.969434
+-------------------------------
+45 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028068
+Data distro time  = 0.044350
+Processing time   = 3.659683
+Data gather time  = 0.109987
+------------------------------
+TOTAL             = 3.842089
+-------------------------------
+47 nodes --------------------
+OMP abort: pthreads_setspecific: failed.
+
+mpiexec: Warning: main: task 0 died with signal 9 (Killed).
+mpiexec: Warning: main: task 1 died with signal 9 (Killed).
+mpiexec: Warning: main: task 2 died with signal 9 (Killed).
+mpiexec: Warning: main: task 3 died with signal 9 (Killed).
+mpiexec: Warning: main: task 4 died with signal 9 (Killed).
+mpiexec: Warning: main: task 5 died with signal 9 (Killed).
+mpiexec: Warning: main: task 6 died with signal 9 (Killed).
+mpiexec: Warning: main: task 7 died with signal 9 (Killed).
+mpiexec: Warning: main: task 8 died with signal 9 (Killed).
+mpiexec: Warning: main: task 9 died with signal 9 (Killed).
+mpiexec: Warning: main: task 14 died with signal 9 (Killed).
+mpiexec: Warning: main: task 15 died with signal 9 (Killed).
+mpiexec: Warning: main: task 16 died with signal 9 (Killed).
+mpiexec: Warning: main: task 17 died with signal 9 (Killed).
+mpiexec: Warning: main: task 18 died with signal 9 (Killed).
+mpiexec: Warning: main: task 19 died with signal 9 (Killed).
+mpiexec: Warning: main: task 22 died with signal 9 (Killed).
+mpiexec: Warning: main: task 23 died with signal 9 (Killed).
+mpiexec: Warning: main: task 24 died with signal 9 (Killed).
+mpiexec: Warning: main: task 25 died with signal 9 (Killed).
+mpiexec: Warning: main: task 28 died with signal 9 (Killed).
+mpiexec: Warning: main: task 29 died with signal 9 (Killed).
+mpiexec: Warning: main: task 30 died with signal 9 (Killed).
+mpiexec: Warning: main: task 31 died with signal 9 (Killed).
+mpiexec: Warning: main: task 34 died with signal 9 (Killed).
+mpiexec: Warning: main: task 35 died with signal 9 (Killed).
+mpiexec: Warning: main: task 36 died with signal 9 (Killed).
+mpiexec: Warning: main: task 37 died with signal 9 (Killed).
+mpiexec: Warning: main: task 38 died with signal 9 (Killed).
+mpiexec: Warning: main: task 39 died with signal 9 (Killed).
+mpiexec: Warning: main: task 40 died with signal 9 (Killed).
+mpiexec: Warning: main: task 41 died with signal 9 (Killed).
+mpiexec: Warning: main: task 42 died with signal 9 (Killed).
+mpiexec: Warning: main: task 43 died with signal 9 (Killed).
+mpiexec: Warning: main: task 46 died with signal 6 (Aborted).
+-------------------------------
+49 nodes --------------------
+OMP abort: __kmp_allocate: out of heap memory (malloc returned zero)
+mpiexec: Warning: main: task 0 died with signal 9 (Killed).
+mpiexec: Warning: main: task 1 died with signal 9 (Killed).
+mpiexec: Warning: main: task 2 died with signal 9 (Killed).
+mpiexec: Warning: main: task 3 died with signal 9 (Killed).
+mpiexec: Warning: main: task 4 died with signal 9 (Killed).
+mpiexec: Warning: main: task 5 died with signal 9 (Killed).
+mpiexec: Warning: main: task 6 died with signal 9 (Killed).
+mpiexec: Warning: main: task 7 died with signal 9 (Killed).
+mpiexec: Warning: main: task 8 died with signal 9 (Killed).
+mpiexec: Warning: main: task 9 died with signal 9 (Killed).
+mpiexec: Warning: main: task 14 died with signal 9 (Killed).
+mpiexec: Warning: main: task 15 died with signal 9 (Killed).
+mpiexec: Warning: main: task 16 died with signal 9 (Killed).
+mpiexec: Warning: main: task 17 died with signal 9 (Killed).
+mpiexec: Warning: main: task 18 died with signal 9 (Killed).
+mpiexec: Warning: main: task 19 died with signal 9 (Killed).
+mpiexec: Warning: main: task 22 died with signal 9 (Killed).
+mpiexec: Warning: main: task 23 died with signal 9 (Killed).
+mpiexec: Warning: main: task 24 died with signal 9 (Killed).
+mpiexec: Warning: main: task 28 died with signal 9 (Killed).
+mpiexec: Warning: main: task 29 died with signal 9 (Killed).
+mpiexec: Warning: main: task 30 died with signal 9 (Killed).
+mpiexec: Warning: main: task 31 died with signal 9 (Killed).
+mpiexec: Warning: main: task 34 died with signal 9 (Killed).
+mpiexec: Warning: main: task 36 died with signal 9 (Killed).
+mpiexec: Warning: main: task 37 died with signal 9 (Killed).
+mpiexec: Warning: main: task 38 died with signal 9 (Killed).
+mpiexec: Warning: main: task 39 died with signal 9 (Killed).
+mpiexec: Warning: main: task 40 died with signal 9 (Killed).
+mpiexec: Warning: main: task 41 died with signal 9 (Killed).
+mpiexec: Warning: main: task 42 died with signal 9 (Killed).
+mpiexec: Warning: main: task 43 died with signal 9 (Killed).
+mpiexec: Warning: main: task 44 died with signal 9 (Killed).
+mpiexec: Warning: main: task 45 died with signal 9 (Killed).
+mpiexec: Warning: main: task 48 died with signal 6 (Aborted).
+-------------------------------
+51 nodes --------------------
+OMP abort: pthreads_setspecific: failed.
+
+mpiexec: Warning: main: task 0 died with signal 9 (Killed).
+mpiexec: Warning: main: task 1 died with signal 9 (Killed).
+mpiexec: Warning: main: task 2 died with signal 9 (Killed).
+mpiexec: Warning: main: task 3 died with signal 9 (Killed).
+mpiexec: Warning: main: task 4 died with signal 9 (Killed).
+mpiexec: Warning: main: task 5 died with signal 9 (Killed).
+mpiexec: Warning: main: task 6 died with signal 9 (Killed).
+mpiexec: Warning: main: task 7 died with signal 9 (Killed).
+mpiexec: Warning: main: task 8 died with signal 9 (Killed).
+mpiexec: Warning: main: task 9 died with signal 9 (Killed).
+mpiexec: Warning: main: task 14 died with signal 9 (Killed).
+mpiexec: Warning: main: task 15 died with signal 9 (Killed).
+mpiexec: Warning: main: task 16 died with signal 9 (Killed).
+mpiexec: Warning: main: task 17 died with signal 9 (Killed).
+mpiexec: Warning: main: task 18 died with signal 9 (Killed).
+mpiexec: Warning: main: task 19 died with signal 9 (Killed).
+mpiexec: Warning: main: task 22 died with signal 9 (Killed).
+mpiexec: Warning: main: task 23 died with signal 9 (Killed).
+mpiexec: Warning: main: task 24 died with signal 9 (Killed).
+mpiexec: Warning: main: task 26 died with signal 9 (Killed).
+mpiexec: Warning: main: task 28 died with signal 9 (Killed).
+mpiexec: Warning: main: task 29 died with signal 9 (Killed).
+mpiexec: Warning: main: task 30 died with signal 9 (Killed).
+mpiexec: Warning: main: task 31 died with signal 9 (Killed).
+mpiexec: Warning: main: task 34 died with signal 9 (Killed).
+mpiexec: Warning: main: task 35 died with signal 9 (Killed).
+mpiexec: Warning: main: task 36 died with signal 9 (Killed).
+mpiexec: Warning: main: task 37 died with signal 9 (Killed).
+mpiexec: Warning: main: task 38 died with signal 9 (Killed).
+mpiexec: Warning: main: task 39 died with signal 9 (Killed).
+mpiexec: Warning: main: task 40 died with signal 9 (Killed).
+mpiexec: Warning: main: task 41 died with signal 9 (Killed).
+mpiexec: Warning: main: task 42 died with signal 9 (Killed).
+mpiexec: Warning: main: task 43 died with signal 9 (Killed).
+mpiexec: Warning: main: task 44 died with signal 9 (Killed).
+mpiexec: Warning: main: task 45 died with signal 9 (Killed).
+mpiexec: Warning: main: task 46 died with signal 9 (Killed).
+mpiexec: Warning: main: task 47 died with signal 9 (Killed).
+mpiexec: Warning: main: task 50 died with signal 6 (Aborted).
+-------------------------------
+53 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028271
+Data distro time  = 0.045680
+Processing time   = 3.127716
+Data gather time  = 0.141125
+------------------------------
+TOTAL             = 3.342791
+-------------------------------
+55 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028169
+Data distro time  = 0.046879
+Processing time   = 3.026526
+Data gather time  = 0.136168
+------------------------------
+TOTAL             = 3.237742
+-------------------------------
+57 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028271
+Data distro time  = 0.046043
+Processing time   = 3.623641
+Data gather time  = 0.099711
+------------------------------
+TOTAL             = 3.797666
+-------------------------------
+59 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028071
+Data distro time  = 0.046668
+Processing time   = 2.787819
+Data gather time  = 0.117236
+------------------------------
+TOTAL             = 2.979795
+-------------------------------
+61 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028269
+Data distro time  = 0.053424
+Processing time   = 2.686628
+Data gather time  = 0.101227
+------------------------------
+TOTAL             = 2.869548
+-------------------------------
+63 nodes --------------------
+333833500 1334333000
+Initlization time = 0.028174
+Data distro time  = 0.048023
+Processing time   = 2.598828
+Data gather time  = 0.105849
+------------------------------
+TOTAL             = 2.780873
+-------------------------------

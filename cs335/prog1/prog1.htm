@@ -1,0 +1,1004 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<LINK REL=stylesheet HREF="/maner/common/walt.css" TYPE="text/css">
+  <SCRIPT LANGUAGE="JAVASCRIPT">
+<!--//
+
+function showdate()
+{
+  revdate = new Date( document.lastModified );
+  year    = revdate.getYear();
+  month   = revdate.getMonth() + 1;
+  day     = revdate.getDate();
+  hour    = revdate.getHours();
+  mins    = revdate.getMinutes();
+  AMorPM  = "AM";
+
+  if ( mins < 10 ) mins = "0" + mins;
+  if ( hour > 12 )
+  {
+     hour = hour - 12;
+     AMorPM = "PM";
+  }
+
+  switch ( month )
+  {
+    case  1: month = "January";   break;
+    case  2: month = "February";  break;
+    case  3: month = "March";     break;
+    case  4: month = "April";     break;
+    case  5: month = "May";       break;
+    case  6: month = "June";      break;
+    case  7: month = "July";      break;
+    case  8: month = "August";    break;
+    case  9: month = "September"; break;
+    case 10: month = "October";   break;
+    case 11: month = "November";  break;
+    case 12: month = "December";  break;
+  };
+
+  document.write( "<IMG SRC=/maner/common/updated.gif WIDTH=60 HEIGHT=12> ");
+  document.write( month + " " + day + ", " + year +
+                  " at " + hour + ":" + mins + " " + AMorPM + ". " );
+  document.write( "Printed copies may not be current." );
+  document.write( "<BR>" );
+  document.write( "Visit " );
+  document.write( "<A HREF=" );
+  document.write( document.location );
+  document.write( ">" );
+  document.write( document.location );
+  document.write( "</A> for the latest version." );
+}
+//-->
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JAVASCRIPT">
+<!--//
+showdate();
+//-->
+</SCRIPT>
+
+<TITLE>PROGRAM 1: FLASHSORT</TITLE>
+</HEAD>
+<BODY>
+<H2><A NAME="0">PROGRAM 1: FLASHSORT</A></H2>
+<UL style="font-weight: bold; list-style-image: url(/maner/common/bullet.gif);">
+<LI><A HREF="#1">DUE SAT NOV 8, 11:59 PM</A></LI>
+<LI><A HREF="#2">FAQ</A></LI>
+<LI><A HREF="#3">DIRECTIONS</A></LI>
+<LI><A HREF="#4">SUBMITTALS</A></LI>
+</UL>
+&copy; 2003 by <A HREF="mailto:maner@cs.bgsu.edu">Walter Maner</A> (unless otherwise noted)<BR>May be reproduced only for non-commercial educational purposes.<BR>
+The outline below requires Netscape/Microsoft browsers, version 3.x or later, for correct viewing.
+<OL TYPE=I>
+<LI><STRONG><EM><FONT FACE="Comic Sans MS" SIZE="+1"><A NAME="1"></A>
+<A HREF="#1"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/backgray.gif" ALT="Back" BORDER="0"></A>
+<A HREF="#0"><IMG WIDTH="40" HEIGHT="16" SRC="/maner/common/contents.gif" ALT="Contents" BORDER="0"></A>
+<A HREF="#2"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/next.gif" ALT="Next" BORDER="0"></A>
+<BR>
+DUE SAT NOV 8, 11:59 PM</FONT></EM></STRONG>
+</LI>
+<LI><STRONG><EM><FONT FACE="Comic Sans MS" SIZE="+1">
+<A NAME="2"></A>
+<A HREF="#1"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/back.gif" ALT="Back" BORDER="0"></A>
+<A HREF="#0"><IMG WIDTH="40" HEIGHT="16" SRC="/maner/common/contents.gif" ALT="Contents" BORDER="0"></A>
+<A HREF="#3"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/next.gif" ALT="Next" BORDER="0"></A>
+<BR>
+FAQ
+</FONT></EM></STRONG>
+<OL TYPE=A>
+<LI><STRONG>My flashsort only works up to a size of 128.</STRONG>
+<OL TYPE=1>
+<LI><EM>There was a problem with the insertionsort() code; it's been </EM>
+<EM>fixed (see below).</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>I need an InsertionSort if I am going to use Casper's code.</STRONG>
+<OL TYPE=1>
+<LI><EM>Okay:</EM>
+&nbsp;<BR>
+<PRE>	
+void insertionsort( int array[], int arraysize ) {	
+    int pos;	
+    int lowest = 0; // Fixed 11/04 WM	
+    for ( int pass = 1; pass < arraysize; pass++ ) {	
+        pos = pass - 1;	
+        lowest = array[ pass ];	
+        while ( lowest < array[ pos ] &amp;&amp; pos >= 0 ) {	
+            array[ pos + 1 ] = array[ pos ];	
+            --pos;	
+        }	
+        array[ pos + 1 ] = lowest;	
+    }	
+}	
+</PRE>
+</OL></LI>
+<LI><STRONG>Whoops, what I really need is a generic InsertionSort.</STRONG>
+<OL TYPE=1>
+<LI><EM>Okay.</EM>
+&nbsp;<BR>
+<PRE>	
+template < class RandomAccessIterator >	
+void isort5( RandomAccessIterator begin, 	
+             RandomAccessIterator end ) {	
+    for ( RandomAccessIterator outerpos = begin; 	
+          outerpos != end; 	
+          ++outerpos ) {	
+        iterator_traits< RandomAccessIterator >::value_type	
+           candidate = *outerpos;	
+        RandomAccessIterator pos = outerpos - 1;	
+        while ( pos >= begin &amp;&amp; candidate < *pos ) {	
+            *( pos + 1 ) = *pos;	
+            pos--;	
+        }	
+        *( pos + 1 ) = candidate;	
+    }	
+}	
+</PRE>
+</OL></LI>
+<LI><STRONG>Is the dynamically allocated L array supposed to stay of type int?</STRONG>
+<OL TYPE=1>
+<LI><EM>Easiest approach is to let it stay of type int, then use the </EM>
+<EM>ints to calculate pointer offsets later.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>In the call:</STRONG>
+&nbsp;<BR>
+<PRE>	
+   flashsort( &amp;array[ L[ K ] ], classSize )	
+</PRE>	
+<STRONG>What would &amp;array[ L[ K ] ] be equivalent to pointer-wise?</STRONG>
+<OL TYPE=1>
+<LI><EM>It would be equivalent to ...</EM>
+&nbsp;<BR>
+<PRE>	
+   flashsort( start + L[ K ], start + L[ K ] + classSize )	
+</PRE>	
+<EM>... because the two args are specifying a subrange stretching </EM>
+<EM>from the position referenced by the first argument to the </EM>
+<EM>position referenced by the second argument.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>Is &amp;array[ L[ K ] ] just sending the address of the L[ K ]th </STRONG>
+<STRONG>position of the array?</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>Yes.</EM>
+</OL></LI>
+<LI><STRONG>How can I use Method 2 with Casper's original FlashSort code?</STRONG>
+<OL TYPE=1>
+<LI><EM>This is the problem: Vectors are drop-in replacements for </EM>
+<EM>arrays, but arrays aren't drop-in replacements for vectors!  </EM>
+<EM>Probably the best solution (because it would leave all of the </EM>
+<EM>original Method 2 code intact) would be to invent a new </EM>
+<EM>interface function called wrapper(), and call that function </EM>
+<EM>from the timing loop.  The wrapper() function would look </EM>
+<EM>something like this:	</EM>
+<BR>
+<PRE>	
+template < class RandomAccessIterator >	
+void wrapper( RandomAccessIterator first, 	
+              RandomAccessIterator last ) {	
+   typedef 	
+      iterator_traits< RandomAccessIterator >::value_type T;	
+   long int arraysize = distance( first, last );	
+   T * array = new T[ arraysize ];	
+   copy( first, last, array );	
+   flashsort( array, arraysize );	
+   copy( array, array + arraysize, first ); // Fixed 11/04 WM	
+   delete [] array; // Fixed 11/04 WM	
+}	
+</PRE>	
+<EM>Of course, you would need to do an equivalent thing for the </EM>
+<EM>dummy sort to make sure the cost of the wrapper function gets </EM>
+<EM>subtracted out later.  This means you will need another wrapper </EM>
+<EM>function, just like the one above, except that it will call </EM>
+<EM>dummysort() instead of flashsort().  	</EM>
+<BR>
+&nbsp;<BR>
+<EM>When you use wrapper(), you will probably get a warning about </EM>
+<EM>&quot;array&quot; being a &quot;reference to a temporary,&quot; but this can be </EM>
+<EM>ignored.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>Can you describe the FlashSort algorithm in pseudocode?</STRONG>
+<OL TYPE=1>
+<LI><EM>Okay:</EM>
+&nbsp;<BR>
+<PRE>	
+(1) Store unsorted data in array A.	
+	
+(2) Let	
+      N be the size of A	
+      Max be the maximum value in A	
+      Min be the minimum value in A	
+      M be 0.2 * N	
+      L be an array of size M	
+	
+(2) Fill L with zeros.	
+	
+(3) Use the classifier function K() ...	
+	
+ K( A(i) ) = 1 + INT(( M - 1 )( A(i) - Min ) / ( Max - Min ))	
+	
+... to classify each A(i) into a number from 1 .. M.	
+	
+(4) Let each L(i) accumulate a count of the number of A(i) 
+classified into it.	
+	
+(5) Calculate a running total over each L(i) such that each 
+L(i) contains the number of A(i) values that are in the i-th 
+class OR LOWER. So now L(i) = L(i) + L(i-1), and L(M) = N.	
+	
+(6) Let J index the first A(i) that starts a new class boundary 
+AND hasn't yet had all of its elements moved inside its 
+borders.	
+	
+(7) Permute (swap?) qualifying A(i) into the class J is 
+indexing.	
+	
+(8) Each time the class that J indexes fills up, iterate J to 
+the next cycle leader and permute A(i) into that class.	
+	
+(9) For each class in A, call insertionsort() on its members IF 
+it is small enough; otherwise call flashsort() recursively on 
+the members of that class.	
+</PRE>
+</OL></LI>
+<LI><STRONG>Where do I start?</STRONG>
+<OL TYPE=1>
+<LI><EM>I recommend the following &quot;build plan&quot;:</EM>
+<OL TYPE=a>
+<LI>Get the integer version of flashsort ...
+&nbsp;<BR>
+<PRE>	
+void flashsort( int array[], int length )	
+</PRE>	
+... working, perhaps relying on Casper's code (see below).
+</LI>
+<LI>
+Add a main() function complete with timing loops as shown in 
+Method 2 (see below), and verify that the timing code works 
+with the original integer version of flashsort.  If you are 
+within 24 hours of the deadline, go ahead and collect timing 
+data for this version of flashsort.
+<BR>
+</LI>
+<LI>
+Modify flashsort to work with pointers, modify main() to 
+agree, and re-test.  If you are within 24 hours of the 
+deadline, go ahead and collect timing data for this version 
+of flashsort.
+<BR>
+</LI>
+<LI>
+Modify flashsort to be a template function, modify main() to 
+agree, and re-test.  If you are within 24 hours of the 
+deadline, go ahead and collect timing data for this version 
+of flashsort.
+<BR>
+</LI>
+<LI>
+Modify flashsort to accept range-based parameters, modify 
+main() to agree, and re-test.  If you are within 24 hours of 
+the deadline, go ahead and collect timing data for this 
+version of flashsort.
+<BR>
+</LI>
+<LI>
+Modify flashsort to work with random access iterators, 
+modify main() to agree, and re-test.  Collect timing data on 
+this version of flashsort.
+<BR>
+</OL></LI>
+</OL></LI>
+<LI><STRONG>How will I know when my inner loops are doing a sufficient number </STRONG>
+<STRONG>of repetitions?</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>Clearly, repetitions in the thousands will be needed, but it is </EM>
+<EM>impossible to recommend a specific number.  To increase your </EM>
+<EM>confidence that you have enough repetitions, do this:  Run the </EM>
+<EM>program twice in succession with the same command-line </EM>
+<EM>arguments; if you get almost 100% identical output, especially </EM>
+<EM>for small N, then your value for REPS is probably large enough.</EM>
+</OL></LI>
+<LI><STRONG>Will I always see definitive convergence in one of the columns?</STRONG>
+<OL TYPE=1>
+<LI><EM>Probably, but not necessarily.  If the BigO lies &quot;between the </EM>
+<EM>columns&quot; (for example, between N log N and N^2) you will not </EM>
+<EM>get definitive convergence in either the N log N column or the </EM>
+<EM>N^2 column.  N log N will seem to be an underestimate and N^2 </EM>
+<EM>an overestimate.  In this case, we would conclude that the BigO </EM>
+<EM>is O(N^2) because, even though N^2 is an overestimate, it still </EM>
+<EM>provides an upper found on the rate of growth.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>Is there any way to test my timing loops (the &quot;Method 2&quot; part of </STRONG>
+<STRONG>my program) to be sure they are working?</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>Sure.  Create a simple generic function known to be O(n), </EM>
+<EM>perhaps one like this:	</EM>
+<BR>
+<PRE>	
+template < class RandomAccessIterator >	
+void OrderN( RandomAccessIterator first,	
+             RandomAccessIterator last ) {	
+  for ( RandomAcessIterator itr = first;	
+        itr != last; ++itr )	
+     int i = last - first;	
+}	
+</PRE>	
+<EM>Time the function.  If your timing loops are working, you </EM>
+<EM>should see definitive convergence to a positive constant in the </EM>
+<EM>N column.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>How long will flashsort.cpp need to run in order to get good data?</STRONG>
+<OL TYPE=1>
+<LI><EM>If the command-line arguments are, say, &quot;4 16 50000&quot; then you </EM>
+<EM>might expect to have good data after about an hour of CPU time. </EM>
+<EM> Actual clocktime would be much longer, of course, depending on </EM>
+<EM>system usage.  If your program seems truly sluggish, you might </EM>
+<EM>be able to improve efficiency (a) by moving the is_sorted() </EM>
+<EM>test to a position just beyond the REPS loop and (b) by </EM>
+<EM>restoring the randomized sequence from a saved location after a </EM>
+<EM>sort, instead of recreating the sequence each time from </EM>
+<EM>scratch.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>Can I make changes to Timer.h?</STRONG>
+<OL TYPE=1>
+<LI><EM>Probably not a good idea since I will be trying to link the </EM>
+<EM>ORIGINAL version of Timer.h with your sorts.cpp program.</EM>
+</OL></LI>
+<LI><STRONG>I have a function defined like</STRONG>
+&nbsp;<BR>
+<PRE>	
+template < class RandomAccessIterator >	
+void fn( RandomAccessIterator start, RandomAccessIterator end )	
+</PRE>	
+<STRONG>Inside the function body, I need to declare something of type T, </STRONG>
+<STRONG>where T is the type of element held in the container being sorted. </STRONG>
+<STRONG> Problem is, T is not one of the template parameters (!), so what </STRONG>
+<STRONG>do I do if I need a variable named &quot;value&quot; of type T?</STRONG>
+<OL TYPE=1>
+<LI><EM>Yes, generic algorithms often need to have access to the </EM>
+<EM>underlying type, perhaps to declare a temporary variable whose </EM>
+<EM>type is the iterator's value type.	</EM>
+<BR>
+&nbsp;<BR>
+<EM>Here is how.	</EM>
+<BR>
+&nbsp;<BR>
+<EM>First of all, &quot;value&quot; is reserved, so shorten it to &quot;val&quot;.  </EM>
+<EM>Then declare and use &quot;val&quot; like this, inside the body of the </EM>
+<EM>function:	</EM>
+<BR>
+<PRE>	
+iterator_traits< RandomAccessIterator >::value_type val;	
+val = *pos;	
+</PRE>	
+<EM>The effect is similar to	</EM>
+<BR>
+<PRE>	
+T val;	
+val = *pos;	
+</PRE>
+</OL></LI>
+<LI><STRONG>Is there any standard format of unsorted material that you want us </STRONG>
+<STRONG>to sort in our assignment?</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>FlashSort will be a generic template, which means it could sort </EM>
+<EM>anything.  In practice, FlashSort only works with discrete </EM>
+<EM>values (int, string, char, enums) but not for continuous values </EM>
+<EM>(float).  So the question really is: How do I get a random </EM>
+<EM>collection of discrete values in a standard format when I don't </EM>
+<EM>know what that something is?	</EM>
+<BR>
+&nbsp;<BR>
+<EM>This question does not seem to have an easy answer so, for our </EM>
+<EM>program, let's agree to feed vectors of int to FlashSort.  We </EM>
+<EM>can randomize the vector in two steps: (1) initialize the </EM>
+<EM>vector with a sequence of ints from 0 .. size, and (2) use </EM>
+<EM>random_shuffle() to randomize the sequence:	</EM>
+<BR>
+&nbsp;<BR>
+<PRE>	
+#include < vector >	
+#include < algorithm >	
+	
+using std::vector;	
+using std::random_shuffle;	
+	
+int main() {	
+  vector< int > vi;	
+  for ( int i = 0; i < 100; i++ )	
+    vi.push_back( i );	
+  random_shuffle( vi.begin(), vi.end() );	
+  return 0;	
+}	
+</PRE>
+</OL></LI>
+<LI><STRONG>What is the most efficient way to test whether something is </STRONG>
+<STRONG>sorted?</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>Use the is_sorted() function built in to SGI's version of the </EM>
+<EM>STL ...	</EM>
+<BR>
+<EM><A HREF="http://www.sgi.com/tech/stl/is_sorted.html 	">http://www.sgi.com/tech/stl/is_sorted.html 	</A><BR></EM>
+<EM>... or code your own as follows:	</EM>
+<BR>
+<PRE>	
+// Mimics function of similar name found in the SGI extensions	
+// to the STL	
+	
+template < class ForwardIterator >	
+bool is_sorted( ForwardIterator first, ForwardIterator last ) {	
+    ForwardIterator itr = first;	
+    while ( itr != last - 1 ) {	
+        if ( *( itr + 1 ) < *itr )	
+            return false;	
+        ++itr;	
+    }	
+    return true;	
+}	
+</PRE>
+</OL></LI>
+<LI><STRONG>How do I work with command-line arguments in C++?</STRONG>
+<OL TYPE=1>
+<LI><EM>The file method2.cpp (see below) uses command-line arguments.</EM>
+</OL></LI>
+</OL></LI>
+<LI><STRONG><EM><FONT FACE="Comic Sans MS" SIZE="+1"><A NAME="3"></A>
+<A HREF="#2"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/back.gif" ALT="Back" BORDER="0"></A>
+<A HREF="#0"><IMG WIDTH="40" HEIGHT="16" SRC="/maner/common/contents.gif" ALT="Contents" BORDER="0"></A>
+<A HREF="#4"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/next.gif" ALT="Next" BORDER="0"></A>
+<BR>
+DIRECTIONS</FONT></EM></STRONG>
+<OL TYPE=A>
+<LI><STRONG>Implement FlashSort as range-based STL-compatible generic template </STRONG>
+<STRONG>function.</STRONG>
+<BR>
+</LI>
+<LI><STRONG>
+FlashSort works by advance calculation of the place where each </STRONG>
+<STRONG>element to be sorted must go (it's final resting place).  The </STRONG>
+<STRONG>first step is to randomly selet a small set of &quot;splitters&quot; from </STRONG>
+<STRONG>among the elements to be sorted.  The splitters are sorted; after </STRONG>
+<STRONG>the sort, the set of splitters divides or &quot;splits&quot; the overall </STRONG>
+<STRONG>range into intervals.  The i-th interval will eventually store </STRONG>
+<STRONG>elements whose keys are larger than the key of the i-1 splitter, </STRONG>
+<STRONG>but smaller than the key of the i-th splitter. (We assume the key </STRONG>
+<STRONG>values are unique.)	</STRONG>
+<BR>
+<PRE>	
+From Dr. Neubert's website:	
+	
+FlashSort sorts n elements in O(n) time. Flash-Sort uses a vector 
+L(k) of length m in a first step for the classification 
+[splitting] of the elements of array A. Then, in a second step, 
+the resulting counts are accumulated and the L(k) point to the 
+class [interval] boundaries. Then the elements are sorted by in 
+situ permutation. During the permutation, the L(k) are decremented 
+by a unit step at each new placement of an element of class k in 
+the array A.	
+	
+A crucial aspect of FlashSort is that for identifying new cycle 
+leaders. A cycle ends, if the the vector L(k) points to the 
+position of an element below the class boundary of class k. The 
+new cycle leader is the element situated in the lowest position 
+complying to the complimentary condition, i.e. for which L(k) 
+points to a position with L(k(A(i))) >= i.	
+	
+Evidently, in addition to the array A of length n which holds the 
+n elements to be sorted, the only auxiliary vector is the 
+L(k)-vector. The size of this vector is equal to the number m of 
+classes, which is small compared to n, e.g. m typically may be set 
+to m = 0.1 n in case of floating point numbers.	
+	
+Finally,a small number of partially distinguishable elements are 
+sorted locally within their classes either by recursion or by a 
+simple conventional sort algorithm. 	
+</PRE>
+<OL TYPE=1>
+<LI><EM>Here are my notes about generic functions:</EM>
+&nbsp;<BR>
+<EM><A HREF="http://csweb.cs.bgsu.edu/maner/335/lecture5.htm  ">http://csweb.cs.bgsu.edu/maner/335/lecture5.htm  </A><BR></EM>
+</LI>
+<LI><EM>
+Here is a good discussion of FlashSort:</EM>
+&nbsp;<BR>
+<EM><A HREF="http://csweb.cs.bgsu.edu/maner/335/DrDobbs.pdf ">http://csweb.cs.bgsu.edu/maner/335/DrDobbs.pdf </A><BR></EM>
+</LI>
+<LI><EM>
+Here are some implementations of FlashSort in various </EM>
+<EM>languages:	</EM>
+<BR>
+<EM><A HREF="http://csweb.cs.bgsu.edu/maner/335/codes.txt ">http://csweb.cs.bgsu.edu/maner/335/codes.txt </A><BR></EM>
+</LI>
+<LI><EM>
+Here is a commented implementation in C++, but you may find </EM>
+<EM>this too complicated to use:	</EM>
+<BR>
+<EM><A HREF="http://www.cs.utah.edu/~ccasper/cs/ 	">http://www.cs.utah.edu/~ccasper/cs/ 	</A><BR></EM>
+<PRE>
+<A NAME="L1"></A><FONT COLOR="#238E23"><I>// File flashsort.cpp</I></FONT>
+<A NAME="L2"></A><FONT COLOR="#238E23"><I>// All code and comments by Clint Jed Casper unless otherwise noted</I></FONT>
+<A NAME="L3"></A><FONT COLOR="#238E23"><I>// From http:// www.cs.utah.edu/~ccasper/cs/flashsort.cpp</I></FONT>
+<A NAME="L4"></A><FONT COLOR="#238E23"><I>// Reformatted for readability by Walter Maner</I></FONT>
+<A NAME="L5"></A>
+<A NAME="L6"></A><FONT COLOR="#FF0000">void</FONT> insertionSort<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> array<FONT COLOR="#871F78">[</FONT><FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">int</FONT> length <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L7"></A>
+<A NAME="L8"></A><FONT COLOR="#238E23"><I>// The flashsort algorithm is attributed to Karl-Dietrich Neubert.</I></FONT>
+<A NAME="L9"></A><FONT COLOR="#238E23"><I>// The translation to C++ is provided by Clint Jed Casper.</I></FONT>
+<A NAME="L10"></A>
+<A NAME="L11"></A>
+<A NAME="L12"></A><FONT COLOR="#238E23"><I>// Sorts an array in place in O(n) time using 20% of the</I></FONT>
+<A NAME="L13"></A><FONT COLOR="#238E23"><I>// memory used by the array for storing intermediate,</I></FONT>
+<A NAME="L14"></A><FONT COLOR="#238E23"><I>// temporary computations.</I></FONT>
+<A NAME="L15"></A>
+<A NAME="L16"></A><FONT COLOR="#FF0000">void</FONT> flashsort<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> array<FONT COLOR="#871F78">[</FONT><FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">int</FONT> length <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L17"></A>    <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> length <FONT COLOR="#3080CA">==</FONT> <FONT COLOR="#802000">0</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L18"></A>        <FONT COLOR="#FF0000">return</FONT> <FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L19"></A>
+<A NAME="L20"></A>    <FONT COLOR="#238E23"><I>// 20% of the number of elements or 0.2n classes will</I></FONT>
+<A NAME="L21"></A>    <FONT COLOR="#238E23"><I>// be used to distribute the input data set into.</I></FONT>
+<A NAME="L22"></A>    <FONT COLOR="#238E23"><I>// There must be at least 2 classes (hence the addition).</I></FONT>
+<A NAME="L23"></A>
+<A NAME="L24"></A>    <FONT COLOR="#FF0000">int</FONT> m <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>.</B></FONT><FONT COLOR="#802000">2</FONT> <FONT COLOR="#3080CA">*</FONT> length <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">2</FONT> <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L25"></A>
+<A NAME="L26"></A>    <FONT COLOR="#238E23"><I>// -------CLASS FORMATION-------</I></FONT>
+<A NAME="L27"></A>
+<A NAME="L28"></A>    <FONT COLOR="#238E23"><I>// O(n)</I></FONT>
+<A NAME="L29"></A>    <FONT COLOR="#238E23"><I>// Compute the max and min values of the input data.</I></FONT>
+<A NAME="L30"></A>
+<A NAME="L31"></A>    <FONT COLOR="#FF0000">int</FONT> min<FONT COLOR="#9932CD"><B>,</B></FONT> max<FONT COLOR="#9932CD"><B>,</B></FONT> maxIndex<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L32"></A>    min <FONT COLOR="#3080CA">=</FONT> max <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">0</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L33"></A>    maxIndex <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L34"></A>
+<A NAME="L35"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> i <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> i <FONT COLOR="#3080CA">&lt;</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> i <FONT COLOR="#3080CA">+=</FONT> <FONT COLOR="#802000">2</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L36"></A>        <FONT COLOR="#FF0000">int</FONT> small<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L37"></A>        <FONT COLOR="#FF0000">int</FONT> big<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L38"></A>        <FONT COLOR="#FF0000">int</FONT> bigIndex<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L39"></A>
+<A NAME="L40"></A>        <FONT COLOR="#238E23"><I>// Which is bigger A(i) or A(i+1) ?</I></FONT>
+<A NAME="L41"></A>
+<A NAME="L42"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">&lt;</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L43"></A>            small <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L44"></A>            big <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L45"></A>            bigIndex <FONT COLOR="#3080CA">=</FONT> i <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L46"></A>        <FONT COLOR="#DB3098">}</FONT> <FONT COLOR="#FF0000">else</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L47"></A>            big <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L48"></A>            bigIndex <FONT COLOR="#3080CA">=</FONT> i<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L49"></A>            small <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L50"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L51"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> big <FONT COLOR="#3080CA">&gt;</FONT> max <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L52"></A>            max <FONT COLOR="#3080CA">=</FONT> big<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L53"></A>            maxIndex <FONT COLOR="#3080CA">=</FONT> bigIndex<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L54"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L55"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> small <FONT COLOR="#3080CA">&lt;</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L56"></A>            min <FONT COLOR="#3080CA">=</FONT> small<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L57"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L58"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L59"></A>
+<A NAME="L60"></A>    <FONT COLOR="#238E23"><I>// Do the last element</I></FONT>
+<A NAME="L61"></A>
+<A NAME="L62"></A>    <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> array<FONT COLOR="#871F78">[</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">&lt;</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L63"></A>        min <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L64"></A>    <FONT COLOR="#DB3098">}</FONT> <FONT COLOR="#FF0000">else</FONT> <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> array<FONT COLOR="#871F78">[</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">&gt;</FONT> max <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L65"></A>        max <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L66"></A>        maxIndex <FONT COLOR="#3080CA">=</FONT> length <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L67"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L68"></A>
+<A NAME="L69"></A>    <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> max <FONT COLOR="#3080CA">==</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L70"></A>
+<A NAME="L71"></A>        <FONT COLOR="#238E23"><I>// All the elements are the same.</I></FONT>
+<A NAME="L72"></A>
+<A NAME="L73"></A>        <FONT COLOR="#FF0000">return</FONT> <FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L74"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L75"></A>
+<A NAME="L76"></A>    <FONT COLOR="#238E23"><I>// Dynamically allocate the storage for L.</I></FONT>
+<A NAME="L77"></A>    <FONT COLOR="#238E23"><I>// Note that L is in the range 1...m (hence the extra 1).</I></FONT>
+<A NAME="L78"></A>
+<A NAME="L79"></A>    <FONT COLOR="#FF0000">int</FONT><FONT COLOR="#3080CA">*</FONT> L <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF0000">new</FONT> <FONT COLOR="#FF0000">int</FONT><FONT COLOR="#871F78">[</FONT> m <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L80"></A>
+<A NAME="L81"></A>    <FONT COLOR="#238E23"><I>// O(m)</I></FONT>
+<A NAME="L82"></A>    <FONT COLOR="#238E23"><I>// Initialize L to contain all zeros (L[0] is unused).</I></FONT>
+<A NAME="L83"></A>
+<A NAME="L84"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> t <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> t <FONT COLOR="#3080CA">&lt;=</FONT> m<FONT COLOR="#9932CD"><B>;</B></FONT> t<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L85"></A>        L<FONT COLOR="#871F78">[</FONT> t <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L86"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L87"></A>
+<A NAME="L88"></A>    <FONT COLOR="#238E23"><I>// O(n)</I></FONT>
+<A NAME="L89"></A>    <FONT COLOR="#238E23"><I>// Use the function K(A(i)) = 1 + INT((m-1)(A(i)-Amin)/(Amax-Amin))</I></FONT>
+<A NAME="L90"></A>    <FONT COLOR="#238E23"><I>// to classify each A(i) into a number from 1...m</I></FONT>
+<A NAME="L91"></A>    <FONT COLOR="#238E23"><I>// (note that this is mainly just a percentage calculation)</I></FONT>
+<A NAME="L92"></A>    <FONT COLOR="#238E23"><I>// and then store a count of each distinct class K in L(K).</I></FONT>
+<A NAME="L93"></A>    <FONT COLOR="#238E23"><I>// For instance, if there are 22 A(i) values that fall into class</I></FONT>
+<A NAME="L94"></A>    <FONT COLOR="#238E23"><I>// K == 5 then the count in L(5) would be 22.</I></FONT>
+<A NAME="L95"></A>
+<A NAME="L96"></A>    <FONT COLOR="#238E23"><I>// IMPORTANT:</I></FONT>
+<A NAME="L97"></A>    <FONT COLOR="#238E23"><I>// Note that the class K == m only has elements equal to Amax.</I></FONT>
+<A NAME="L98"></A>
+<A NAME="L99"></A>    <FONT COLOR="#238E23"><I>// Precomputed constant:</I></FONT>
+<A NAME="L100"></A>
+<A NAME="L101"></A>    <FONT COLOR="#FF0000">double</FONT> c <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> m <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>.</B></FONT><FONT COLOR="#802000">0</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">/</FONT> <FONT COLOR="#FF00FF">(</FONT> max <FONT COLOR="#3080CA">-</FONT> min <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L102"></A>    <FONT COLOR="#FF0000">int</FONT> K<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L103"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> h <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> h <FONT COLOR="#3080CA">&lt;</FONT> length<FONT COLOR="#9932CD"><B>;</B></FONT> h<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L104"></A>        <FONT COLOR="#238E23"><I>// classify the A(i) value</I></FONT>
+<A NAME="L105"></A>        K <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> array<FONT COLOR="#871F78">[</FONT> h <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">-</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">*</FONT> c <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L106"></A>
+<A NAME="L107"></A>        <FONT COLOR="#238E23"><I>// Assert: K is in the range 1...m</I></FONT>
+<A NAME="L108"></A>
+<A NAME="L109"></A>        <FONT COLOR="#238E23"><I>// Add one to the count for this class</I></FONT>
+<A NAME="L110"></A>
+<A NAME="L111"></A>        L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">+=</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L112"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L113"></A>
+<A NAME="L114"></A>    <FONT COLOR="#238E23"><I>// O(m)</I></FONT>
+<A NAME="L115"></A>    <FONT COLOR="#238E23"><I>// Sum over each L(i) such that each L(i) contains</I></FONT>
+<A NAME="L116"></A>    <FONT COLOR="#238E23"><I>// the number of A(i) values that are in the ith</I></FONT>
+<A NAME="L117"></A>    <FONT COLOR="#238E23"><I>// class or lower.</I></FONT>
+<A NAME="L118"></A>    <FONT COLOR="#238E23"><I>// See counting sort for more details.</I></FONT>
+<A NAME="L119"></A>
+<A NAME="L120"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> K <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">2</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> K <FONT COLOR="#3080CA">&lt;=</FONT> m<FONT COLOR="#9932CD"><B>;</B></FONT> K<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L121"></A>        L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">+</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L122"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L123"></A>
+<A NAME="L124"></A>    <FONT COLOR="#238E23"><I>// -------PERMUTATION-------</I></FONT>
+<A NAME="L125"></A>
+<A NAME="L126"></A>    <FONT COLOR="#238E23"><I>// Swap the max value with the first value in the array.</I></FONT>
+<A NAME="L127"></A>
+<A NAME="L128"></A>    <FONT COLOR="#FF0000">int</FONT> temp <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> maxIndex <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L129"></A>    array<FONT COLOR="#871F78">[</FONT> maxIndex <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">0</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L130"></A>    array<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">0</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> temp<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L131"></A>
+<A NAME="L132"></A>    <FONT COLOR="#238E23"><I>// Except when being iterated upwards,</I></FONT>
+<A NAME="L133"></A>    <FONT COLOR="#238E23"><I>// j always points to the first A(i) that starts</I></FONT>
+<A NAME="L134"></A>    <FONT COLOR="#238E23"><I>// a new class boundary &amp;&amp; that class hasn't yet</I></FONT>
+<A NAME="L135"></A>    <FONT COLOR="#238E23"><I>// had all of its elements moved inside its borders;</I></FONT>
+<A NAME="L136"></A>
+<A NAME="L137"></A>    <FONT COLOR="#238E23"><I>// This is called a cycle leader since you know</I></FONT>
+<A NAME="L138"></A>    <FONT COLOR="#238E23"><I>// that you can begin permuting again here. You know</I></FONT>
+<A NAME="L139"></A>    <FONT COLOR="#238E23"><I>// this becuase it is the lowest index of the class</I></FONT>
+<A NAME="L140"></A>    <FONT COLOR="#238E23"><I>// and as such A(j) must be out of place or else all</I></FONT>
+<A NAME="L141"></A>    <FONT COLOR="#238E23"><I>// the elements of this class have already been placed</I></FONT>
+<A NAME="L142"></A>    <FONT COLOR="#238E23"><I>// within the borders of the this class (which means</I></FONT>
+<A NAME="L143"></A>    <FONT COLOR="#238E23"><I>// j wouldn't be pointing to this A(i) in the first place)</I></FONT>
+<A NAME="L144"></A>
+<A NAME="L145"></A>    <FONT COLOR="#FF0000">int</FONT> j <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L146"></A>
+<A NAME="L147"></A>    <FONT COLOR="#238E23"><I>// K is the class of an A(i) value.</I></FONT>
+<A NAME="L148"></A>    <FONT COLOR="#238E23"><I>// It is always in the range 1..m.</I></FONT>
+<A NAME="L149"></A>
+<A NAME="L150"></A>    K <FONT COLOR="#3080CA">=</FONT> m<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L151"></A>
+<A NAME="L152"></A>    <FONT COLOR="#238E23"><I>// The number of elements that have been moved</I></FONT>
+<A NAME="L153"></A>    <FONT COLOR="#238E23"><I>// into their correct class:</I></FONT>
+<A NAME="L154"></A>
+<A NAME="L155"></A>    <FONT COLOR="#FF0000">int</FONT> numMoves <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L156"></A>
+<A NAME="L157"></A>    <FONT COLOR="#238E23"><I>// O(n)</I></FONT>
+<A NAME="L158"></A>    <FONT COLOR="#238E23"><I>// Permute elements into their correct class; each</I></FONT>
+<A NAME="L159"></A>    <FONT COLOR="#238E23"><I>// time the class that j is pointing to fills up,</I></FONT>
+<A NAME="L160"></A>    <FONT COLOR="#238E23"><I>// then iterate j to the next cycle leader.</I></FONT>
+<A NAME="L161"></A>    <FONT COLOR="#238E23"><I>//</I></FONT>
+<A NAME="L162"></A>    <FONT COLOR="#238E23"><I>// Do not use the n - 1 optimization because that last element</I></FONT>
+<A NAME="L163"></A>    <FONT COLOR="#238E23"><I>// will not have its count decreased (this causes trouble with</I></FONT>
+<A NAME="L164"></A>    <FONT COLOR="#238E23"><I>// determining the correct classSize in the last step).</I></FONT>
+<A NAME="L165"></A>
+<A NAME="L166"></A>    <FONT COLOR="#FF0000">while</FONT> <FONT COLOR="#FF00FF">(</FONT> numMoves <FONT COLOR="#3080CA">&lt;</FONT> length <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L167"></A>
+<A NAME="L168"></A>        <FONT COLOR="#238E23"><I>// If j does not point to the begining of a class</I></FONT>
+<A NAME="L169"></A>        <FONT COLOR="#238E23"><I>// that has at least 1 element still needing to be</I></FONT>
+<A NAME="L170"></A>        <FONT COLOR="#238E23"><I>// moved to within the borders of the class, then iterate</I></FONT>
+<A NAME="L171"></A>        <FONT COLOR="#238E23"><I>// j upward until such a class is found (such a class</I></FONT>
+<A NAME="L172"></A>        <FONT COLOR="#238E23"><I>// must exist). In other words, find the next cycle leader.</I></FONT>
+<A NAME="L173"></A>
+<A NAME="L174"></A>        <FONT COLOR="#FF0000">while</FONT> <FONT COLOR="#FF00FF">(</FONT> j <FONT COLOR="#3080CA">&gt;=</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L175"></A>            j<FONT COLOR="#3080CA">++</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L176"></A>
+<A NAME="L177"></A>            <FONT COLOR="#238E23"><I>// Classify the A(j) value.</I></FONT>
+<A NAME="L178"></A>
+<A NAME="L179"></A>            K <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> array<FONT COLOR="#871F78">[</FONT> j <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">-</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">*</FONT> c <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L180"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L181"></A>
+<A NAME="L182"></A>        <FONT COLOR="#238E23"><I>// Evicted always holds the value of an element whose location</I></FONT>
+<A NAME="L183"></A>        <FONT COLOR="#238E23"><I>// in the array is free to be written into.</I></FONT>
+<A NAME="L184"></A>
+<A NAME="L185"></A>        <FONT COLOR="#FF0000">int</FONT> evicted <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> j <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L186"></A>
+<A NAME="L187"></A>        <FONT COLOR="#238E23"><I>// While j continues to meet the condition that it is</I></FONT>
+<A NAME="L188"></A>        <FONT COLOR="#238E23"><I>// pointing to the start of a class that has at least one</I></FONT>
+<A NAME="L189"></A>        <FONT COLOR="#238E23"><I>// element still outside its borders (the class isn't full)</I></FONT>
+<A NAME="L190"></A>
+<A NAME="L191"></A>        <FONT COLOR="#FF0000">while</FONT> <FONT COLOR="#FF00FF">(</FONT> j <FONT COLOR="#3080CA">&lt;</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L192"></A>
+<A NAME="L193"></A>            <FONT COLOR="#238E23"><I>// Compute the class of the evicted value.</I></FONT>
+<A NAME="L194"></A>
+<A NAME="L195"></A>            K <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> evicted <FONT COLOR="#3080CA">-</FONT> min <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">*</FONT> c <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L196"></A>
+<A NAME="L197"></A>            <FONT COLOR="#238E23"><I>// Get a location that is inside the evicted</I></FONT>
+<A NAME="L198"></A>            <FONT COLOR="#238E23"><I>// element's class boundaries.</I></FONT>
+<A NAME="L199"></A>
+<A NAME="L200"></A>            <FONT COLOR="#FF0000">int</FONT> location <FONT COLOR="#3080CA">=</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L201"></A>
+<A NAME="L202"></A>            <FONT COLOR="#238E23"><I>// Swap the value currently residing at the new</I></FONT>
+<A NAME="L203"></A>            <FONT COLOR="#238E23"><I>// location with the evicted value.</I></FONT>
+<A NAME="L204"></A>
+<A NAME="L205"></A>            <FONT COLOR="#FF0000">int</FONT> temp <FONT COLOR="#3080CA">=</FONT> array<FONT COLOR="#871F78">[</FONT> location <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L206"></A>            array<FONT COLOR="#871F78">[</FONT> location <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> evicted<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L207"></A>            evicted <FONT COLOR="#3080CA">=</FONT> temp<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L208"></A>
+<A NAME="L209"></A>            <FONT COLOR="#238E23"><I>// Decrease the count for this class.</I></FONT>
+<A NAME="L210"></A>            <FONT COLOR="#238E23"><I>// See counting sort for why this is done.</I></FONT>
+<A NAME="L211"></A>
+<A NAME="L212"></A>            L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">-=</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L213"></A>
+<A NAME="L214"></A>            <FONT COLOR="#238E23"><I>// Another element was moved.</I></FONT>
+<A NAME="L215"></A>
+<A NAME="L216"></A>            numMoves<FONT COLOR="#3080CA">++</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L217"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L218"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L219"></A>
+<A NAME="L220"></A>    <FONT COLOR="#238E23"><I>// -------RECURSION or STRAIGHT INSERTION-------</I></FONT>
+<A NAME="L221"></A>
+<A NAME="L222"></A>    <FONT COLOR="#238E23"><I>// If the classes do not have the A(i) values uniformly distributed</I></FONT>
+<A NAME="L223"></A>    <FONT COLOR="#238E23"><I>// into each of them. then insertion sort will not produce O(n) results.</I></FONT>
+<A NAME="L224"></A>
+<A NAME="L225"></A>    <FONT COLOR="#238E23"><I>// Look for classes that have too many elements.  Ideally each class</I></FONT>
+<A NAME="L226"></A>    <FONT COLOR="#238E23"><I>// (except the topmost or K == m class) should have about n/m elements.</I></FONT>
+<A NAME="L227"></A>    <FONT COLOR="#238E23"><I>// Look for classes that exceed n/m elements by some threshold AND have</I></FONT>
+<A NAME="L228"></A>    <FONT COLOR="#238E23"><I>// more than some minimum number of elements to flashsort recursively.</I></FONT>
+<A NAME="L229"></A>
+<A NAME="L230"></A>    <FONT COLOR="#238E23"><I>// If the class has 25% more elements than it should ...</I></FONT>
+<A NAME="L231"></A>
+<A NAME="L232"></A>    <FONT COLOR="#FF0000">int</FONT> threshold <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>.</B></FONT><FONT COLOR="#802000">25</FONT> <FONT COLOR="#3080CA">*</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF00FF">(</FONT> length <FONT COLOR="#3080CA">/</FONT> m <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L233"></A>    <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">int</FONT> minElements <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">30</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L234"></A>
+<A NAME="L235"></A>    <FONT COLOR="#238E23"><I>// For each class decide whether to insertion sort its members</I></FONT>
+<A NAME="L236"></A>    <FONT COLOR="#238E23"><I>// or recursively flashsort its members.</I></FONT>
+<A NAME="L237"></A>    <FONT COLOR="#238E23"><I>// Skip the K == m class because it is already sorted</I></FONT>
+<A NAME="L238"></A>    <FONT COLOR="#238E23"><I>// since all of the elements have the same value.</I></FONT>
+<A NAME="L239"></A>
+<A NAME="L240"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> K <FONT COLOR="#3080CA">=</FONT> m <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> K <FONT COLOR="#3080CA">&gt;=</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> K<FONT COLOR="#3080CA">--</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L241"></A>
+<A NAME="L242"></A>        <FONT COLOR="#238E23"><I>// Determine the number of elments in the Kth class.</I></FONT>
+<A NAME="L243"></A>
+<A NAME="L244"></A>        <FONT COLOR="#FF0000">int</FONT> classSize <FONT COLOR="#3080CA">=</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">-</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L245"></A>
+<A NAME="L246"></A>        <FONT COLOR="#238E23"><I>// Ff the class size is larger than expected but not</I></FONT>
+<A NAME="L247"></A>        <FONT COLOR="#238E23"><I>// so small that insertion sort could make quick work</I></FONT>
+<A NAME="L248"></A>        <FONT COLOR="#238E23"><I>// of it then ...</I></FONT>
+<A NAME="L249"></A>
+<A NAME="L250"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> classSize <FONT COLOR="#3080CA">&gt;</FONT> threshold <FONT COLOR="#3080CA">&amp;&amp;</FONT> classSize <FONT COLOR="#3080CA">&gt;</FONT> minElements <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L251"></A>
+<A NAME="L252"></A>            <FONT COLOR="#238E23"><I>// ... attempt to flashsort the class. This will work</I></FONT>
+<A NAME="L253"></A>            <FONT COLOR="#238E23"><I>// well if the elements inside the class are uniformly</I></FONT>
+<A NAME="L254"></A>            <FONT COLOR="#238E23"><I>// distributed throughout the class otherwise it will</I></FONT>
+<A NAME="L255"></A>            <FONT COLOR="#238E23"><I>// perform badly, O(n^2) worst case, since we will have</I></FONT>
+<A NAME="L256"></A>            <FONT COLOR="#238E23"><I>// performed another classification and permutation step</I></FONT>
+<A NAME="L257"></A>            <FONT COLOR="#238E23"><I>// and not succeeded in making the problem significantly</I></FONT>
+<A NAME="L258"></A>            <FONT COLOR="#238E23"><I>// smaller for the next level of recursion. However,</I></FONT>
+<A NAME="L259"></A>            <FONT COLOR="#238E23"><I>// progress is assured since at each level the elements</I></FONT>
+<A NAME="L260"></A>            <FONT COLOR="#238E23"><I>// with the maximum value will get sorted.</I></FONT>
+<A NAME="L261"></A>
+<A NAME="L262"></A>            flashsort<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#3080CA">&amp;</FONT>array<FONT COLOR="#871F78">[</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> classSize <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L263"></A>        <FONT COLOR="#DB3098">}</FONT> <FONT COLOR="#FF0000">else</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L264"></A>
+<A NAME="L265"></A>            <FONT COLOR="#238E23"><I>// Perform insertion sort on the class.</I></FONT>
+<A NAME="L266"></A>
+<A NAME="L267"></A>            <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> classSize <FONT COLOR="#3080CA">&gt;</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L268"></A>                insertionSort<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#3080CA">&amp;</FONT>array<FONT COLOR="#871F78">[</FONT> L<FONT COLOR="#871F78">[</FONT> K <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> classSize <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L269"></A>            <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L270"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L271"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L272"></A>
+<A NAME="L273"></A>    <FONT COLOR="#FF0000">delete</FONT> <FONT COLOR="#871F78">[</FONT><FONT COLOR="#871F78">]</FONT> L<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L274"></A><FONT COLOR="#DB3098">}</FONT>
+<A NAME="L275"></A>
+</PRE>
+</LI>
+<LI><EM>
+Here is a nicely commented implementationin Java:</EM>
+&nbsp;<BR>
+<EM><A HREF="http://csweb.cs.bgsu.edu/maner/335/javacode.pdf ">http://csweb.cs.bgsu.edu/maner/335/javacode.pdf </A><BR></EM>
+</LI>
+<LI><EM>
+Here are some DOS-based demos:</EM>
+&nbsp;<BR>
+<EM><A HREF="http://www.neubert.net/Download/flademo1.zip 	">http://www.neubert.net/Download/flademo1.zip 	</A><BR></EM>
+<EM><A HREF="http://www.neubert.net/Download/flademo2.zip ">http://www.neubert.net/Download/flademo2.zip </A><BR></EM>
+</OL></LI>
+<LI><STRONG>Your implementation of FlashSort should take two iterator </STRONG>
+<STRONG>arguments, one addressing the beginning of a range and another </STRONG>
+<STRONG>iterator addressing the end of the range.</STRONG>
+<BR>
+</LI>
+<LI><STRONG>
+Inside the body of your FlashSort function, make sure your </STRONG>
+<STRONG>identifiers are long enough to be self-documenting, but do not </STRONG>
+<STRONG>allow their length to exceed 11 characters.</STRONG>
+<BR>
+</LI>
+<LI><STRONG>
+Use Method 2 (illustrated below) to measure FlashSort's Big-O time </STRONG>
+<STRONG>complexity for randomized input:	</STRONG>
+<BR>
+<PRE>
+<A NAME="L1"></A><FONT COLOR="#238E23"><I>// File TimerTest.cpp version 6 of 27 October 2002</I></FONT>
+<A NAME="L2"></A><FONT COLOR="#238E23"><I>// All code and comments written by Walter Maner unless otherwise noted.</I></FONT>
+<A NAME="L3"></A>
+<A NAME="L4"></A><FONT COLOR="#FF8000">#include</FONT> &lt;iostream&gt;
+<A NAME="L5"></A><FONT COLOR="#FF8000">#include</FONT> &lt;iomanip&gt;
+<A NAME="L6"></A><FONT COLOR="#FF8000">#include</FONT> &lt;stdlib.h&gt;
+<A NAME="L7"></A><FONT COLOR="#FF8000">#include</FONT> &lt;math.h&gt;
+<A NAME="L8"></A><FONT COLOR="#FF8000">#include</FONT> <FONT COLOR="#0000FF">&quot;Timer.h&quot;</FONT>
+<A NAME="L9"></A>
+<A NAME="L10"></A><FONT COLOR="#238E23"><I>// Function findPattern from ALGORITHMS IN C++ by Robert Sedgewick, page 279.</I></FONT>
+<A NAME="L11"></A><FONT COLOR="#238E23"><I>// (c) 1992 by Addison-Wesley Publishing Company, Inc.</I></FONT>
+<A NAME="L12"></A>
+<A NAME="L13"></A><FONT COLOR="#FF0000">int</FONT> findPattern1<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> pattern<FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> data <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L14"></A>    <FONT COLOR="#238E23"><I>// This &quot;empty&quot; function is used to calculate overhead.</I></FONT>
+<A NAME="L15"></A>    <FONT COLOR="#FF0000">return</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L16"></A><FONT COLOR="#DB3098">}</FONT>
+<A NAME="L17"></A>
+<A NAME="L18"></A><FONT COLOR="#FF0000">int</FONT> findPattern2<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> pattern<FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> data <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L19"></A>    <FONT COLOR="#238E23"><I>// This function contains the code we wish to measure.</I></FONT>
+<A NAME="L20"></A>    <FONT COLOR="#FF0000">int</FONT> i<FONT COLOR="#9932CD"><B>,</B></FONT> j<FONT COLOR="#9932CD"><B>,</B></FONT> M <FONT COLOR="#3080CA">=</FONT> strlen<FONT COLOR="#FF00FF">(</FONT> pattern <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> N <FONT COLOR="#3080CA">=</FONT> strlen<FONT COLOR="#FF00FF">(</FONT> data <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L21"></A>    <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> i <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> j <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> j <FONT COLOR="#3080CA">&lt;</FONT> M <FONT COLOR="#3080CA">&amp;&amp;</FONT> i <FONT COLOR="#3080CA">&lt;</FONT> N<FONT COLOR="#9932CD"><B>;</B></FONT> i<FONT COLOR="#3080CA">++</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> j<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L22"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> data<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">!=</FONT> pattern<FONT COLOR="#871F78">[</FONT> j <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L23"></A>            i <FONT COLOR="#3080CA">-=</FONT> j <FONT COLOR="#3080CA">-</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L24"></A>            j <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#3080CA">-</FONT><FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L25"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L26"></A>    <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> j <FONT COLOR="#3080CA">==</FONT> M <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L27"></A>        <FONT COLOR="#FF0000">return</FONT> i <FONT COLOR="#3080CA">-</FONT> M<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L28"></A>    <FONT COLOR="#FF0000">else</FONT>
+<A NAME="L29"></A>        <FONT COLOR="#FF0000">return</FONT> i<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L30"></A><FONT COLOR="#DB3098">}</FONT>
+<A NAME="L31"></A>
+<A NAME="L32"></A>
+<A NAME="L33"></A><FONT COLOR="#FF0000">void</FONT> printLine<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> N<FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">double</FONT> T <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L34"></A>    <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">double</FONT> LOG2N <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">3</FONT><FONT COLOR="#9932CD"><B>.</B></FONT><FONT COLOR="#802000">3219292</FONT> <FONT COLOR="#3080CA">*</FONT> log10<FONT COLOR="#FF00FF">(</FONT> N <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L35"></A>    <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">double</FONT>
+<A NAME="L36"></A>       logn <FONT COLOR="#3080CA">=</FONT> T <FONT COLOR="#3080CA">/</FONT> LOG2N<FONT COLOR="#9932CD"><B>,</B></FONT>
+<A NAME="L37"></A>       n <FONT COLOR="#3080CA">=</FONT> T <FONT COLOR="#3080CA">/</FONT> N<FONT COLOR="#9932CD"><B>,</B></FONT>
+<A NAME="L38"></A>       nlogn <FONT COLOR="#3080CA">=</FONT> T <FONT COLOR="#3080CA">/</FONT> <FONT COLOR="#FF00FF">(</FONT> N <FONT COLOR="#3080CA">*</FONT> LOG2N <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>,</B></FONT>
+<A NAME="L39"></A>       nn <FONT COLOR="#3080CA">=</FONT> T <FONT COLOR="#3080CA">/</FONT> <FONT COLOR="#FF00FF">(</FONT> N <FONT COLOR="#3080CA">*</FONT> N <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L40"></A>
+<A NAME="L41"></A>    cout
+<A NAME="L42"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setiosflags<FONT COLOR="#FF00FF">(</FONT> ios <FONT COLOR="#3080CA">::</FONT> fixed <FONT COLOR="#3080CA">|</FONT> ios <FONT COLOR="#3080CA">::</FONT> showpoint <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L43"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">9</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> N
+<A NAME="L44"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setprecision<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">11</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> T
+<A NAME="L45"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setprecision<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">11</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> logn
+<A NAME="L46"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setprecision<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">11</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> n
+<A NAME="L47"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setprecision<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">11</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> nlogn
+<A NAME="L48"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setprecision<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">11</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> nn
+<A NAME="L49"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L50"></A><FONT COLOR="#DB3098">}</FONT>
+<A NAME="L51"></A>
+<A NAME="L52"></A><FONT COLOR="#FF0000">int</FONT> main<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">int</FONT> argc<FONT COLOR="#9932CD"><B>,</B></FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT>argv<FONT COLOR="#871F78">[</FONT><FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L53"></A>    <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> argc <FONT COLOR="#3080CA">!=</FONT> <FONT COLOR="#802000">4</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L54"></A>        cout
+<A NAME="L55"></A>        <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Wrong number of command-line arguments&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L56"></A>        <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Usage: method2 starting-power-of-2 ending-power-of-2 repetitions&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L57"></A>        <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Example: method2 4 10 50000&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L58"></A>        <FONT COLOR="#FF0000">return</FONT> <FONT COLOR="#802000">1</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L59"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L60"></A>
+<A NAME="L61"></A>    Timer aTimer1<FONT COLOR="#9932CD"><B>,</B></FONT> aTimer2<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L62"></A>
+<A NAME="L63"></A>    <FONT COLOR="#FF0000">const</FONT> <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> pattern <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#0000FF">&quot;target&quot;</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L64"></A>    <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> N <FONT COLOR="#3080CA">=</FONT> atoi<FONT COLOR="#FF00FF">(</FONT> argv<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L65"></A>    N <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> pow<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">2</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> N <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L66"></A>    <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> OUTERLIMIT <FONT COLOR="#3080CA">=</FONT> atoi<FONT COLOR="#FF00FF">(</FONT> argv<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">2</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L67"></A>    OUTERLIMIT <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> <FONT COLOR="#FF00FF">)</FONT> pow<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">2</FONT><FONT COLOR="#9932CD"><B>,</B></FONT> OUTERLIMIT <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L68"></A>    <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> INNERLIMIT <FONT COLOR="#3080CA">=</FONT> atoi<FONT COLOR="#FF00FF">(</FONT> argv<FONT COLOR="#871F78">[</FONT> <FONT COLOR="#802000">3</FONT> <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L69"></A>    <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">double</FONT> elapsedCPUtime <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L70"></A>    <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> pos <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L71"></A>
+<A NAME="L72"></A>    cout
+<A NAME="L73"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L74"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Timing results are expressed in seconds&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L75"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Resolution of the clock: &quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> aTimer1<FONT COLOR="#9932CD"><B>.</B></FONT>getResolution<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot; seconds&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L76"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Starting N: &quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> N <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L77"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Maximum N: &quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> OUTERLIMIT <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L78"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Repetitions for each N: &quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> INNERLIMIT <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L79"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L80"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">9</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;N&quot;</FONT>
+<A NAME="L81"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;T (seconds)&quot;</FONT>
+<A NAME="L82"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;T / logN&quot;</FONT>
+<A NAME="L83"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;T / N&quot;</FONT>
+<A NAME="L84"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;T / NlogN&quot;</FONT>
+<A NAME="L85"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;T / N^2&quot;</FONT>
+<A NAME="L86"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl
+<A NAME="L87"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> setfill<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#0000FF">'-'</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setw<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#802000">14</FONT> <FONT COLOR="#3080CA">*</FONT> <FONT COLOR="#802000">5</FONT> <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">9</FONT> <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;&quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> setfill<FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#0000FF">' '</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L88"></A>    <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L89"></A>
+<A NAME="L90"></A>    <FONT COLOR="#FF0000">while</FONT> <FONT COLOR="#FF00FF">(</FONT> N <FONT COLOR="#3080CA">&lt;=</FONT> OUTERLIMIT <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L91"></A>        <FONT COLOR="#FF0000">char</FONT> <FONT COLOR="#3080CA">*</FONT> data <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF0000">new</FONT> <FONT COLOR="#FF0000">char</FONT><FONT COLOR="#871F78">[</FONT> N <FONT COLOR="#3080CA">+</FONT> <FONT COLOR="#802000">1</FONT> <FONT COLOR="#871F78">]</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L92"></A>        <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> i <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> i <FONT COLOR="#3080CA">&lt;</FONT> N<FONT COLOR="#9932CD"><B>;</B></FONT> i<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L93"></A>            data<FONT COLOR="#871F78">[</FONT> i <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#0000FF">'?'</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L94"></A>        data<FONT COLOR="#871F78">[</FONT> N <FONT COLOR="#871F78">]</FONT> <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#0000FF">'\0'</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L95"></A>
+<A NAME="L96"></A>        aTimer1<FONT COLOR="#9932CD"><B>.</B></FONT>start<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>  <FONT COLOR="#238E23"><I>// Time &quot;empty&quot; function</I></FONT>
+<A NAME="L97"></A>        <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> j <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> j <FONT COLOR="#3080CA">&lt;</FONT> INNERLIMIT<FONT COLOR="#9932CD"><B>;</B></FONT> j<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L98"></A>            pos <FONT COLOR="#3080CA">=</FONT> findPattern1<FONT COLOR="#FF00FF">(</FONT> pattern<FONT COLOR="#9932CD"><B>,</B></FONT> data <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L99"></A>        aTimer1<FONT COLOR="#9932CD"><B>.</B></FONT>stop<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L100"></A>
+<A NAME="L101"></A>        <FONT COLOR="#238E23"><I>//	aTimer1.display( &quot;aTimer1 after stop()&quot; );</I></FONT>
+<A NAME="L102"></A>
+<A NAME="L103"></A>        aTimer2<FONT COLOR="#9932CD"><B>.</B></FONT>start<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>  <FONT COLOR="#238E23"><I>// Time the real function</I></FONT>
+<A NAME="L104"></A>        <FONT COLOR="#FF0000">for</FONT> <FONT COLOR="#FF00FF">(</FONT> <FONT COLOR="#FF0000">long</FONT> <FONT COLOR="#FF0000">int</FONT> j <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT> j <FONT COLOR="#3080CA">&lt;</FONT> INNERLIMIT<FONT COLOR="#9932CD"><B>;</B></FONT> j<FONT COLOR="#3080CA">++</FONT> <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L105"></A>            pos <FONT COLOR="#3080CA">=</FONT> findPattern2<FONT COLOR="#FF00FF">(</FONT> pattern<FONT COLOR="#9932CD"><B>,</B></FONT> data <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L106"></A>        aTimer2<FONT COLOR="#9932CD"><B>.</B></FONT>stop<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L107"></A>
+<A NAME="L108"></A>        <FONT COLOR="#238E23"><I>//	aTimer2.display( &quot;aTimer2 after stop()&quot; );</I></FONT>
+<A NAME="L109"></A>
+<A NAME="L110"></A>        <FONT COLOR="#238E23"><I>// Next line requires overload of operator-</I></FONT>
+<A NAME="L111"></A>        <FONT COLOR="#FF0000">if</FONT> <FONT COLOR="#FF00FF">(</FONT> aTimer1 <FONT COLOR="#3080CA">&gt;</FONT> aTimer2 <FONT COLOR="#FF00FF">)</FONT>
+<A NAME="L112"></A>            cout <FONT COLOR="#3080CA">&lt;&lt;</FONT> <FONT COLOR="#0000FF">&quot;Invalid data for N = &quot;</FONT> <FONT COLOR="#3080CA">&lt;&lt;</FONT> N <FONT COLOR="#3080CA">&lt;&lt;</FONT> endl<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L113"></A>        <FONT COLOR="#FF0000">else</FONT> <FONT COLOR="#DB3098">{</FONT>
+<A NAME="L114"></A>            elapsedCPUtime <FONT COLOR="#3080CA">=</FONT> <FONT COLOR="#FF00FF">(</FONT> aTimer2 <FONT COLOR="#3080CA">-</FONT> aTimer1 <FONT COLOR="#FF00FF">)</FONT> <FONT COLOR="#3080CA">/</FONT> INNERLIMIT<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L115"></A>            printLine<FONT COLOR="#FF00FF">(</FONT> N<FONT COLOR="#9932CD"><B>,</B></FONT> elapsedCPUtime <FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L116"></A>        <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L117"></A>
+<A NAME="L118"></A>        <FONT COLOR="#FF0000">delete</FONT> <FONT COLOR="#871F78">[</FONT><FONT COLOR="#871F78">]</FONT> data<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L119"></A>        N <FONT COLOR="#3080CA">+=</FONT> N<FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L120"></A>        aTimer1<FONT COLOR="#9932CD"><B>.</B></FONT>clear<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L121"></A>        aTimer2<FONT COLOR="#9932CD"><B>.</B></FONT>clear<FONT COLOR="#FF00FF">(</FONT><FONT COLOR="#FF00FF">)</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L122"></A>    <FONT COLOR="#DB3098">}</FONT>
+<A NAME="L123"></A>    <FONT COLOR="#FF0000">return</FONT> <FONT COLOR="#802000">0</FONT><FONT COLOR="#9932CD"><B>;</B></FONT>
+<A NAME="L124"></A><FONT COLOR="#DB3098">}</FONT>
+<A NAME="L125"></A>
+</PRE>
+</LI>
+<LI><STRONG>
+Capture typical output from Method 2 for the sort, and attach this </STRONG>
+<STRONG>output as a comment at the end of the program.</STRONG>
+<BR>
+<OL TYPE=1>
+<LI><EM>Be sure to allow the doubling process to continue until N is </EM>
+<EM>large enough for meaningful analysis of trends.</EM>
+<BR>
+</LI>
+<LI><EM>
+Be sure to use enough repetitions to get four places of </EM>
+<EM>accuracy.</EM>
+<BR>
+</OL></LI>
+<LI><STRONG>In an extended comment at the end of flashsort.cpp, analyze the </STRONG>
+<STRONG>data and tell what it means regarding the BigO time complexity of </STRONG>
+<STRONG>FlashSort.</STRONG>
+<BR>
+</OL></LI>
+<LI><STRONG><EM><FONT FACE="Comic Sans MS" SIZE="+1"><A NAME="4"></A>
+<A HREF="#3"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/back.gif" ALT="Back" BORDER="0"></A>
+<A HREF="#0"><IMG WIDTH="40" HEIGHT="16" SRC="/maner/common/contents.gif" ALT="Contents" BORDER="0"></A>
+<A HREF="#4"><IMG WIDTH="16" HEIGHT="17" SRC="/maner/common/nextgray.gif" ALT="Next" BORDER="0"></A>
+<BR>
+SUBMITTALS</FONT></EM></STRONG>
+<OL TYPE=A>
+<LI><STRONG>Submit a file named flashsort.cpp containing the generic sorting </STRONG>
+<STRONG>algorithm and a main() program that calls and times the sort </STRONG>
+<STRONG>according to Method 2.</STRONG>
+<BR>
+</LI>
+<LI><STRONG>
+The main() program should use command-line arguments as </STRONG>
+<STRONG>illustrated in method2.cpp (above).</STRONG>
+<BR>
+</LI>
+<LI><STRONG>
+The flashsort.cpp file should include, in an end-comment, your </STRONG>
+<STRONG>timing data and analysis.</STRONG>
+<BR>
+</OL>
+</OL>
+</BODY>
+</HTML>

@@ -1,0 +1,52 @@
+/*
+   This program demonstrates many features of the language.
+   Enter these input values:  5  7  10  -1
+*/
+program sample;
+
+int largest = 0, i, j,
+    listLength, list[50] = ('x', 'X', 20, 020, 0x20), value;
+
+proc GetList;
+    int limit = 50, negOne, NegOne,
+        value;
+    0xf423E - 03641077 -> negOne;  /* 999998 - 999999 */
+    -1 -> NegOne;
+    read value;
+    while (negOne < value)
+        if (limit <= listLength)
+            break;
+        endif;
+        value -> list[listLength];
+        call AddOne;
+        read value;
+    endwhile;
+    NegOne + 1 -> NegOne;
+    write negOne, NegOne;
+endproc;
+
+proc AddOne;
+    listLength - NegOne -> listLength;
+endproc;
+
+/* Beginning of main program */
+
+1234 -> value;
+5 -> listLength;
+call GetList;
+write value;
+0 -> i;
+while (i < listLength)
+    if (largest < list[i])
+        list[i] -> largest + list[1] -> value;
+        if (i < 4)
+            i+1->j;
+            value + list[j] -> value;
+        endif;
+    endif;
+    i + 1 -> i;
+endwhile;
+write largest, value, list[1];
+
+endprogram
+

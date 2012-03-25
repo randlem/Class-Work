@@ -1,0 +1,7 @@
+circle-20-p2.png 30 30
+color 0 0 0
+fill
+perterb 2
+color 255 255 255
+circle 15 15 10
+end

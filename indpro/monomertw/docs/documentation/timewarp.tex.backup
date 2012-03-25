@@ -1,0 +1,45 @@
+\mychapter{Time Warp}
+
+\section{Introduction}
+Time Warp (TW) is a popular algorithm used in Distributed Discrete Event Simulation (DDES).  TW is an optimistic, rigorous algorithm that limits the number of global synchronizations that must be made during the simulation execution.  Originally introduced as a concept in 1980, it showed marked improvement over the current conservative algorithms used in DDES.  This is because of the main components of the TW algorithm.
+
+The first and most important component is the TW algorithm is the concept of local virtual time (LVT) and global virtual time (GVT).  LVT is the time of the last event that happened locally to a single process, essentially taking on the purpose of the event clock in most distributed simulation software.  GVT, however, is a new concept to TW.  The GVT is the minimum LVT for the entire simulation.  No event can be scheduled before the GVT, so the GVT provides a means to no only progress the simulation forward, but to allow us to garbage collect previous events.
+
+Now, TW gathers it's optimistic execution from the simple fact that the LVT for various threads do not need to be synchronized very often.  However, we must still maintain the rigorous algorithm, which is enforce by the GVT and a process called rollback.  Rollback is done whenever a process receives a remote event that happens before the LVT, that is, in the past.  To ensure that the effects of this event happen we rollback the process to a point before the remote event would happen, and continue from there.
+
+However, if a rollback is performed, we must make sure to cancel any events that the process might have scheduled on other processes.  To do this we send an anti-message, which signals the remote process to cancel that message.  This can trigger additional rollbacks on the remote process, but it is necessary to maintain the rigorous algorithm.
+
+\begin{figure}
+\hrule
+\resizebox{\textwidth}{!}{\includegraphics{timewarp_flowchart}}
+\hrule
+\caption{The Time Warp Algorithm}
+\end{figure}
+
+\section{Implementation}
+The first thing that must be done to implement a TW algorithm for the monomer lattice problem was to adapt a lattice class that would be flexible enough to incorporate the various changes that must be made over the SR algorithm.  To do this, the previously implemented lattice class was modified and recreated to fit the needs.
+
+This new lattice class differed from previous lattice models in that it had a three step process to process the next event.  This added layers of abstraction to what was previously a rather simple function model.  On the top level a function named doNextEvent(), is called to start the event commit.  This function in turn find the correct event to commit (either local or remote), creates a new event object, and passes the new event object to a commit function.  This commit function actually performs the event on the lattice and stores the event for future reference should a rollback need to happen at some point in the future.
+
+After a lattice class was created, a rollback function must be created to make sure that the lattice could and would be able to recover for errors.  This task was accomplished by using a variety of useful data structures such as stacks and an rewind-list.  The rewind-list encapsulated the logic that was used to control the monomer list of the original SR and latter SR algorithms.  This is a rather complex data structure, and of no concern to the actual TW algorithm, but rather the rollback of the KMC events.  For the purpose of this description, it is only necessary to know that the data structure can recreate the monomer list at any known point in the simulation time.
+
+The actual rollback algorithm is rather simple, when compared to the rest of the code body.   The algorithm loops through a stack of committed events, till it finds an event that is less then the time that we must rollback to.  As the events are removed from the top of the stack, they are undone buy using the functional inverse of their commit to the lattice, then discarded.  In a more proper DDES problem, we my not be so quick to delete the events, since by storing them we could use a method of lazy anti-message passing where we only delete events that we're sure won't happen.  However, in this problem, once any of the simulation values change, it is considerable odds that any future events will change, and the cases where they will not are few and far between, so we need not assume the computational overhead of such a lazy evaluation.
+
+After the rollback mechanism was in place, the only thing left to do was implement the message passing interface.  This was done through the implementation of a class that was tailor made to encapsulate the various functionalities, and to keep all the MPI calls in a single package.  Ideally this would be implemented along the singleton design pattern, so we only incur on instance of the the class, but due to time constraints and the lack of a simple way to enforce the singleton pattern in C++, this was not done.  One must be careful when using the class, otherwise errors may arise.
+
+The MPI class encapsulates a simple data structure for passing events between different processes, along with encapsulating various useful operations like all reduces and barrier calls.  Another feature of the class is it's ability to determine the neighbors of the process, and keep from sending messages along a null path.  This is important since the calling thread need not know who is on the left or right but to just know the direction that is wishes to send the message.
+
+Another important feature of the MPI class is that is tracks it's own statistics.  This is important to validate if all the messages are getting received by the proper process and to gather statistics about the various performance characteristics of the TW algorithm.
+
+The last thing that was done was to code the main program, which included any GVT calculation and statistics output.  To do the GVT calculation a simple cycle length counter was implemented, that forced the GVT to be calculated after a certain amount of time passed.  There is some voodoo to getting the right cycle length set to keep the algorithm proceeding at a rapid pace.
+
+Once all these things were done we could begin to debug and validate the program.  Those processes are described in the results section.
+
+\section{Problems and Analysis}
+After the program was mostly implemented, a variety of issues arose which have prevented us from gathering the necessary performance data.  One such issue is the inconsistent running state of the simulation.  There appears to be some randomness in the execution of the program.  As of the time of writing this I'm unsure what causes it.
+
+There are variety of things that could cause this execution problem.  First and foremost is an error in the code used to do the actual simulation.  This would be a huge error and would effect not only the validity of the simulation results but the simulation algorithm.  To rectify this we must get the simulation to run multiple times to arrive at a single answer before we can begin to validate the model.  Once we arrive here we are considerably closer to archiving hard performance numbers and are able to compare it against the original SR algorithm and the latter SR.
+
+Secondly, there appears to be a consistent runtime with this algorithm, wither it is correct or not.  Runtime in the tens of seconds are relatively common.  If this is caused by some sort of error in the model or the rigorous nature of the algorithm, we can discard these numbers as fundamentally flawed and must work towards gathering new numbers.   However, the author feels these are generally indicative of the algorithms speed over the previous SR algorithm, which ran at a considerably slower pace.  The author feels that the times will go up, but generally they will be faster then the fastest SR.
+
+This leads to two things: 1) we have arrived at a fast solution to modeling large scale systems and 2) the problem is now the limiting factor in the scale of the problem.  Point two is a direct correlation of point one, but important none the less.  The whole goal of applying DDES algorithms to this problem was to allow for the exploration of larger problem sizes then was currently possible with single process solutions.  Once a speedy algorithm was found, this was made possible.

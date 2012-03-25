@@ -1,0 +1,872 @@
+{\ttfamily \raggedright \footnotesize
+\#include\ "{}lattice.h"{}
+point\ Lattice::ranmove(site\ mysite)
+\{
+
+\ \ \ \ point\ pt;
+\ \ \ \ pt.x=0;pt.y=0;
+
+\ \ \ \ \textsl{////cout<{}<{}xdir<{}<{}"{}\ \ "{};\ \ }
+\ \ \ \
+\ \ \ \ int\ prob=ranlist[iran]*4;\textsl{//rand()\%4;}
+\ \ \ \ iran++;
+\ \ \ \
+\ \ \ \
+\ \ \ \ pt.x=mysite.pos.x+mdir[prob].x;
+\ \ \ \ pt.y=mysite.pos.y+mdir[prob].y;
+
+\ \ \ \ \textsl{//Allow\ boundary\ movement}
+\ \ \ \ \textsl{//No!!!}
+\ \ \ \
+\ \ \ \ if(pt.x>{}=size+2)\ pt.x-{}=1;
+\ \ \ \ if(pt.x<{}0)pt.x+=1;
+\ \ \ \
+\ \ \ \
+\ \ \ \ if(pt.y>{}=size)pt.y-{}=2;
+\ \ \ \ if(pt.y<{}0)pt.y+=2;
+\ \ \ \
+\ \ \ \ return\ pt;
+\}
+
+Lattice::Lattice()
+\{
+
+\ \ \ \ float\ ratio=0.0;
+\ \ \ \ float\ prob;
+\ \ \ \ point\ newsite;
+\ \ \ \ mcount=0;
+\ \ \ \ deprate=1.0f,difrate=1.0e3;
+\ \ \ \ ndep=0;
+\ \ \ \ nevent=0;
+\ \ \ \ time=0;
+\ \ \ \ iran=0;
+\ \ \ \ subcycle=0;
+\ \ \ \ T=0.001;
+
+\ \ \ \ int\ i=0,j=0;
+\ \ \ \
+\ \ \ \ for\ (i=0;i<{}2;i++)
+\ \ \ \ \ \ \ \ bdycount[i]=0;
+
+\ \ \ \ for\ (i=0;i<{}2;i++)
+\ \ \ \ \ \ bdycountrec[i]=0;
+
+\ \ \ \ for\ (i=0;i<{}2;i++)
+\ \ \ \ \ \ oldbdycountrec[i]=0;
+
+\ \ \ \ for\ (i=0;i<{}size+2;i++)
+\ \ \ \ \{
+\ \ \ \ for\ (j=0;j<{}size;j++)
+\ \ \ \ \ \ \{
+\ \ \ \ \ \ \ \ newsite.x=i;
+\ \ \ \ \ \ \ \ newsite.y=j;
+\ \ \ \ \ \ \ \ location[i][j].pos=newsite;
+\ \ \ \ \ \ \ \ location[i][j].h=0;
+\ \ \ \ \ \ location[i][j].index=-{}1;
+\ \ \ \ \ \ \}
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \
+\ \ \ \ \textsl{//generate\ random\ numbers}
+\ \ \ \
+\ \ \ \ \textsl{//randgen();}
+\ \ \ \
+\ \ \ \ \textsl{/*
+\ \ \ \ generate\ points\ in\ the\ form\ e.g\ (1,-{}1)\ move\ one\ unit\ left\ in\ x\ and\ and\ one\ unit\ up
+\ \ \ \ do\ not\ allow\ particle\ to\ remain\ (0,0)
+\ \ \ \ */}
+
+
+\ \ \ \ \textsl{/*Set\ directions*/}
+
+
+
+\ \ \ \ mdir[0].y=\ 1;\ \ mdir[0].x=\ 0;
+\ \ \ \ mdir[1].y=\ 0;\ \ mdir[1].x=\ 1;
+\ \ \ \ mdir[2].y=-{}1;\ \ mdir[2].x=\ 0;
+\ \ \ \ mdir[3].y=\ 0;\ \ mdir[3].x=-{}1;
+\ \ \ \ mdir[4].y=\ 1;\ \ mdir[4].x=\ 1;
+\ \ \ \ mdir[5].y=\ 1;\ \ mdir[5].x=-{}1;
+\ \ \ \ mdir[6].y=-{}1;\ \ mdir[6].x=\ 1;
+\ \ \ \ mdir[7].y=-{}1;\ \ mdir[7].x=-{}1;
+
+\}
+void\ Lattice::calctime()
+\{
+\ \ float\ \ \ monomer=(float)mcount,
+\ \ \ \ Drate=difrate*monomer*0.25f,
+\ \ \ \ N=(float)latsize,dt,prob,
+\ \ \ \ totaldep=deprate*N;
+\ \ \
+\ \ prob\ =\ ranlist[iran];
+\ \ \ \ \ \ \ \ iran++;
+\ \ dt=-{}log(prob)/(Drate+totaldep);
+\ \ time+=dt;
+\}
+Lattice::\textasciitilde Lattice()
+\{
+
+\}
+
+int\ Lattice::getbonds(site\ mysite,point\ *\ bondpt)
+\{
+int\ ctr=0,i=0;
+point\ pt;
+pt=mysite.pos;
+for(;i<{}dir;i++)
+\{
+\ \ \ pt.x+=mdir[i].x;
+\ \ \ pt.y+=mdir[i].y;
+\ \ \ if((pt.x<{}0)
+\ \ \ \ \ \ ||(pt.x>{}=size+2)
+\ \ \ \ \ \ ||(pt.y<{}0)
+\ \ \ \ \ \ ||(pt.y>{}=size))
+\ \ \{
+\
+\ \ \}
+\ \ else
+\ \ \{
+\ \ \ \ \ if(location[pt.x][pt.y].h>{}=mysite.h)
+\ \ \ \ \ \{
+\ \ \ \ \ \ \ bondpt[ctr]=pt;
+\ \ \ \ ctr++;
+\ \ \ \ \ \}
+\ \ \ \}
+\ \ \ pt=mysite.pos;
+\}
+return\ ctr;
+\}
+
+int\ Lattice::getnbhrs(site\ mysite,point\ *\ bondpt)
+\{
+\ \ \ \ int\ ctr=0,i=0;
+\ \ \ \ point\ pt;
+\ \ \ \ pt=mysite.pos;
+\ \ \ \ for(;i<{}dir;i++)
+\ \ \ \ \{
+\ \ \ \ pt.x+=mdir[i].x;
+\ \ \ \ pt.y+=mdir[i].y;
+\ \ \ \ if((pt.x<{}0)
+\ \ \ \ \ \ ||(pt.x>{}=size+2)
+\ \ \ \ \ \ ||(pt.y<{}0)
+\ \ \ \ \ \ ||(pt.y>{}=size))
+\ \ \ \ \{
+\ \ \ \ \
+\ \ \ \ \}
+\ \ \ \ else
+\ \ \ \ \{
+\ \ \ \ \ \ \ \ \ bondpt[ctr]=pt;
+\ \ \ \ \ \ ctr++;
+\ \ \ \ \ \ \ \
+\ \ \ \ \}
+\ \ \ \ pt=mysite.pos;
+\ \ \ \ \}
+\ \ \ \ return\ ctr;
+\}
+
+void\ Lattice::deletemonomer(point\ pos)
+\{
+\ \ point\ lastpt;
+\ \ if(mcount>{}1)
+\ \ \{
+\ \ \ \ lastpt=monomerloc[mcount-{}1];
+\ \ \ \ addmonomerchange(diff,lastpt);
+\ \ \ \ location[lastpt.x][lastpt.y].index=location[pos.x][pos.y].index;
+\ \ \ \ monomerloc[location[pos.x][pos.y].index]=monomerloc[mcount-{}1];
+\ \ \ \ location[pos.x][pos.y].index=-{}1;
+\ \ \ \ mcount-{}-{};
+\ \ \}
+\ \ else
+\ \ \{
+\ \ \ \ location[pos.x][pos.y].index=-{}1;
+\ \ \ \ mcount-{}-{};
+\ \ \}
+\}
+
+bool\ Lattice::neighborIsMonomer(point\ pt,site\ mysite)
+\{
+\ \ bool\ bMonomer=false;
+\ \ \textsl{//if\ index\ is\ not\ -{}1\ and\ same\ height\ as\ my\ location}
+\ \ if\ (location[pt.x][pt.y].index!=-{}1\ \&\&\ (location[pt.x][pt.y].h==location[mysite.pos.x][mysite.pos.y].h))
+\ \ \ \ \{
+\ \ \ \ \ \ bMonomer=true;\ \ \ \
+\ \ \ \ \}
+\ \ return\ bMonomer;
+\}
+bool\ Lattice::checkupdatebonds(site\ mysite)
+\{
+\ \ \textsl{/*
+\ \ Possible\ Scenarios
+\ \ Deposit
+\ \ 1.\ Monomer\ encounters\ no\ cluster\ or\ other\ neighbor\ monomer
+\ \ -{}No\ bonds
+\ \ 2.\ Monomer\ encounters\ cluster
+\ \ -{}bond\ delete\ monomer\ from\ list
+\ \ 3.\ Monomer\ encounters\ single\ monomer
+\ \ -{}bond.\ delete\ BOTH\ from\ list
+
+\ \ Diffusion
+\ \ 1.\ Monomer\ encounters\ no\ cluster\ or\ other\ neighbor\ monomer
+\ \ -{}No\ bonds
+\ \ 2.\ Monomer\ encounters\ cluster
+\ \ -{}bond\ delete\ monomer\ from\ list
+\ \ 3.\ Monomer\ encounters\ single\ monomer
+\ \ -{}bond.\ delete\ BOTH\ from\ list
+\ \ */}
+\ \ bool\ bond=false;
+\ \ point\ pt,\ bondpt[dir],lastpt;
+\ \ int\ i=0,j=0,ctr=0;
+\ \ ctr=getbonds(mysite,bondpt);
+\ \ if(ctr==0)
+\ \ \{
+\ \ \textsl{//No\ cluster\ or\ monomer;}
+\ \ bond=false;
+\ \ \}
+\ \ else
+\ \ \{
+\ \ \textsl{//for\ each\ bond\ recieved}
+\ \ bond=true;
+\ \ for(;j<{}ctr;j++)
+\ \ \ \ \ \ \ \{
+\ \ \ \ pt=bondpt[j];
+\ \ \ \ \textsl{//if\ monomer\ means\ it\ has\ an\ index}
+\ \ \ \ if(neighborIsMonomer(pt,mysite))
+\ \ \ \ \ \ \{
+\ \ \ \ \ \ \textsl{//delete\ both\ you\ and\ monomer}
+\ \ \ \ \ \ \textsl{//delete\ monomer}
+\ \ \ \ \ \ deletemonomer(pt);
+\ \ \ \ \ \ \}
+\ \ \ \ \}
+\ \ \ \ \ \ \textsl{//delete\ your\ self\ IF\ you\ are\ a\ monomer}
+\ \ \ \ if(mysite.index!=-{}1)
+\ \ \ \ \{
+\ \ \ \ \textsl{//rearrange\ list\ if\ mcount\ is\ greater\ than\ 1}
+\ \ \ \ \ \ deletemonomer(mysite.pos);
+\ \ \ \ \}
+
+\ \ \}
+\ \ return\ bond;
+\}
+
+void\ Lattice::upnbhd(site\ mysite)
+\{
+\ \ \ \ \ \ \ \ bool\ bond=false;
+\ \ point\ pt,\ bondpt[dir],lastpt;
+\ \ int\ x,y;
+\ \ int\ i=0,j=0,ctr=0;
+\ \ ctr=getnbhrs(mysite,bondpt);
+\ \ \textsl{//cout<{}<{}"{}getcte="{}<{}<{}ctr<{}<{}endl;}
+\ \ \ checksite(mysite);
+\ \ \ \ for(i=0;i<{}ctr;i++)
+\ \ \ \ \{
+\ \ \ \ \ \ \ x=bondpt[i].x;
+\ \ \ \ \ \ \ y=bondpt[i].y;
+\ \ \ \ \ \ \ checksite(location[x][y]);\textsl{//bond=checkupdatebonds(location[bondpt[i].x][bondpt[i].y]);}
+\ \ \ \ \}
+\ \ \ \ \ \ \ if(mysite.h<{}=0\ \&\&\ mysite.index!=-{}1)
+\ \ \ \ \ \ \ \ \ \{
+\ \ \ \ \ \ deletemonomer(mysite.pos);
+\ \ \ \}
+
+\}
+void\ Lattice::checksite(site\ mysite)
+\{
+\ \ bool\ bond=false;
+\ \ bond=checkupdatebonds(location[mysite.pos.x][mysite.pos.y]);\ \ \
+\ \ \ \ if(bond==false)
+\ \ \ \ \{
+\ \ \ \ \ \ \ \ if((location[mysite.pos.x][mysite.pos.y].index==-{}1)\ \&\&(location[mysite.pos.x][mysite.pos.y].h>{}0))
+\ \ \ \ \ \ \ \ \ \{
+\ \ \ \ \ \ \ \ \ \ \ \ location[mysite.pos.x][mysite.pos.y].index=mcount;
+\ \ \ \ \ \ \ \ \ \ \ \ monomerloc[mcount]=location[mysite.pos.x][mysite.pos.y].pos;
+\ \ \ \ \ \ \ \ \ \ \ \ mcount++;
+\ \ \ \ \ \ \ addmonomerchange(0,mysite.pos);
+\ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \}
+\}
+void\ Lattice::addmonomerchange(int\ tag,int\ lastpoint)
+\{
+\ \ change[changecount].time=time;
+\ \ if(tag==0)
+\ \ \{
+\ \ \ \ myevents[eventcount].oldval=monomerloc[count];
+\ \ \ \ change[changecount].newsite=mcount;
+\ \ \ \ change[changecount].newval=monomerloc[mcount];
+\ \ \ \ change[changecount].tag=0;
+\ \ \ \ changecount++;
+\ \ \}
+\ \ else
+\ \ \{
+\ \ \ \ change[changecount].oldsite=lastpoint;
+\ \ \ \ change[changecount].oldval=monomerloc[lastpoint];
+\ \ \ \ change[changecount].newsite=count-{}1;
+\ \ \ \ change[changecount].newval=monomerloc[count-{}1];
+\ \ \ \ change[changecount].tag=1;
+\ \ \ \ changecount++;
+\ \ \}
+
+\}
+void\ Lattice::restorelist(float\ Ctime)
+\{
+\ \ int\ oldloc,newloc,tag;
+\ \ site\ oldval,newval;
+\ \ int\ j=changecount-{}1;
+\ \ while(change[j].time>{}Ctime)
+\ \ \{
+\ \ oldloc=change[j].oldsite;
+\ \ newloc=change[j].newsite;
+\ \ oldval=change[j].oldval;
+\ \ newval=change[j].newval;
+\ \ tag=change[j].tag;
+\ \ if(tag==1)
+\ \ \ \ \ \ \ \{
+\ \ \ \ monomerloc[newloc]=newval;
+\ \ \ \ \ \ \ monomerloc[oldloc]=oldval;
+\ \ \ \ mcount++;
+\ \ \ \ \}
+\ \ else
+\ \ \ \ \{
+\ \ \ \ monomerloc[newloc]=oldval;
+\ \ \ \ mcount-{}-{};
+\ \ \ \ \}
+\ \ \ \ j-{}-{};
+\ \ \}
+\}
+void\ Lattice::saveconfig()
+\{
+\ \ int\ j;
+\ \ for\ (j=0;j<{}mcount;j++)
+\ \ \{
+\ \ \ \ \ \ oldlist.monomerloc[j]=monomerloc[j];
+\ \ \}
+\ \ \
+\ \ oldlist.mcount=mcount;
+\ \ oldlist.ndep=ndep;
+\}
+
+void\ Lattice::restorelist()
+\{
+\ \ int\ j;
+\ \ for\ (j=0;j<{}oldlist.mcount;j++)
+\ \ \{
+\ \ \ \ monomerloc[j]=oldlist.monomerloc[j];
+\ \ \}
+\
+\ \ mcount=oldlist.mcount;
+\ \ ndep=oldlist.ndep;
+\}
+
+void\ Lattice::restoreLattice()
+\{
+\ \ \ undoevent();
+\ \ \ restorelist();
+\ \ \ int\ i,j;
+\ \ \ int\ x,y;
+\ \ \ \textsl{/**clear\ lattice**/}
+\ \ \ for(i=0;i<{}size+2;i++)
+\ \ \ \{
+\ \ \ \ \ for(j=0;j<{}size;j++)
+\ \ \ \ \ \{
+\ \ \ \ \ \ \ \ location[i][j].index=-{}1;
+\ \ \ \ \ \}
+\ \ \ \}
+\ \
+\ \ \ \textsl{/** restore\ indexes*/}
+\ \ \ for(i=0;i<{}mcount;i++)
+\ \ \ \{
+\ \ \ \ \ x=monomerloc[i].x;
+\ \ \ \ \ y=monomerloc[i].y;
+\ \ \ \ \ location[x][y].index=i;
+\ \ \ \}
+\}
+
+void\ Lattice::restoreLattice(float\ Ctime)
+\{
+\ \ undoevent(Ctime);
+\ \ restorelist(Ctime);
+\ \ int\ i,j;
+\ \ int\ x,y;
+\ \ \textsl{/**clear\ lattice**/}
+\ \ for(i=0;i<{}size+2;i++)
+\ \ \{
+\ \ \ \ for(j=0;j<{}size;j++)
+\ \ \ \ \{
+\ \ \ \ \ \ location[i][j].index=-{}1;
+\ \ \ \ \}
+\ \ \}
+\ \ \ \
+\ \ \textsl{/** restore\ indexes*/}
+\ \ for(i=0;i<{}mcount;i++)
+\ \ \{
+\ \ \ \ x=monomerloc[i].x;
+\ \ \ \ y=monomerloc[i].y;
+\ \ \ \ location[x][y].index=i;
+\ \ \}
+\}
+
+void\ Lattice::addbdyevent(site\ oldsite,site\ newsite,float,int\ tag)
+\{
+\ \ //add\ boundary\ events\ to\ list
+\ \ \ \ int\ bdyrightcount=bdycount[right],bdyleftcount=bdycount[left];
+\ \ //erase\ pointers
+\ \ \ \ oldsite.index=-{}1;newsite.index=-{}1;
+\ \ if((oldsite.pos.x>{}=size)\ ||\ (newsite.pos.x>{}=size))
+\ \ \{
+\ \ \ \ if(oldsite.pos.x==size)
+\ \ \ \ \{
+\ \ \ \ \ \ oldsite.pos.x=0;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(oldsite.pos.x==size+1)
+\ \ \ \ \{
+\ \ \ \ \ \ oldsite.pos.x=1;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(newsite.pos.x==size)
+\ \ \ \ \{
+\ \ \ \ \ \ newsite.pos.x=0;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(newsite.pos.x==size+1)
+\ \ \ \ \{
+\ \ \ \ \ \ newsite.pos.x=1;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ bdyevent[right][bdyrightcount].oldsite=oldsite;
+\ \ \ \ bdyevent[right][bdyrightcount].newsite=newsite;
+\ \ \ \ bdyevent[right][bdyrightcount].t=time;
+\ \ \ \ bdyevent[right][bdyrightcount].tag=tag;
+\ \ \ \ bdycount[right]++;
+\ \ \}
+
+\ \ if((oldsite.pos.x<{}=1)\ ||\ (newsite.pos.x<{}=1))
+\ \ \{\ \ \
+\ \ \ \ if(oldsite.pos.x==0)
+\ \ \ \ \{
+\ \ \ \ \ \ oldsite.pos.x=size;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(oldsite.pos.x==1)
+\ \ \ \ \{
+\ \ \ \ \ \ oldsite.pos.x=size+1;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(newsite.pos.x==0)
+\ \ \ \ \{
+\ \ \ \ \ \ newsite.pos.x=size;
+\ \ \ \ \}
+\ \ \ \
+\ \ \ \ if(newsite.pos.x==1)
+\ \ \ \ \{
+\ \ \ \ \ \ newsite.pos.x=size+1;
+\ \ \ \ \}\
+\ \ \ \ bdyevent[left][bdyleftcount].oldsite=oldsite;
+\ \ \ \ bdyevent[left][bdyleftcount].newsite=newsite;
+\ \ \ \ bdyevent[left][bdyleftcount].t=time;
+\ \ \ \ bdyevent[left][bdyleftcount].tag=tag;
+\ \ \ \ bdycount[left]++;
+\ \ \}
+
+\}
+
+
+void\ Lattice::deposit()
+\{
+\ \ \textsl{/*
+\ \ 1.\ Find\ a\ location
+\ \ 2.\ place\ monomer\ in\ monomer\ list\ IF\ NO\ neighbours\ around!
+\ \ 3.\ \ do\ not\ deposit\ on\ ghost\ region;
+\ \ */}
+\ \ \ \ float\ xrand=ranlist[iran];
+\ \ \ \ iran++;
+\ \ \ \ float\ yrand=ranlist[iran];
+\ \ \ \ iran++;
+
+\ \ \ \ int\ locx=xrand*(size)+1;
+\ \ \ \ int\ locy=yrand*(size);
+
+\ \ \ \ \textsl{//add\ height}
+\ \ \ \ location[locx][locy].h+=1;
+\ \ \ \ if((locx==1)\ ||\ (locy==size))
+\ \ \ \ \{
+\ \ \ \ \ \ \textsl{//add\ event\ to\ bdylist}
+\ \ \ \ \ \ addbdyevent(location[locx][locy],location[locx][locy],time,depevent);
+\ \ \ \ \ \ \ \ \ \
+\ \ \ \ \}\ \ \ \ \ \ \ \
+\ \ \ \ upnbhd(location[locx][locy]);
+\ \ \ \ \textsl{//cout<{}<{}"{}newdeploc.x=\ "{}<{}<{}locx<{}<{}"{}\ newdeploc.y=\ "{}<{}<{}locy<{}<{}endl;\ }
+\ \ \ \ \textsl{//add\ to\ eventlist;}
+\ \ \
+\ \ \ \ myeventlist[nevent].oldsite=location[locx][locy];
+\ \ \ \ myeventlist[nevent].newsite=location[locx][locy];
+\ \ \ \ myeventlist[nevent].ranseq=nevent;
+\ \ \ \ myeventlist[nevent].t=time;
+\ \ \ \ myeventlist[nevent].tag=depevent;
+\}
+
+void\ Lattice::diffuse()
+\{
+
+\ \ point\ newloc,oldloc,lastloc;
+\ \ bool\ bonded=false;
+\ \ \
+\ \ float\ ranm=ranlist[iran];
+\ \ iran++;
+\ \ \
+\ \ if(mcount>{}0)
+\ \ \{
+\ \ \ \ \ \ int\ loc=(ranm)*(mcount-{}1);
+\ \ \ \ \ \ oldloc=monomerloc[loc];
+\ \ \ \ \ \ newloc=ranmove(location[oldloc.x][oldloc.y]);
+\ \ \ \ \ \ location[newloc.x][newloc.y].h+=1;
+\ \ \ \ \ \ location[oldloc.x][oldloc.y].h-{}=1;
+\ \ \ \ \textsl{//cout<{}<{}"{}locx"{}<{}<{}oldloc.x<{}<{}"{}locy"{}<{}<{}oldloc.y<{}<{}endl;}
+\ \ \ \ \textsl{//cout<{}<{}"{}nlocx"{}<{}<{}newloc.x<{}<{}"{}nlocy"{}<{}<{}newloc.y<{}<{}endl;}
+\ \ \ \ \textsl{//cout<{}<{}"{}bdyevent"{}<{}<{}bdycount<{}<{}endl;}
+\ \ \ \ if(location[oldloc.x][oldloc.y].h<{}0)
+\ \ \ \ \ \ \{
+\ \ \ \ \ \ cout<{}<{}"{}fuuuuuuuuuuuuuuuuck"{}<{}<{}endl;
+\ \ \ \ \}
+\ \ \ \ \textsl{//boundary\ event}
+\ \ \ \ \ \ \ \ \
+\ \ \ \ if((newloc.x<{}1\ )||\ (newloc.x>{}size))
+\ \ \ \ \ \ \{
+\ \ \ \ \textsl{//add\ event\ to\ bdylist}
+\ \ \ \ deletemonomer(oldloc);
+\ \ \ \ addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],time,diffevent);
+\ \ \ \ \
+\ \ \ \ \}
+\ \ \ \ if(newloc.x==1\ ||\ newloc.x==size)
+\ \ \ \ \{
+\ \ \ \ addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],time,diffevent);
+\ \ \ \ \}
+\ \ \
+\ \ \ \ if((oldloc.x<{}=1\ )||\ (oldloc.x>{}=size))
+\ \ \ \ \ \ \{
+\ \ \ \ \textsl{//add\ event\ to\ bdylist}
+\ \ \ \ addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],time,diffevent);
+\ \ \ \ \
+\ \ \ \ \}
+\ \ \ \ \ \ \
+\ \ \ \ \textsl{//diffusion\ may\ release\ trapped\ monomer\ but\ capture\ released\ monomer}
+\ \ \ \ if(location[oldloc.x][oldloc.y].h>{}location[newloc.x][newloc.y].h)
+\ \ \ \ \{
+\ \ \ \ upnbhd(location[oldloc.x][oldloc.y]);\ \
+\ \ \ \ \}
+\ \ \ \ else
+\ \ \ \ \{
+\ \ \ \ \textsl{//Move\ Monomer\ by\ changing\ index\ location\ }
+\ \ \ \ location[newloc.x][newloc.y].index=location[oldloc.x][oldloc.y].index;
+\ \ \ \ monomerloc[location[oldloc.x][oldloc.y].index]=location[newloc.x][newloc.y].pos;
+\ \ \ \ location[oldloc.x][oldloc.y].index=-{}1;
+\ \ \ \ upnbhd(location[newloc.x][newloc.y]);
+\ \ \ \ \}
+\ \ \
+\ \ \}
+\ \ \ \
+\ \ \textsl{//add\ to\ eventlist;}
+\ \ myeventlist[nevent].oldsite=location[oldloc.x][oldloc.y];
+\ \ myeventlist[nevent].newsite=location[newloc.x][newloc.y];
+\ \ myeventlist[nevent].ranseq=nevent;
+\ \ myeventlist[nevent].t=time;
+\ \ myeventlist[nevent].tag=diffevent;
+\ \ \ \
+\ \ \textsl{//cout<{}<{}"{}****End\ Diffuson*************************"{}<{}<{}endl;\ \ }
+\}
+void\ Lattice::savebdylist()
+\{
+\ \ \ \ int\ a,b,i,bdyrightcrec=bdycountrec[right],bdyleftcrec=bdycountrec[left];
+
+\ \ \ \ for(i=0;i<{}bdyleftcrec;i++)
+\ \ \ \ \{
+\ \ \ \ \ \ oldbdyeventrec[left][i]=bdyeventrec[left][i];
+\ \ \ \ \}
+\ \ \ \ oldbdycountrec[left]=bdyleftcrec;
+
+
+\ \ \ \ for(i=0;i<{}bdyrightcrec;i++)
+\ \ \ \ \{
+\ \ \ \ \ \ oldbdyeventrec[right][i]=bdyeventrec[right][i];
+\ \ \ \ \}
+
+\ \ \ \ oldbdycountrec[right]=bdyrightcrec;
+\}
+
+int\ Lattice::comparebdylist()
+\{
+\ \ int\ a,\ b,\ acheck,\ bcheck;
+
+\ \ \ \ acheck\ =\ 0;
+\ \ \ \ bcheck\ =\ 0;
+\ \ \ \ for\ (a=0;\ a\ <{}\ 2;\ a++)\ \{
+\ \ \ \ \ \ if\ (oldbdycountrec[a]!=\ bdycountrec[a])\ \{
+\ \ \ \ \ \ \ \ redoflag\ =\ 1;
+\ \ \ \ \ \ \ \ acheck\ \ \ =\ 1;
+\ \ \ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ for\ (b=0;\ b\ <{}\ bdycountrec[a];\ )\ \{
+\ \ \ \ \ \ \ \ \ \ if\ (oldbdyeventrec[a][b].t\ !=\ bdyeventrec[a][b].t)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ redoflag\ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ bcheck\ \ \ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ b\ \ \ \ \ \ \ \ =\ bdycountrec[a];
+\ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \ \ if\ (oldbdyeventrec[a][b].newsite.pos.x\ !=\ bdyeventrec[a][b].newsite.pos.x)\ \{
+\ \ \ \ \ \ \ \ \ \ redoflag\ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ bcheck\ \ \ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ b\ \ \ \ \ \ \ \ =\ bdycountrec[a];
+\ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \ \ if\ (oldbdyeventrec[a][b].newsite.pos.y!=bdyeventrec[a][b].newsite.pos.y)\ \{
+\ \ \ \ \ \ \ \ \ \ redoflag\ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ bcheck\ \ \ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ b\ \ \ \ \ \ \ \ =\ bdycountrec[a];
+\ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \ \ if\ (oldbdyeventrec[a][b].newsite.h!=bdyeventrec[a][b].newsite.h)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ redoflag\ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ bcheck\ \ \ =\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ b\ \ \ \ \ \ \ \ =\ bdycountrec[a];
+\ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \ \ b++;
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \}
+\ \ \ \ \}
+
+\}
+
+
+void\ Lattice::p()
+\{
+\ \ cout<{}<{}"{}**************S**********************************"{};
+\ \ float\ theta=0,vacancy=(float)\ mcount\ ,lat=(float)latsize;
+\ \ float\ x;
+\ \ for\ (int\ i=0;i<{}size;i++)
+\ \ \{
+\ \ cout<{}<{}endl;
+\ \ for\ (int\ j=0;j<{}size+2;j++)
+\ \ cout<{}<{}location[j][i].h;
+\ \ \}
+
+\ \ cout<{}<{}endl<{}<{}"{}mcount="{}<{}<{}mcount<{}<{}endl;
+\ \ \textsl{//cout<{}<{}"{}**************E**********************************"{}<{}<{}endl;}
+\ \ theta=(lat-{}vacancy)/lat;
+\ \ \textsl{//cout<{}<{}"{}Theta="{}<{}<{}theta<{}<{}endl;}
+\ \ for\ (int\ i=0;i<{}=size;i++)
+\ \ \{
+\ \ cout<{}<{}endl;
+\ \ for\ (int\ j=0;j<{}size+2;j++)
+\ \ cout<{}<{}location[j][i].index<{}<{}"{}\ \ \ "{};
+\ \ \}
+\}
+void\ Lattice::doKMC()
+\{
+\ \ \textsl{///create\ and\ save\ random\ number}
+\ \ float\ ranX;
+
+\ \ ranX=ranlist[iran];
+\ \ iran++;
+
+\ \ float\ Trate,Drate;
+\ \ Drate=.25*mcount*difrate;
+\ \ Trate=Drate+(deprate*\ (float)\ latsize);
+
+\ \ float\ prob=(Drate/Trate);
+
+\ \ \textsl{//cout<{}<{}"{}ranX="{}<{}<{}ranlist[iran]<{}<{}endl;}
+\ \ if(ranX<{}prob)
+\ \ diffuse();
+\ \ else
+\ \ \{
+\ \ deposit();
+\ \ ndep++;
+\ \ \}
+\ \ nevent++;
+\
+\}
+
+void\ Lattice::undoevent()\ \{
+\ \ \ \ int\ a,\ xi,\ yi,\ xf,\ yf,\ tag;
+\ \ \ \ double\ t;
+
+\ \ \ \ if\ (redoflag\ ==\ 0)\ \{
+\ \ \ \ \ \ \ \ return;
+\ \ \}
+
+\ \ \ \ for\ (a=nevent-{}1;\ a\ >{}=0;\ a-{}-{})\ \{
+\ \ \ \ \ \ \ \ tag\ \ =\ myeventlist[a].tag;
+\ \ \ \ \ \ \ \ xi\ \ \ =\ myeventlist[a].oldsite.pos.x;
+\ \ \ \ \ \ \ \ yi\ \ \ =\ myeventlist[a].oldsite.pos.y;
+\ \ \ \ \ \ \ \ xf\ \ \ =\ myeventlist[a].newsite.pos.x;
+\ \ \ \ \ \ \ \ yf\ \ \ =\ myeventlist[a].newsite.pos.y;
+\ \ \ \ \ \ \ \ t\ \ \ \ =\ myeventlist[a].t;
+
+\ \ \ \ \ \ \ \ switch\ (tag)\ \{
+\ \ \ \ \ \ \ \ case\ 0:
+\ \ \ \ \ \ \ \ \ \ \ \ location[xi][yi].h\ =\ myeventlist[a].oldsite.h;
+\ \ \ \ \ \ \ \ \ \ \ \ if\ (myeventlist[a].newsite.h\ !=\ -{}1)
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ location[xf][yf].h\ =\ myeventlist[a].newsite.h;
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ case\ 1:
+\ \ \ \ \ \ \ \ \ \ \ \ location[xi][yi].h\ =\ location[xi][yi].h\ +\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ location[xf][yf].h\ =\ location[xf][yf].h\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ case\ 2:
+\ \ \ \ \ \ location[xi][yi].h\ =\ location[xi][yi].h\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ ndep-{}-{};
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ default:
+\ \ \ \ \ \ \ \ \ \ \ \ cout<{}<{}"{}Error\ in\ tag"{}<{}<{}endl;
+\ \ \ \ \ \ \ \ \ \ \ \ return;\ \textsl{/*\ SHOULDN'T\ THIS\ EXIT()?!?\ */}
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \}
+\}
+
+void\ Lattice::undoevent(float\ Ctime)\ \{
+\ \ \ \ int\ a,\ xi,\ yi,\ xf,\ yf,\ tag;
+\ \ \ \ double\ t;
+
+\ \ \ \ if\ (redoflag\ ==\ 0)\ \{
+\ \ \ \ \ \ \ \ return;
+\ \ \}
+\ \ \ \ a=nevent-{}1;
+\ \ \ t\ \ \ \ =\ myeventlist[a].t;
+\ \ \ \ while(t>{}Ctime)\ \{
+\ \ \ \ \ \ \ \ tag\ \ =\ myeventlist[a].tag;
+\ \ \ \ \ \ \ \ xi\ \ \ =\ myeventlist[a].oldsite.pos.x;
+\ \ \ \ \ \ \ \ yi\ \ \ =\ myeventlist[a].oldsite.pos.y;
+\ \ \ \ \ \ \ \ xf\ \ \ =\ myeventlist[a].newsite.pos.x;
+\ \ \ \ \ \ \ \ yf\ \ \ =\ myeventlist[a].newsite.pos.y;
+\ \ \ \ \ \ \ \ t\ \ \ \ =\ myeventlist[a].t;
+
+\ \ \ \ \ \ \ \ switch\ (tag)\ \{
+\ \ \ \ \ \ \ \ case\ 0:
+\ \ \ \ \ \ \ \ \ \ \ \ location[xi][yi].h\ =\ myeventlist[a].oldsite.h;
+\ \ \ \ \ \ \ \ \ \ \ \ if\ (myeventlist[a].newsite.h\ !=\ -{}1)
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ location[xf][yf].h\ =\ myeventlist[a].newsite.h;
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ case\ 1:
+\ \ \ \ \ \ \ \ \ \ \ \ location[xi][yi].h\ =\ location[xi][yi].h\ +\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ location[xf][yf].h\ =\ location[xf][yf].h\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ case\ 2:
+\ \ \ \ \ \ location[xi][yi].h\ =\ location[xi][yi].h\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ ndep-{}-{};
+\ \ \ \ \ \ \ \ \ \ \ \ break;
+\ \ \ \ \ \ \ \ \ \ \
+\ \ \ \ \ \ \ \ default:
+\ \ \ \ \ \ \ \ \ \ \ \ cout<{}<{}"{}Error\ in\ tag"{}<{}<{}endl;
+\ \ \ \ \ \ \ \ \ \ \ \ return;\ \textsl{/*\ SHOULDN'T\ THIS\ EXIT()?!?\ */}
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ a-{}-{};
+\ \ \ \ \}
+\}
+
+void\ Lattice::randgen()
+\{
+\ \ int\ i;
+\ \ for(i=0;i<{}10000;i++)
+\ \ \{
+\ \ \ \ ranlist[i]=((float)rand()/(float)RAND\underline\ MAX);
+\ \ \}
+\}
+void\ Lattice::updateBuffer(int\ iranflag)\ \{
+\ \ \ \ int\ a,\ b,\ am1,\ x,\ y,\ xi,\ ii,\ abflag,\ mflag,\ sdir,\ dir,\ aid,\ i,\ j,\ hij,\ hxy,tag;
+\ \ \ \ double\ newTrate,\ oldTrate;
+\ \ \ \ point\ oldsite,newsite;
+\ \ \
+\ \ \ \ i=sortbdyevent[nupdate].oldsite.pos.x;
+\ \ \ \ j=sortbdyevent[nupdate].oldsite.pos.y;
+\ \ \
+\ \ \ \ x=sortbdyevent[nupdate].newsite.pos.x;
+\ \ \ \ y=sortbdyevent[nupdate].newsite.pos.y;
+\ \ \
+\ \ \ \ tag=sortbdyevent[nupdate].tag;
+
+\ \ \ \ time\ =\ sortbdyevent[nupdate].t;
+\ \
+\ \ if\ (redoflag\ ==\ 0)\ \{
+\ \ \ \ \ \ \ \ return;
+\ \ \}
+\ \ \ \textsl{//cout<{}<{}"{}update\ buffer!"{}<{}<{}endl;}
+\ \ \ \textsl{//cout<{}<{}"{}x="{}<{}<{}x<{}<{}"{}\ y="{}<{}<{}nupdate<{}<{}endl;}
+\ \ \ \textsl{//cout<{}<{}"{}i="{}<{}<{}x<{}<{}"{}\ j="{}<{}<{}y<{}<{}endl;}
+\ \ \
+\ \ \ \
+\ \ \
+\ \ \ \ if(tag==diffevent)
+\ \ \{
+\ \ \ \ \ \ \ \ location[i][j].h\ =\ sortbdyevent[nupdate].oldsite.h;
+\ \ \ \ \ \ \ \ upnbhd(sortbdyevent[nupdate].oldsite);
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ else
+\ \ \{
+\ \ location[x][y].h\ =\ sortbdyevent[nupdate].newsite.h;
+\ \ \ \ \ \ \ \ upnbhd(sortbdyevent[nupdate].newsite);
+\ \ \}\ \
+
+\ \textsl{/*\ add\ this\ event\ in\ my\ event\ list\ */}
+\ \ \ \ myeventlist[nevent].oldsite=location[x][y];
+\ \ \ \ myeventlist[nevent].newsite=location[i][j];
+\ \ \ \ myeventlist[nevent].ranseq=iran\ -{}\ iranflag;
+\ \ \ \ myeventlist[nevent].t=time;
+\ \ \ \ myeventlist[nevent].tag=0;
+\ \
+\ \ \ \ nupdate++;
+\ \ \ \ nevent++;
+\}
+
+void\ Lattice::sorting\underline\ nbevent()\ \{
+\ \ \ \ int\ a,\ b,\ nxcv,\ i,\ j,\ caselabel,\ dir,\ idn;
+\ \ \ \ double\ t;
+\ \ \ \ boundaryevent\ swap;
+
+\ \ \ \ if\ (bdycountrec[left]\ >{}\ 0\ \&\&\ bdycountrec[right]\ ==\ 0)
+\ \ \ \ \ \ \ \ caselabel\ =\ 0;
+\ \ \ \ if\ (bdycountrec[left]\ ==\ 0\ \&\&\ bdycountrec[right]\ >{}\ 0)
+\ \ \ \ \ \ \ \ caselabel\ =\ 1;
+\ \ \ \ if\ (bdycountrec[left]\ >{}\ 0\ \&\&\ bdycountrec[right]\ >{}\ 0)
+\ \ \ \ \ \ \ \ caselabel\ =\ 2;
+
+\ \ \ \ switch(caselabel)\ \{
+\ \ \ \ case\ 0:
+\ \ \ \ \ \ \ \ for\ (a=0;\ a\ <{}\ bdycountrec[left];\ a++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[a]=\ bdyeventrec[0][a];
+\ \ \ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ tnbdyevent\ =\ bdycountrec[0];
+\ \ \ \ \ \ \ \ break;
+\ \ \ \ case\ 1:
+\ \ \ \ \ \ \ \ for\ (a=0;\ a\ <{}\ bdycountrec[1];\ a++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[a]\ =\ bdyeventrec[1][a];
+\ \ \ \ \}
+\ \ \ \ \ \ \ \ tnbdyevent\ =\ bdycountrec[1];
+\ \ \ \ \ \ \ \ break;
+\ \ \ \ case\ 2:
+\ \ \ \ \ \ \ \ tnbdyevent\ =\ bdycountrec[0]\ +\ bdycountrec[1];
+\ \ \ \ \ \ \ \ nxcv\ =\ 0;
+\ \ \ \ \ \ \ \ \textsl{/*\ sort\ the\ events\ in\ early\ time\ order\ */}
+\ \ \ \ \ \ \ \ for\ (a\ =\ 0;\ a\ <{}\ bdycountrec[0];\ a++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[nxcv]=\ bdyeventrec[0][a];
+\ \ \ \ \ \ \ \ \ \ \ \ nxcv++;
+\ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ for\ (a=0;\ a\ <{}\ bdycountrec[1];\ a++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[nxcv]=\ bdyeventrec[1][a];
+\ \ \ \ \ \ \ \ \ \ \ \ nxcv++;
+\ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ for\ (j=1;\ j\ <{}\ tnbdyevent;\ j++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ swap=sortbdyevent[j];
+\ \ \ \ \ \ \ \ \ \ \ \ i\ =\ j\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ \ \ while\ (i\ >{}=\ 0\ \&\&\ sortbdyevent[i].t\ >{}\ t)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[i+1]\ =\ sortbdyevent[i];
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i-{}-{};
+\ \ \ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \ \ \ \ sortbdyevent[i+1]=swap;
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ break;
+\ \ \ \ default:
+\ \ \ \ \ \ \ \ break;
+\ \ \ \ \}
+\}
+
+ }
+\normalfont\normalsize
+

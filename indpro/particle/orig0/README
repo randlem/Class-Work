@@ -1,0 +1,3 @@
+ORIGINAL IMPLEMENTATION
+
+This implementation was the first version that was satisfactory.  However due to it's reliance upon pointers it was unsuitable for use with MPI.  It's reliance upon pointers was rectified in a new version.

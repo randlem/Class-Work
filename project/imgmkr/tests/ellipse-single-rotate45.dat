@@ -1,0 +1,6 @@
+ellipse-single-rotate45.png 256 256
+color 0 0 0
+fill
+color 255 0 0
+ellipse 128 128 64 32 45
+end

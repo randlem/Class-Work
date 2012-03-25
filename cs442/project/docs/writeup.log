@@ -1,0 +1,301 @@
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2005.3.13)  16 MAY 2005 05:00
+**writeup.tex
+(./writeup.tex{/usr/share/texmf/pdftex/config/pdftex.cfg}
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/fancyheadings/fancyheadings.sty
+\headrulewidth=\dimen103
+\footrulewidth=\dimen104
+\plainheadrulewidth=\dimen105
+\plainfootrulewidth=\dimen106
+\headwidth=\dimen107
+\footruleskip=\dimen108
+)
+(/usr/share/texmf/tex/generic/babel/babel.sty
+Package: babel 2001/03/01 v3.7h The Babel package
+
+(/usr/share/texmf/tex/generic/babel/english.ldf
+Language: english 2001/04/15 v3.3l English support from the babel system
+
+(/usr/share/texmf/tex/generic/babel/babel.def
+File: babel.def 2001/03/01 v3.7h Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen109
+)
+\l@canadian = a dialect from \language\l@english 
+))
+(/usr/share/texmf/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/share/texmf/tex/latex/misc/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks14
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+\tempboxa=\box26
+ (./writeup.aux)
+\openout1 = `writeup.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 55.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 55
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+ [1
+
+{/usr/share/texmf/dvips/config/pdftex.map}]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 87.
+ [1
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
+ (./writeup.toc
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+) [1
+
+])
+\tf@toc=\write3
+\openout3 = `writeup.toc'.
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[2]
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 96.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[3
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[4]
+Chapter 2.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[5
+
+]
+Chapter 3.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[6
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[7]
+Chapter 4.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[8
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[9]
+Chapter 5.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[10
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[11]
+Overfull \hbox (1.24655pt too wide) in paragraph at lines 169--170
+/ptmr7t@12.0pt/work. Also, fur-ther re-search would need to be done to adapt th
+e Au-tomake/Autoconf
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[12]
+Chapter 6.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[13
+
+]
+Appendix A.
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--178
+
+ []
+
+
+Overfull \hbox (85.13983pt too wide) in paragraph at lines 193--193
+[]                /pcrr7tn@12.0pt/<xs:element name="var" type="xs:string" maxOc
+curs="unbounded"/>[] 
+ []
+
+
+Overfull \hbox (103.49977pt too wide) in paragraph at lines 199--199
+[]                /pcrr7tn@12.0pt/<xs:element name="action" type="xs:string" ma
+xOccurs="unbounded"/>[] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[14
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[15]
+Appendix B.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[16
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[17] (./writeup.aux) ) 
+Here is how much of TeX's memory you used:
+ 1155 strings out of 95437
+ 13438 string characters out of 1190233
+ 58274 words of memory out of 1000001
+ 4165 multiletter control sequences out of 10000+50000
+ 25473 words of font info for 57 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 26i,10n,24p,1057b,486s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 73 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 0 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/dvips/tetex/aae443f0.enc}</usr/share/te
+xmf/fonts/type1/bluesky/cm/cmmi10.pfb>{/usr/share/texmf/dvips/psnfss/8r.enc}</u
+sr/share/texmf/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on writeup.pdf (19 pages, 49806 bytes).

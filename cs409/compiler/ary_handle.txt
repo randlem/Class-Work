@@ -1,0 +1,15 @@
+; a +
+
+LD()
+
+sips.emit(OPlw,REG(target),REGgp,(symbol)->getAddress());
+
+; a[i] +
+
+REGgp + a->getAddress + (4 * i)
+
+load value of i REG(interm)
+shift REG(interm) left by 2
+add contents of REG(interm) + REGgp
+
+sips.emit(OPlw,REG(target),REG(interm),(symbol)->getAddress());

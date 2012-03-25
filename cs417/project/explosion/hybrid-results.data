@@ -1,0 +1,94 @@
+particle_problem_hybrid.c(140) : (col. 3) remark: OpenMP DEFINED LOOP WAS PARALLELIZED.
+particle_problem_hybrid.c(138) : (col. 2) remark: OpenMP DEFINED REGION WAS PARALLELIZED.
+particle_problem_hybrid.c(244) : (col. 4) remark: OpenMP DEFINED LOOP WAS PARALLELIZED.
+particle_problem_hybrid.c(242) : (col. 3) remark: OpenMP DEFINED REGION WAS PARALLELIZED.
+3 threads --------------------
+
+real	0m5.237s
+user	0m0.033s
+sys	0m0.031s
+-------------------------------
+5 threads --------------------
+
+real	0m3.757s
+user	0m0.033s
+sys	0m0.023s
+-------------------------------
+7 threads --------------------
+
+real	0m3.407s
+user	0m0.027s
+sys	0m0.022s
+-------------------------------
+9 threads --------------------
+
+real	0m3.926s
+user	0m0.031s
+sys	0m0.021s
+-------------------------------
+11 threads --------------------
+
+real	0m3.173s
+user	0m0.033s
+sys	0m0.021s
+-------------------------------
+13 threads --------------------
+
+real	0m2.365s
+user	0m0.031s
+sys	0m0.013s
+-------------------------------
+15 threads --------------------
+
+real	0m2.359s
+user	0m0.030s
+sys	0m0.018s
+-------------------------------
+17 threads --------------------
+
+real	0m2.136s
+user	0m0.031s
+sys	0m0.021s
+-------------------------------
+19 threads --------------------
+
+real	0m2.086s
+user	0m0.034s
+sys	0m0.015s
+-------------------------------
+21 threads --------------------
+
+real	0m2.078s
+user	0m0.029s
+sys	0m0.021s
+-------------------------------
+23 threads --------------------
+
+real	0m2.342s
+user	0m0.037s
+sys	0m0.021s
+-------------------------------
+25 threads --------------------
+
+real	0m2.012s
+user	0m0.031s
+sys	0m0.021s
+-------------------------------
+27 threads --------------------
+
+real	0m1.954s
+user	0m0.031s
+sys	0m0.015s
+-------------------------------
+29 threads --------------------
+
+real	0m2.010s
+user	0m0.030s
+sys	0m0.025s
+-------------------------------
+31 threads --------------------
+
+real	0m8.084s
+user	0m0.033s
+sys	0m0.031s
+-------------------------------

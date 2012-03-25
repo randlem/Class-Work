@@ -1,0 +1,3 @@
+program testintary;
+	int largest = 0, i, j, listLenght, list[50] = ( 'x', 'X', 20, 020, 0x20), value;
+endprogram;

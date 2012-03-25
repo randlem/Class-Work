@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="simulation">
+<xs:complexType>
+<xs:sequence>
+	<xs:element name="head">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="data" type="xs:string"/>
+		</xs:sequence>
+		<xs:element name="object" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="var" type="xs:string" maxOccurs="unbounded"/>
+			</xs:complexType>
+		</xs:element>
+		<xs:element name="eventType" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:element name="name" type="xs:string"/>
+				<xs:element name="action" type="xs:string" maxOccurs="unbounded"/>
+			</xs:complexType>
+		</xs:element>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="trace">
+	<xs:complexType>
+		<xs:element name="event" maxOccurs="unbounded">		
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="time" type="xs:decimal"/>
+				<xs:element name="target" type="xs:string"/>
+			</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:complexType>
+	</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

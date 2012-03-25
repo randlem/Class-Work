@@ -1,0 +1,144 @@
+Mark Randles
+CS490
+Homework #2
+M W F 10:30-11:20A
+
+	There are many aspects to writing a program for use on a
+message passing (MP) based parallel system.  The programmer must be able 
+to use and understand a variety of things before he or she is able to
+write code for use on one of these systems.  Amoung the topics the
+programmer must understand are: lanuguages, process creation (OS and
+otherwise), and inter-process communications (the message passing
+interface on our reference system).
+
+	The languages avalable to a programmer on a MP-based parallel
+system are numerous.  The languages avaliable fall into three
+categories: existing, established languages using high-level libraries;
+existing languages extended with extra keywords/types/etc. for MP; or a
+special language designed from the get-go with MP and parallel
+programming in mind.  These options are simmiliar and very different in
+may ways.  Each option however has it's own unique advantages and may be
+the best fit for the task at hand.
+
+	The most time intensive and overall difficult option is to roll
+your own language.  Apart from the overall difficulty of creating your
+own language sequential or otherwise, you have the difficulty of making
+the language useful and helpful to the programming process.  In some
+ways a specialized language is very helpful.  It allows the system
+designers to hide the messy bits of the MP interface and other parallel
+bits below the surface hidden from the user of the language.  By
+simplifing the writing of the program you can get more use out of the
+system.  However with rolling your own language there are some severe
+drawbacks.  First and foremost is the loss of know optimizations that
+exist in other languages either at the programmer or compiler level.
+Over time this will become less of a problem as new optimizations will
+be implemented or existing optimizations will be found to work with the
+new language, but initially this will drastically affect the performance
+of the new language.
+
+	The inbetween option is to extend a existing language with new
+keywords and native datatypes.  The most critical drawback to this
+approach is that some existing languages might be very ackward to
+extend or the extension might become very messy and effect the flow of
+the language.  However an extended sequential language introduces it's
+own problem in that you now have a very specific compiler needed to
+compile examples of the new language.  This become a problem when you
+want your code to be portable to be used on a multitude of different
+systems.  Each system must then get it's own compiler and hope they all
+conform to the same standard for the new extensions. However you do gain
+some benefits over a custom rolled language.  The best benefit is that
+people already know the base of the language, they only must learn the
+new extensions and how to use them in their programming.
+
+	The third option when selecting a language is to use a
+high-level library with an existing language.  The best feature of this
+option is that the library is portable.  You would only need to compile
+it for use on each system, assuming that each system has compatable
+compilers.  Also this option could allow for the developer to use which
+ever language they preferred as libraries can usually be interfaced
+with multiple languages.  One drawback to this option is that the code
+in the library (especially if it is ment to be portable) must be mostly
+generic.  If the code becomes too platform specific you lose the
+portability and most of the usefulness of using a library.
+
+	Another topic, related to the language used, is the tools that
+are avaliable to the programmer.  The programmer must have useful tools
+for debugging, process monitering, etc. in order to create a efficient
+and useful program.  The types of tools needed by the programmer fall
+into 3 categories.  The first category is that of network usage and
+monitering.  The programmer should be able to see where the most
+bandwidth is being used, what it's being used on, who is sending it, who
+is recieving it, etc.  The second category is process monitering.  To
+debug some conditions that may arise in a parallel program it will be
+important for the programmer to monitor what processes are being
+created, what they are doing, where are they running, what their state
+is, when did the process terminate, who created the process, and so on.
+The thrid category is debugging tools.  A parallel program requires a
+special type of debugger and support tools.  The prievious two
+categories also provide some important debugging information.  The
+situation may arise that the tool needed by the programmer isn't
+avaliable or hasn't been created.  Should that situation arise the
+programmer must be as resourceful as possible, by either writing a tool
+that does the job or making due with what's avaliable.
+
+	Inter-process communication is the core of MP parallel 
+programming.  The programmer must put conciderable though into 
+how the processes must communicate and what they need to say to 
+one another.  Since we are using a message passing based cluster 
+as our reference system we would assume that all inter-process 
+communication is handled by a message passing interface (MPI).
+
+	There are two basic commands that all MPIs must have: 
+send and recieve.  Usually a MPI has a broadcast or multicast and 
+a wait command, however send and recieve are the work horses of 
+the MPI.  Send sends a message to a node, however the other node 
+must be recieveing with the recieve command.  Recieve blocks 
+execution (usually) until a message is recieved.  Broadcast (or 
+multicast) sends a message to a group of nodes.  Wait always 
+block program execution till a message is recieved, usually 
+syncronizing the processes.
+
+	One problem with inter-process communication with MPI is 
+that since you're using a hardware network (usually Ethernet) you 
+have to worry about the avaliable bandwidth of the hardware.  The 
+more messages you generate the more bandwidth you use up till you 
+saturate the network and network latency kills your performance.  
+
+	Another problem with hardware networks is that 
+transmission errors can occur.  Buffering allows us to resend 
+messages that get corrupted in transmission.  It also allows us 
+to queue up messages to be processed later.  Buffering can also 
+guarantee that every message that needs sent gets sent.
+
+	The last subject a programmer must address while programming
+is related to the operating system.  If the process creation is 
+local, such as a parent spawning a child process to handle some 
+subsystem, that is handled by the operating system.  There are 
+two types of process creation: static and dynamic.  Static 
+process creation is where the program creates the same number of 
+threads despite differing runtime conditions.  Dynamic process 
+creation is where the program spawns a varying number of threads 
+based on current runtime conditions.
+
+	Static process creation usually is a bad idea in a 
+parallel program.  With static creation you only get a set amount 
+of threads regardless of the number of nodes or the amount of 
+data to be processed.  In some specific situations static process 
+creation is a good thing, but for the most part dynamic creation 
+is the better solution.  Dynamic creation gives you a varing 
+number of threads so you can utilitize all the nodes avaliable to 
+you and partition the data into smaller chunks.
+
+	However with each type of process creation there are some 
+associated problems.  One of the biggest problems is determining 
+if a process has died either naturally or prematurly.  Usually if 
+a thread is going to die naturally it would signal it's parent, 
+but a network can be unreliable and the message could get lost in 
+the network noise.  However if a thread dies prematurly it would 
+never get the chance to signal it's parent that it's going to 
+die, and the parent would never know.
+
+	There are many other smaller factors that a programmer 
+must worry about while programming on a parallel system.  The 
+above topics are usually the biggest and most important to the 
+user of the system and the effectiveness of the computer.

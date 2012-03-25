@@ -1,0 +1,121 @@
+g++ -o lab2 lab2.cpp
+./lab2 2 2 2 2
+P1: Is sending 731 to P0.
+Parent created child process with pid 3012
+Parent created child process with pid 3013
+P2: Is sending 826 to P0.
+P3: Is sending 121 to P1.
+Parent created child process with pid 3014
+P1: The number 121 is odd.
+P1: Is sending 951 to P3.
+P0: Is sending 871 to P3.
+P3: The number 871 is odd.
+P3: Is sending 387 to P0.
+P0: The number 826 is even.
+P0: Is sending 948 to P2.
+P2: The number 948 is even.
+P2: Is sending 345 to P0.
+P0: The number 345 is odd.
+P0: The number 731 is odd.
+P1: Is done
+P0: The number 387 is odd.
+P3: Is done
+P0: Sent all messages.
+./lab2 10 2 2 2
+P1: Is sending 731 to P0.
+Parent created child process with pid 3016
+P2: Is sending 826 to P0.
+Parent created child process with pid 3017
+P3: Is sending 121 to P1.
+Parent created child process with pid 3018
+P1: The number 121 is odd.
+P1: Is sending 951 to P3.
+P0: Is sending 871 to P3.
+P3: The number 871 is odd.
+P3: Is sending 387 to P0.
+P0: The number 826 is even.
+P0: Is sending 948 to P2.
+P2: The number 948 is even.
+P2: Is sending 345 to P0.
+P0: The number 345 is odd.
+P0: Is sending 27 to P2.
+P2: The number 27 is odd.
+P2: Is done
+P0: The number 387 is odd.
+P0: Is sending 78 to P3.
+P3: The number 78 is even.
+P3: Is done
+P0: The number 731 is odd.
+P0: Is sending 122 to P1.
+P1: The number 122 is even.
+P1: Is done
+P0: Is sending 483 to P1.
+P0: Is sending 93 to P1.
+P0: Is sending 840 to P2.
+P0: Is sending 872 to P1.
+P0: Is sending 121 to P2.
+P0: Sent all messages.
+./lab2 2 10 10 10
+P1: Is sending 731 to P0.
+Parent created child process with pid 3020
+P2: Is sending 826 to P0.
+Parent created child process with pid 3021
+P3: Is sending 121 to P1.
+Parent created child process with pid 3022
+P1: The number 121 is odd.
+P1: Is sending 951 to P3.
+P0: Is sending 871 to P3.
+P3: The number 871 is odd.
+P3: Is sending 387 to P0.
+P0: The number 826 is even.
+P0: Is sending 948 to P2.
+P2: The number 948 is even.
+P2: Is sending 345 to P0.
+P0: The number 345 is odd.
+P2: Is sending 777 to P1.
+P0: The number 731 is odd.
+P1: Is sending 520 to P1.
+P0: The number 387 is odd.
+P3: Is sending 895 to P3.
+P1: The number 777 is odd.
+P1: Is sending 635 to P2.
+P2: Is sending 747 to P2.
+P3: The number 951 is odd.
+P3: Is sending 836 to P3.
+P1: Is sending 53 to P2.
+P3: The number 895 is odd.
+P3: Is sending 105 to P2.
+P3: Is sending 878 to P2.
+P3: The number 836 is even.
+P3: Is sending 48 to P2.
+P3: Is sending 454 to P2.
+P2: The number 105 is odd.
+P2: Is sending 123 to P3.
+P3: Is sending 570 to P0.
+P2: The number 878 is even.
+P2: Is sending 11 to P1.
+P3: Is sending 181 to P3.
+P1: The number 520 is even.
+P1: Is sending 83 to P0.
+P1: Is sending 495 to P0.
+P2: The number 635 is odd.
+P2: Is sending 593 to P0.
+P1: Is sending 889 to P2.
+P2: The number 53 is odd.
+P2: Is sending 423 to P3.
+P1: Is sending 76 to P2.
+P0: The number 83 is odd.
+P1: Is sending 32 to P0.
+P2: The number 48 is even.
+P2: Is sending 798 to P2.
+P3: Is done
+P2: The number 454 is even.
+P2: Is sending 33 to P2.
+P0: The number 570 is even.
+P0: The number 495 is odd.
+P1: Is done
+P2: The number 747 is odd.
+P2: Is done
+P0: The number 32 is even.
+P0: The number 593 is odd.
+P0: Sent all messages.

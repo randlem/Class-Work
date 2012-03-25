@@ -1,0 +1,28 @@
+/* Test forward references */
+program test10;
+int a = 1, b = 2;
+
+proc one;
+   a + 1 -> a;
+   call two;
+   call three;
+endproc;
+
+proc two;
+   write a;
+   call three;
+endproc;
+
+proc three;
+   a + 2 -> a;
+endproc;
+
+/* Main program */
+
+call one;
+write a;
+call three;
+write a;
+
+endprogram
+

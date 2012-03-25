@@ -1,0 +1,9 @@
+ellipse-single-0-2-0.80-0.1.png 512 512
+perterb 2
+noisy 0.80
+color 0 0 0
+fill
+color 255 255 255
+ellipse 256 256 128 64 0
+background 0.1
+end

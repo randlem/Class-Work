@@ -1,0 +1,33 @@
+TODO
+
+-- Convert the SimPlus library to use C++ throw/catch exceptions to allow for more user control over the error handling procedure.  This would most likly require siginficant work to not only develop a robust exception handler, but to modify the siginificant code base to use the new system.
+
+-- Get the CalendarQueue to work.
+
+-- Get the PossionDist to work correctly.
+
+-- Add more demos.
+
+-- Incorporate the LogFile class into the library, so that each simulation creates a log file, and has some sort of useful logging feature.
+
+-- Extend the SampST library to do more robust sample reporting, ANOVA, qurtles, mode, etc. Add a box plotter to the class for data output
+
+-- Add more distributions to the engine.
+
+-- Create a more robust factory base class to speed later development.
+
+-- Add the ability for the simulation to create a XML trace file for a to-be-developed visulation engine and trace debugger.  Should use the LogFile class for output.
+
+-- Move over the GNU autoconf and automake tools.  This would more then likely require a reconfigure of the directory structure.
+
+-- Performance analysis of chokepoints in the code to both identify problem areas and to develop better code.
+
+-- Better error checking.
+
+-- Implement the SimPlus::cancelEventID() function.
+
+-- Remove null code paths.
+
+-- Create unit tests for all the various classes.
+
+-- Extend the Image class to not only include doing transparency, but rendering based on vector paths and order (for layering/transparency).  This will take some serious work, but should facilitate using SVG for default output rather then the current PNG which though suppored by nearly all image readers requires an outside library for graphic output.  The tradeoff with using SVG is there will have to be some sort of post-simulation conversion done if no SVG reader is avaliable.  Best added advantage of SVG is it can do text output right in the format, anything else and it's much, much harder.

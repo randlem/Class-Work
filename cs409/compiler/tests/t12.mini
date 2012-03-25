@@ -1,0 +1,8 @@
+/*  A program with a subscript for non-array */
+program test12;
+int i=3, j;
+
+    j[i] -> i;
+endprogram
+
+

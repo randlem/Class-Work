@@ -1,0 +1,115 @@
+{\ttfamily \raggedright \footnotesize
+\#include\ <{}vector>{}
+using\ std::vector;
+
+\#include\ <{}fstream>{}
+using\ std::fstream;
+using\ std::endl;
+
+\#include\ <{}iostream>{}
+using\ std::cout;
+
+\#include\ <{}mpi.h>{}
+
+\#include\ "{}latprim.h"{}
+\#include\ "{}latconst.h"{}
+\#include\ "{}exception.h"{}
+\#include\ "{}event.h"{}
+
+\#ifndef MPIWRAPPER\underline\ H
+\#define MPIWRAPPER\underline\ H
+
+\#define LEFT(a,b)\ (((a\ -{}\ 1)\ >{}=\ 0)\ ?\ (a\ -{}\ 1)\ :\ -{}1)
+\#define RIGHT(a,b)\ (((a\ +\ 1)\ <{}\ b)\ ?\ (a\ +\ 1)\ :\ -{}1)
+\#define DIR(a)\ ((a\ ==\ LEFT)\ ?\ left\ :\ right)
+const\ int\ BUFFER\underline\ SIZE\underline\ COUNT\ =\ 1024*1024*10;\ \textsl{//\ 10MB\ buffer\ (overkill,\ baby)}
+const\ int\ ROOT\underline\ RANK\ =\ 0;
+const\ int\ NUM\underline\ NEIGHBORS\ =\ 2;
+
+const\ int\ TAG\underline\ MESSAGE\ =\ 0;
+const\ int\ TAG\underline\ ANTI\underline\ MESSAGE\ =\ 1;
+
+enum\ Direction\ \{LEFT,RIGHT\};
+
+typedef\ struct\ \{
+\ \ site\ oldSite;
+\ \ site\ newSite;
+\ \ double\ time;
+\ \ EventType\ type;
+\}\ message;
+
+class\ MPIWrapper\ \{
+public:
+\ \ MPIWrapper();
+\ \ \textasciitilde MPIWrapper();
+
+\ \ bool\ init(int*,\ char***);
+\ \ bool\ shutdown();
+
+\ \ bool\ sendMessage(message*\ ,\ Direction);
+\ \ bool\ recvMessages(vector<{}message>{}*);
+\ \ bool\ isMessage();
+
+\ \ bool\ sendAntiMessage(message*\ ,\ Direction);
+\ \ bool\ recvAntiMessages(vector<{}message>{}*);
+\ \ bool\ isAntiMessage();
+
+\ \ float\ allReduceFloat(float,\ MPI\underline\ Op);
+\ \ double\ allReduceDouble(double,\ MPI\underline\ Op);
+\ \ int\ allReduceInt(int,\ MPI\underline\ Op);
+
+\ \ void\ barrier();
+\ \ double\ wallTime();
+
+\ \ bool\ isRoot();
+
+\ \ int\ getRank()\ \{
+\ \ \ \ return(rank);
+\ \ \}
+
+\ \ int\ getNodeCount()\ \{
+\ \ \ \ return(nodeCount);
+\ \ \}
+
+\ \ void\ printStats(fstream\&\ file)\ \{
+\ \ \ \ file\ <{}<{}\ "{}-{}-{}-{}\ MPI\ STATS\ -{}-{}-{}"{}\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ \ "{}rank\ =\ "{}\ <{}<{}\ rank\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}nodeCount\ =\ "{}\ <{}<{}\ nodeCount\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}left\ =\ "{}\ <{}<{}\ left\ <{}<{}\ "{}\ right\ =\ "{}\ <{}<{}\ right\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}Send\ Messages\ =\ "{}\ <{}<{}\ countSend\ <{}<{}\ "{}\ Recieved\ Messages\ =\ "{}\ <{}<{}\ countRecv\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}Send\ Anti-{}Messages\ =\ "{}\ <{}<{}\ countSendAnti\ <{}<{}\ "{}\ Recieved\ Anti-{}Messages\ =\ "{}\ <{}<{}\ countRecvAnti\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}Total\ Send\ =\ "{}\ <{}<{}\ (countSend\ +\ countSendAnti)\ <{}<{}\ "{}\ Total\ Recv\ =\ "{}\ <{}<{}\ (countRecv\ +\ countRecvAnti)\ <{}<{}\ endl;
+\ \ \ \ file\ <{}<{}\ "{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}-{}"{}\ <{}<{}\ endl\ <{}<{}\ endl;
+\ \ \ \ file.flush();
+\ \ \}
+
+private:
+\ \ int\ rank;
+\ \ int\ nodeCount;
+\ \ bool\ isInit;
+
+\ \ char*\ buffer;
+\ \ int\ bufferSize;
+
+\ \ MPI\underline\ Datatype\ typeSite;
+\ \ MPI\underline\ Datatype\ typePoint;
+\ \ MPI\underline\ Datatype\ typeMessage;
+
+\ \ int\ left;
+\ \ int\ right;
+\ \ message\ m;
+
+\ \ MPI\underline\ Status\ status;
+\ \ int\ flag;
+
+\ \ int\ countSend;
+\ \ int\ countRecv;
+\ \ int\ countSendAnti;
+\ \ int\ countRecvAnti;
+\};
+
+\#endif
+
+ }
+\normalfont\normalsize
+

@@ -1,0 +1,32 @@
+{\ttfamily \raggedright \small
+\#ifndef LATCONST\underline\ H\\
+\#define LATCONST\underline\ H\\
+\ \\
+\textsl{//\ lattice\ dimensions\ and\ area}\\
+\textsl{//const\ int\ DIM\underline\ X\ =\ 4096;}\\
+\textsl{//const\ int\ DIM\underline\ X\ =\ 2048;}\\
+const\ int\ DIM\underline\ X\ =\ 1024;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ the\ total\ X\ dimension\ of\ the\ lattice}\\
+\textsl{//const\ int\ DIM\underline\ X\ =\ 512;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ the\ total\ X\ dimension\ of\ the\ lattice}\\
+\textsl{//const\ int\ DIM\underline\ Y\ =\ 1024;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ the\ total\ Y\ dimension\ of\ the\ lattice}\\
+const\ int\ DIM\underline\ Y\ =\ 256;\\
+const\ int\ GHOST\ =\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ the\ size\ of\ the\ ghost\ region}\\
+const\ int\ LEFT\underline\ X\underline\ BOUNDRY\ =\ GHOST;\ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ the\ left\ boundry}\\
+const\ int\ RIGHT\underline\ X\underline\ BOUNDRY\ =\ DIM\underline\ X\ -{}\ GHOST\ -{}\ 1;\ \ \ \textsl{//\ the\ right\ boundry}\\
+const\ int\ SIZE\ =\ DIM\underline\ X\ $\ast$\ DIM\underline\ Y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ the\ area\ (number)\ of\ sites\ in\ the\ lattice}\\
+\ \\
+\textsl{//\ enviroment\ attributes}\\
+const\ int\ NUM\underline\ DIR\ =\ 8;\ \textsl{//\ number\ of\ directions}\\
+\ \\
+\textsl{//\ minimum\ local\ time}\\
+const\ double\ MINIMUM\underline\ TIME\ =\ 0.001;\\
+\ \\
+\textsl{//\ random\ number\ vars}\\
+const\ int\ NUMBER\underline\ START\ =\ 10000;\ \textsl{//\ the\ number\ of\ random\ numbers\ to\ start\ with}\\
+const\ int\ SEED\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ the\ initial\ seed}\\
+\ \\
+\#endif\\
+\ \\
+\ \\
+ }
+\normalfont\normalsize
+

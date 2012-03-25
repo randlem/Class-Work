@@ -1,0 +1,249 @@
+./lab3 10 10
+P0: Is sending 56 to P1.
+P1: The number 56 is even.
+P1: Is sending 131 to P0.
+P0: The number 131 is odd.
+P0: Is sending 308 to P1.
+P1: The number 308 is even.
+P1: Is sending 646 to P0.
+P0: The number 646 is even.
+P0: Is sending 313 to P1.
+P1: The number 313 is odd.
+P1: Is sending 73 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 73 is odd.
+P0: Is sending 356 to P1.
+P1: The number 356 is even.
+P1: Is sending 23 to P0.
+P0: The number 23 is odd.
+P0: Is sending 220 to P1.
+P1: The number 220 is even.
+P1: Is sending 434 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 434 is even.
+P0: Is sending 244 to P1.
+P1: The number 244 is even.
+P1: Is sending 590 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 590 is even.
+P0: Is sending 300 to P1.
+P1: The number 300 is even.
+P1: Is sending 624 to P0.
+P0: The number 624 is even.
+P0: Is sending 852 to P1.
+P1: The number 852 is even.
+P1: Is sending 233 to P0.
+P0: The number 233 is odd.
+P0: Is sending 353 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P1: Recvd an invalid packet sending back NACK!
+P1: Recvd an invalid packet sending back NACK!
+P1: The number 353 is odd.
+P1: Is sending 765 to P0.
+P0: The number 765 is odd.
+P0: Is sending 571 to P1.
+P1: The number 571 is odd.
+P1: Is sending 833 to P0.
+P0: The number 833 is odd.
+P0: Child done!
+P1: Recvd die frame, exiting!
+Stats for Process 1:
+	SENT:
+		Data Packets: 13
+		ACK Packets: 1
+		NACK Packets: 3
+	RECV:
+		Data Packets: 14
+		ACK Packets: 1
+		NACK Packets: 3
+Stats for Process 0:
+	SENT:
+		Data Packets: 14
+		ACK Packets: 1
+		NACK Packets: 3
+	RECV:
+		Data Packets: 14
+		ACK Packets: 1
+		NACK Packets: 3
+./lab3 10 20
+P0: Is sending 417 to P1.
+P1: The number 417 is odd.
+P1: Is sending 242 to P0.
+P0: The number 242 is even.
+P0: Is sending 138 to P1.
+P1: The number 138 is even.
+P1: Is sending 552 to P0.
+P0: The number 552 is even.
+P0: Is sending 259 to P1.
+P1: The number 259 is odd.
+P1: Is sending 456 to P0.
+P0: The number 456 is even.
+P0: Is sending 150 to P1.
+P1: The number 150 is even.
+P1: Is sending 330 to P0.
+P0: The number 330 is even.
+P0: Is sending 1 to P1.
+P1: The number 1 is odd.
+P1: Is sending 576 to P0.
+P0: The number 576 is even.
+P0: Is sending 88 to P1.
+P1: The number 88 is even.
+P1: Is sending 1000 to P0.
+P0: The number 1000 is even.
+P0: Is sending 26 to P1.
+P1: The number 26 is even.
+P1: Is sending 251 to P0.
+P0: The number 251 is odd.
+P0: Is sending 497 to P1.
+P1: The number 497 is odd.
+P1: Is sending 723 to P0.
+P0: The number 723 is odd.
+P0: Is sending 317 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P1: The number 317 is odd.
+P1: Is sending 99 to P0.
+P0: The number 99 is odd.
+P0: Is sending 261 to P1.
+P1: The number 261 is odd.
+P1: Is sending 214 to P0.
+P0: The number 214 is even.
+P1: Is sending 914 to P0.
+P0: The number 914 is even.
+P1: Is sending 334 to P0.
+P0: The number 334 is even.
+P1: Is sending 252 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 252 is even.
+P1: Is sending 958 to P0.
+P0: The number 958 is even.
+P1: Is sending 650 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P1: Recvd an invalid packet sending back NACK!
+P1: Is sending 518 to P0.
+P0: The number 518 is even.
+P1: Is sending 565 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 565 is odd.
+P1: Is sending 392 to P0.
+P0: The number 392 is even.
+P1: Recvd an invalid packet sending back NACK!
+P1: Is sending 674 to P0.
+P0: The number 674 is even.
+P1: Is sending 170 to P0.
+P0: The number 170 is even.
+P0: Child done!
+P1: Recvd die frame, exiting!
+Stats for Process 1:
+	SENT:
+		Data Packets: 22
+		ACK Packets: 1
+		NACK Packets: 3
+	RECV:
+		Data Packets: 12
+		ACK Packets: 12
+		NACK Packets: 3
+Stats for Process 0:
+	SENT:
+		Data Packets: 12
+		ACK Packets: 12
+		NACK Packets: 3
+	RECV:
+		Data Packets: 23
+		ACK Packets: 1
+		NACK Packets: 3
+./lab3 20 10
+P0: Is sending 433 to P1.
+P1: The number 433 is odd.
+P1: Is sending 413 to P0.
+P0: The number 413 is odd.
+P0: Is sending 261 to P1.
+P1: The number 261 is odd.
+P1: Is sending 581 to P0.
+P0: Recvd an invalid packet sending back NACK!
+P0: The number 581 is odd.
+P0: Is sending 7 to P1.
+P1: The number 7 is odd.
+P1: Is sending 947 to P0.
+P0: The number 947 is odd.
+P0: Is sending 535 to P1.
+P1: The number 535 is odd.
+P1: Is sending 904 to P0.
+P0: The number 904 is even.
+P0: Is sending 282 to P1.
+P1: The number 282 is even.
+P1: Is sending 573 to P0.
+P0: The number 573 is odd.
+P0: Is sending 463 to P1.
+P1: The number 463 is odd.
+P1: Is sending 318 to P0.
+P0: The number 318 is even.
+P0: Is sending 601 to P1.
+P1: The number 601 is odd.
+P1: Is sending 297 to P0.
+P0: The number 297 is odd.
+P0: Is sending 276 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P1: The number 276 is even.
+P1: Is sending 215 to P0.
+P0: The number 215 is odd.
+P0: Is sending 434 to P1.
+P1: The number 434 is even.
+P1: Is sending 250 to P0.
+P0: The number 250 is even.
+P0: Is sending 338 to P1.
+P1: The number 338 is even.
+P1: Is sending 852 to P0.
+P0: The number 852 is even.
+P0: Is sending 968 to P1.
+P1: The number 968 is even.
+P0: Child done!
+P0: Is sending 780 to P1.
+P1: The number 780 is even.
+P0: Child done!
+P0: Is sending 204 to P1.
+P1: The number 204 is even.
+P0: Child done!
+P0: Is sending 949 to P1.
+P1: The number 949 is odd.
+P0: Child done!
+P0: Is sending 629 to P1.
+P1: The number 629 is odd.
+P0: Child done!
+P0: Is sending 945 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P0: Recvd an invalid packet sending back NACK!
+P0: Child done!
+P0: Is sending 568 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P1: Recvd an invalid packet sending back NACK!
+P1: The number 568 is even.
+P0: Child done!
+P0: Is sending 903 to P1.
+P1: The number 903 is odd.
+P0: Child done!
+P0: Is sending 327 to P1.
+P1: Recvd an invalid packet sending back NACK!
+P1: The number 327 is odd.
+P0: Child done!
+P0: Is sending 217 to P1.
+P1: The number 217 is odd.
+P0: Child done!
+P1: Recvd die frame, exiting!
+Stats for Process 1:
+	SENT:
+		Data Packets: 11
+		ACK Packets: 10
+		NACK Packets: 5
+	RECV:
+		Data Packets: 25
+		ACK Packets: 0
+		NACK Packets: 2
+Stats for Process 0:
+	SENT:
+		Data Packets: 25
+		ACK Packets: 0
+		NACK Packets: 2
+	RECV:
+		Data Packets: 12
+		ACK Packets: 10
+		NACK Packets: 5

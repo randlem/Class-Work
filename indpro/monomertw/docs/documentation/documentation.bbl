@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{obgl:tw}
+Orna Berry and Greg Lomow.
+\newblock Speeding up distributed simulation using the time warp mechanism.
+\newblock In {\em EW 2: Proceedings of the 2nd workshop on Making distributed
+  systems work}, pages 1--14, New York, NY, USA, 1986. ACM Press.
+
+\bibitem{pc:kmc}
+Paul Coddington.
+\newblock Monte carlo simulation for statistical physics.
+\newblock
+  http://www.npac.syr.edu/users/paulc/lectures/montecarlo/p\_montecarlo.html.
+
+\bibitem{ae:kmc}
+A.~Esteve.
+\newblock Kinetic monte carlo technique in the modeling of
+  micro/nanotechnologies.
+\newblock http://www.laas.fr/ATOMCAD/Doc/aesteve.pdf.
+
+\bibitem{blaw:ising}
+Boris Lubachevsky and Alan Weiss.
+\newblock Synchronous relaxation for parallel ising spin simulations.
+\newblock In {\em PADS '01: Proceedings of the fifteenth workshop on Parallel
+  and distributed simulation}, pages 185--192, Washington, DC, USA, 2001. IEEE
+  Computer Society.
+
+\bibitem{ysja:sr}
+Yimsic Shim and Jaques~G. Amar.
+\newblock Synchronous relaxation algorithm for parallel kinetic monte carlo.
+\newblock {\em Physical Review B}, 71:1--13, 2005.
+
+\end{thebibliography}

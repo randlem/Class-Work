@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <math.h>
+#include <png.h>
+
+#define X_RES 1024
+#define Y_RES 1024
+
+int img[Y_RES][X_RES];
+
+void write_png();
+
+int main(int argv, char* argc[]) {
+    float xmin=0,xmax=0,
+          ymin=0,ymax=0;
+    double xinc=0,yinc=0,
+           cx=0,cy=0,
+           x_n=0,y_n=0,
+           x_n1=0,y_n1=0,
+           xsq=0,ysq=0;
+    int maxitr=0,i,j,k;
+
+    if(argv < 6) {
+        fprintf(stderr,"Too few parameters passed.\n");
+        exit(1);
+    }
+
+    xmin = atof(argc[1]);
+    xmax = atof(argc[2]);
+    ymin = atof(argc[3]);
+    ymax = atof(argc[4]);
+    maxitr = atoi(argc[5]);
+
+    xinc = (double)(xmax-xmin)/(double)(X_RES-1);
+    yinc = (double)(ymax-ymin)/(double)(Y_RES-1);
+
+    memset(img,0,sizeof(int)*Y_RES*X_RES);
+
+    printf("%f %f %f %f %i %f %f\n",xmin,xmax,ymin,ymax,maxitr,xinc,yinc);
+
+    for(i=0; i < Y_RES; i++) {
+        for(j=0; j < X_RES; j++) {
+            x_n = cx = xmin + j * xinc;
+            y_n = cy = ymin + i * yinc;
+            xsq = ysq = 0.0;
+            k = 0;
+            while((xsq + ysq < 4.0) && (k < maxitr)) {
+                xsq = x_n * x_n;
+                ysq = y_n * y_n;
+                y_n = 2.0 * x_n * y_n + cy;
+                x_n = xsq + ysq + cx;
+                k++;
+            }
+            if(k >= maxitr) img[i][j] = 1;
+        }
+    }
+
+    write_png();
+
+    return(0);
+}
+
+void write_png() {
+    int x, y;
+    int width=X_RES, height=Y_RES;
+    png_byte color_type=PNG_COLOR_TYPE_RGBA;
+    png_byte bit_depth=8;
+    png_structp png_ptr;
+    png_infop info_ptr;
+    int number_of_passes=1;
+    png_bytep * row_pointers;
+    char filename[] = "output.png";
+
+    row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+    for (y=0; y<height; y++)
+        row_pointers[y] = (png_byte*) malloc(width*((bit_depth/8)*4));
+
+    for (y=0; y<height; y++) {
+        png_byte* row = row_pointers[y];
+        for (x=0; x<width; x++) {
+            png_byte* ptr = &(row[x*4]);
+            if(img[y][x] == 1) {
+                ptr[0] = 255; ptr[1] = 255; ptr[2] = 255; ptr[3] = 255;
+            } else {
+                ptr[0] = 0; ptr[1] = 0; ptr[2] = 0; ptr[3] = 255;
+            }
+        }
+    }
+
+    FILE *fp = fopen(filename, "wb");
+    png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    info_ptr = png_create_info_struct(png_ptr);
+    png_init_io(png_ptr, fp);
+    png_set_IHDR(png_ptr, info_ptr, width, height,
+             bit_depth, color_type, PNG_INTERLACE_NONE,
+             PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+    png_write_info(png_ptr, info_ptr);
+    png_write_image(png_ptr, row_pointers);
+    png_write_end(png_ptr, NULL);
+
+}
+
+/*int mandint() {
+    int col,j,k,colour,flag,Xoffset,Yoffset;
+    double cr,ci,jmax,x,y,xsq,ysq,distsq,xold,yold,delta;
+
+    xmin=-2.0; xmax=0.8; ymin=-1.3; ymax=1.3;
+    Xoffset=Xctr-(mx>>1);
+    Yoffset=Yctr-(my>>1);
+    dx=(xmax-xmin)/(mx-1);
+    dy=(ymax-ymin)/(my-1);
+    jmax=(my>>1);
+    delta=((dx < dy ? dx : dy) / 2.0);
+    for(j=0; j<=jmax; j++) {
+        for(k=0; k<=mx; k++) {
+            x=cr=xmin+k*dx;
+            y=ci=ymin+j*dy;
+            xsq=ysq=0.0;
+            colour=0;
+            xold=yold=0.0;
+
+            while((colour < maxit) && (xsq+ysq < 4.0)) {
+                xsq=x*x; ysq=y*y;
+                y=2*x*y+ci;
+                x=xsq-ysq+cr;
+                if(old_colour == maxit)
+                {
+                    if((colour & 15) == 0)
+                    {
+                        xold=x;
+                        yold=y;
+                    } else
+                        if((fabs(xold-x)+fabs(yold-y) < delta))
+                            colour=maxit-1;
+                    }
+                    colour++;
+                }
+                if(colour < maxit)
+                    col=colour%255;
+                else
+                    col=(((int)((xsq+ysq)*255)%255)+1);
+            }
+            plot(Xoffset+k,Yoffset+j,col);
+            plot(Xoffset+k,maxY-(Yoffset+j),col);
+        }
+    }
+    return(0);
+}*/

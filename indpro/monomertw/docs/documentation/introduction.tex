@@ -1,0 +1,106 @@
+\mychapter{Introduction}
+
+	In order to model physical processes like thin film growth on large areas and long  time scales, more efficient parallel algorithms need to be developed. In this project we first studied a proposed conservative parallel algorithm known as Synchronous Relaxation(SR) algorithm to try and see whether it can be made more efficient. To do this, we rewrote the initial implementation of the algorithm porting from C to C++ . Though the program was slightly more efficient after revision it still was not scalable, that is, it lost its efficiency as more processors were added.
+	We then proposed a  new algorithm that would use a distributed simulation technique known as Time Warp. This optimistic algorithm should incur less synchronization costs  than the SR algorithm and should therefore scale better
+
+\section{Monte Carlo Methods}
+
+Monte Carlo methods are numerical techniques often used to calculate integrals by using (pseudo) random  numbers. A good example of this is the calculation of $\pi$ using the following algorithm
+  	Monte Carlo for $\pi$
+\begin{enumerate}
+\item Generate i random number pairs (Xi, Yi) where $0<Xi<1$, $0<Yi<1$.
+\item Count number of pairs within the unit circle radius $r=1$
+\item $(count of pairs in r=1)/(total pairs) \approx \pi/4$
+\end{enumerate}~\cite{ysja:sr}
+
+Monte Carlo methods have also been successfully applied to solving various problems in statistical physics. A classic example is the Ising model used to study the effect of temperature on a ferromagnet~\cite{ae:kmc}.  Initial Monte Carlo algorithms like the Metropolis algorithm worked by randomly selecting an event to occur and accepting or rejecting the event based on a criteria known as the Detailed Balance criteria. However such algorithms proved slow and inefficient for modeling systems at large sizes and time scale as is the case in thin film growth.
+
+\section{Modeling Thin Film Growth Using Kinetic Monte Carlo}
+
+\subsection{Kinetic Monte Carlo}
+
+Kinetic Monte Carlo is a subset of Monte Carlo techniques that has proved successful and efficient in stochastic modeling non-equilibrium systems. Kinetic is derived from the n-fold way algorithm. In this method all the rates of possible events are known beforehand as well as the probability of each rate occurring. Events are then performed and system time incremented stochastically.
+Kinetic Monte Carlo is better suited for non-equilibrium systems like thin film growth or the Ising model because
+\begin{enumerate}
+\item It satisfies the Detailed Balance criteria an important property of stochastic processes.
+\item It uses a finite amount of rates that is event rates are precalculated thus reducing computation
+\item No events are rejected as opposed to previous algorithms like Metropolis algorithm which suffers from high rejection at low temperatures.
+\end{enumerate}
+
+The algorithm follows the following basic steps
+\begin{enumerate}
+\item Generate a uniformly distributed random number $0<X<1$
+\item Use the number $X$ to select an event to occur depending on the probability of that event happening
+\item Perform the event (e.g. flip atom or deposit monomer)
+\item Generate a new random number $0<Y<1$
+\item increment system time using the formula $T=T + log(Y)/(Σ(event rates))$
+\item Repeat Step 1 until a stopping condition is equates true
+\end{enumerate}
+
+\subsection{Thin Film Growth}
+\label{section:Thin Film Growth}
+
+	Thin film growth is the process by which a layer of atoms (monomers) are deposited on a surface (substrate) usually at low pressure and temperature so as to form a surface coverage that is a few atoms thick. The morphology of the thin film formed is highly dependent on various factors such as the rates of different events for example the number of atoms(adatoms,monomers) being deposited as opposed to the rate at which atoms on the surface(substrate) diffuse. Thin film growth also takes place in enormous time scales when considering events at atomic levels i.e atomic vibrations take place at nanoseconds yet it takes hours or minutes to grow a thin film device~\cite{pc:kmc}.
+	In our current model we studied a simple growth model known as the Fractal Growth Model. In this model atoms are deposited on the surface of an atom where they may then diffuse along the surface of the substrate. In case a diffusing (or deposited) atom encounters another atom, it reacts to form an island that binds the the atoms to the surface. In case an atom encounters an island(two or more bound atoms) it will be captured by that island.
+
+To model Thin  film growth using KMC the basic data and data structures required are
+\begin{enumerate}
+\item A two dimensional lattice to act as a height map
+\item A monomer list to keep track of the number of monomers as well as their positions on the lattice.
+\item The surface diffusion  rates as well as deposition rates
+\end{enumerate}
+
+The algorithm proceeds like a standard KMC with the exception of steps 4 and 5.
+\begin{enumerate}
+\item Generate a random number $0<X<1$
+\item Use the number $X$ to select an event to occur depending on the probability of that event happening
+\item Perform the event (e.g. deposit monomer)
+\item Update the Lattice heights to record change
+\item Update the Monomer list in case monomers were captured or added by event
+\item Generate a new random number $0<Y<1$
+\item Increment system time using the formula $T=T + log(Y)/(Σ(event rates))$
+\item Repeat Step 1 until $(total_depositions/(dimension_x * dimension_y))=1$
+\end{enumerate}
+
+\begin{figure}
+\hrule
+\vspace{0.5cm}
+\begin{verbatim}
+Sample Output
+g++ -c lattice.cpp main.cpp synch.cpp comm.cpp mpiwrapper.cpp
+ndep=441
+time=0.00556387
+coverage=1.00227
+time=0.00556387
+Execution Time=2.2689
+**************S**********************************
+1 0 0 2 1 0 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 0
+1 0 2 2 0 1 2 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1
+1 0 0 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 2 2 1 1 1 1 0 0 1 1 2 2 2 1 2 2 1 1
+2 0 1 1 2 2 2 1 1 1 2 2 1 2 1 0 1 0 1 2 2 1
+0 0 2 2 2 0 1 1 1 2 1 2 2 1 1 3 1 1 2 2 0 0
+0 0 1 1 2 2 1 1 0 1 1 0 2 2 3 1 0 1 1 2 0 1
+1 1 1 1 1 0 1 1 1 1 1 1 2 1 3 1 0 1 1 0 1 2
+2 1 1 2 1 1 2 1 1 1 1 0 1 1 1 2 1 0 0 1 2 1
+2 0 2 2 1 2 2 2 1 1 1 1 2 0 1 2 3 1 0 1 2 1
+1 0 1 1 1 1 2 2 1 0 2 2 1 0 1 1 2 2 1 2 1 1
+2 0 1 1 1 1 1 2 0 1 2 2 2 1 1 1 1 1 1 1 2 0
+0 0 1 1 1 1 1 2 1 1 2 0 1 1 1 1 1 1 1 1 0 0
+1 0 1 1 2 2 2 1 1 1 1 2 2 2 1 0 1 1 1 0 1 0
+2 0 0 2 1 2 1 1 2 1 0 2 0 1 0 1 1 1 2 2 2 0
+2 0 1 0 0 2 2 0 2 2 2 2 1 0 0 2 2 1 2 2 2 1
+1 1 2 0 2 1 2 1 2 2 1 1 1 1 2 1 1 2 0 1 1 2
+1 2 2 2 1 1 2 2 2 2 1 0 1 1 2 1 2 1 1 0 2 3
+1 0 2 1 2 2 1 2 2 2 2 2 2 2 2 2 0 2 1 3 1 1
+4 0 1 1 1 0 1 2 2 1 1 0 1 2 2 2 2 2 1 1 4 6
+mcount=1
+\end{verbatim}
+\hrule
+\caption{Sample KMC Results}
+\label{sampleKMC}
+\end{figure}
+
+In Figure \ref{sampleKMC} the bold 3 indicates the presence of a sole monomer on the lattice. This is because it is higher than other heights around it and therefore it does not get bound.  The monomer list contains the location $(X,Y)$ pair of the monomer. In this case the monomer is of size 1 and the $(X,Y)=(9,16)$.
+
+

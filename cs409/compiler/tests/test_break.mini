@@ -1,0 +1,22 @@
+program testbreak;
+	int ary[2] = (2,3),one=1,result=0;
+
+	break;
+
+	/* test a single ld op on the array */
+	write ary[0];
+	write ary[one];
+
+	/* test in an expression */
+	ary[0] * 2 -> result;
+	write result;
+
+	ary[1] * ary[0] -> result;
+	write result;
+
+	/* read reading into an array */
+	read ary[0];
+	ary[0] * 2 -> result;
+	write result;
+
+endprogram;

@@ -1,0 +1,27 @@
+program testcon;
+	int one=1,two=2,three=3;
+
+	if(one < two)
+		write one;
+	endif;
+
+	if(two < three)
+		write two;
+	else
+		write three;
+	endif;
+
+	if(one = one)
+		write one;
+	endif;
+
+	if(one <= one)
+		write one;
+	endif;
+
+	while(one <= three)
+		write one;
+		one + 1 -> one;
+	endwhile;
+
+endprogram;

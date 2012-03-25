@@ -1,0 +1,9 @@
+test.png 256 256
+color 0 0 0
+noisy 0.1
+perterb 2
+fill
+color 255 255 255
+circle 64-192 64-192 64
+ellipse 64-192 64-192 64 96 10
+end

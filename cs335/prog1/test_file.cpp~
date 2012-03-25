@@ -1,0 +1,247 @@
+// File TimerTest.cpp version 6 of 27 October 2002
+// All code and comments written by Walter Maner unless otherwise noted.
+
+#include <iostream>
+#include <iomanip>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <iterator>
+#include "Timer.h"
+
+// function written by Mark Randles
+template < class RandomAccessIterator >
+void flashsortTest(RandomAccessIterator begin, RandomAccessIterator end) {
+    typedef iterator_traits< RandomAccessIterator >::value_type T;
+
+    return;
+}
+
+// insertion sort algorithm provided by Walter Mainer from sources
+// unknown.  Formatting and rearranging done by Mark Randles.
+template < class RandomAccessIterator >	
+void isort5( RandomAccessIterator begin, RandomAccessIterator end ) {
+    for ( RandomAccessIterator outerpos = begin; 	
+          outerpos != end; 	
+          ++outerpos ) {	
+        iterator_traits< RandomAccessIterator >::value_type	
+           candidate = *outerpos;	
+        RandomAccessIterator pos = outerpos - 1;	
+        while ( pos >= begin && candidate < *pos ) {	
+            *( pos + 1 ) = *pos;	
+            pos--;	
+        }	
+        *( pos + 1 ) = candidate;	
+    }	
+}	
+
+// The flashsort algorithm is attributed to Karl-Dietrich Neubert
+// The translation to C++ is provided by Clint Jed Casper
+// Cleaning, rearranging, and conversion by Mark Randles
+template < class RandomAccessIterator >
+void flashsort(RandomAccessIterator begin, RandomAccessIterator end) {
+    typedef iterator_traits< RandomAccessIterator >::value_type T;
+
+	if(begin == end) return;
+
+	int length = end - begin;
+
+	int m = (int)((0.2 * length) + 2);
+	
+	T min, max, maxIndex;
+	min = max = *begin;
+	maxIndex = 0;
+
+	for(int i = 1; i < length - 1; i += 2) {
+		T small, big, bigIndex;
+
+		if(*(begin+i) < *(begin+i+1)) {
+			small = *(begin+i);
+			big = *(begin+i+1);
+			bigIndex = i+1;
+		} else {
+			big = *(begin+i);
+			bigIndex = i;
+			small = *(begin+i+1);
+		}
+
+		if(big > max) {
+			max = big;
+			maxIndex = bigIndex;
+		}
+
+		if(small < min) min = small;
+	}
+
+	if(*(begin+length-1) < min) {
+                min = *(begin+length-1);
+        }
+	else if(*(begin+length-1) > max) {
+		max = *(begin+length-1);
+		maxIndex = length-1;
+	}
+
+	if(max == min) return;
+
+	T* L = new T[m+1];
+	
+	for(int t = 1; t <= m; t++) L[t] = 0;
+	
+	double c = (m-1.0)/(max-min);
+	int K;
+	for(RandomAccessIterator h=begin; h != end; ++h) {
+		K = ((int)(((*h)-min)*c))+1;
+    	        L[K] += 1;
+	}
+	
+	for(K = 2; K <= m; K++) {
+		L[K] = L[K] + L[K-1];
+	}
+
+	T temp = *(begin+maxIndex);
+	*(begin+maxIndex) = *begin;
+	*begin = temp;
+
+	int j = 0;
+	K = m;
+	int numMoves = 0;
+	
+	while(numMoves < length) {
+		while(j >= L[K]) {
+			j++;
+			K = ((int)((*(begin+j) - min) * c)) + 1;
+		}
+
+		T evicted = *(begin+j);
+
+		while(j < L[K])	{
+			K = ((int)((evicted-min)*c))+1;
+
+			int location = L[K] - 1;
+
+			T temp = *(begin+location);
+			*(begin+location) = evicted;
+			evicted = temp;
+
+			L[K] -= 1;
+
+			numMoves++;
+		}
+	}
+
+	int threshold = (int)(1.25*((length/m)+1));
+	const int minElements = 30;
+	
+	for(K = m - 1; K >= 1; K--) {
+		int classSize = L[K+1] - L[K];
+
+		if(classSize > threshold && classSize > minElements) {
+			flashsort(begin+L[K],begin+L[K]+classSize);
+		} else {
+			if(classSize > 1) {
+                                isort5(begin+L[K],begin+L[K]+classSize);
+			}
+		}
+	}
+
+	delete [] L;
+}
+
+
+void printLine( long N, double T ) {
+    const double LOG2N = 3.3219292 * log10( N );
+    const long double
+       logn = T / LOG2N,
+       n = T / N,
+       nlogn = T / ( N * LOG2N ),
+       nn = T / ( N * N );
+
+    cout
+    << setiosflags( ios :: fixed | ios :: showpoint )
+    << setw( 9 ) << N
+    << setw( 14 ) << setprecision( 11 ) << T
+    << setw( 14 ) << setprecision( 11 ) << logn
+    << setw( 14 ) << setprecision( 11 ) << n
+    << setw( 14 ) << setprecision( 11 ) << nlogn
+    << setw( 14 ) << setprecision( 11 ) << nn
+    << endl;
+}
+
+int main( int argc, char *argv[] ) {
+    if ( argc != 4 ) {
+        cout
+        << "Wrong number of command-line arguments" << endl
+        << "Usage: method2 starting-power-of-2 ending-power-of-2 repetitions" << endl
+        << "Example: method2 4 10 50000" << endl;
+        return 1;
+    }
+
+    Timer aTimer1, aTimer2;
+
+    const char * pattern = "target";
+    long int N = atoi( argv[ 1 ] );
+    N = ( long int ) pow( 2, N );
+    long int OUTERLIMIT = atoi( argv[ 2 ] );
+    OUTERLIMIT = ( long int ) pow( 2, OUTERLIMIT );
+    long int INNERLIMIT = atoi( argv[ 3 ] );
+    long double elapsedCPUtime = 0;
+    long int pos = 0;
+
+    cout
+    << endl
+    << "Timing results are expressed in seconds" << endl
+    << "Resolution of the clock: " << aTimer1.getResolution() << " seconds" << endl
+    << "Starting N: " << N << endl
+    << "Maximum N: " << OUTERLIMIT << endl
+    << "Repetitions for each N: " << INNERLIMIT << endl
+    << endl
+    << setw( 9 ) << "N"
+    << setw( 14 ) << "T (seconds)"
+    << setw( 14 ) << "T / logN"
+    << setw( 14 ) << "T / N"
+    << setw( 14 ) << "T / NlogN"
+    << setw( 14 ) << "T / N^2"
+    << endl
+    << setfill( '-' ) << setw( 14 * 5 + 9 ) << "" << setfill( ' ' )
+    << endl;
+
+    while ( N <= OUTERLIMIT ) {
+	// edited by Mark Randles
+	vector<int> vi;
+	for (int i = 0; i < N; i++)
+	    vi.push_back( i );
+	random_shuffle(vi.begin(), vi.end());
+
+        aTimer1.start();  // Time "empty" function
+        for ( long int j = 0; j < INNERLIMIT; j++ )
+            pos = flashsortTest( vi.begin(), vi.end() ); // edited by Mark Randles
+        aTimer1.stop();
+
+        //	aTimer1.display( "aTimer1 after stop()" );
+
+	// edited by Mark Randles
+	for (int i = 0; i < N; i++)
+	    vi.push_back( i );
+	random_shuffle(vi.begin(), vi.end());
+
+        aTimer2.start();  // Time the real function
+        for ( long int j = 0; j < INNERLIMIT; j++ )
+            pos = flashsort( vi.begin() vi.end() ); // edited by Mark Randles
+        aTimer2.stop();
+
+        //	aTimer2.display( "aTimer2 after stop()" );
+
+        // Next line requires overload of operator-
+        if ( aTimer1 > aTimer2 )
+            cout << "Invalid data for N = " << N << endl;
+        else {
+            elapsedCPUtime = ( aTimer2 - aTimer1 ) / INNERLIMIT;
+            printLine( N, elapsedCPUtime );
+        }
+
+        N += N;
+        aTimer1.clear();
+        aTimer2.clear();
+    }
+    return 0;
+} 

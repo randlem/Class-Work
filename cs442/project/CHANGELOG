@@ -1,0 +1,36 @@
+CHANGELOG
+
+-- 2005-05-09 randlem - Added the CSV output to a file, added a histogram chart that uses the Image class, and added a "VsTime" output that plots the data vs. the time recorded in the order that it was observed.  Won't work on BGUNIX anymore thanks to their complete lack of support for modern software.
+
+
+--- STUFF FROM THE UPDATED RELEASE FOR CS442: UNDATED ---
+
+The following things have been changed from the original version:
+
+-- All pointers are now initilized/cleared with the NULL define as set by the standard libraries.  Originally these were declared 0, which was correct, but wasn't best practice.
+
+-- Code was added so the size of the event list could be queried from the sim engine.  Any event lists derived from the standard base class will need to define this functionality as well.
+
+-- A new class was added called LogFile.  This is a asynchronos data output that takes STL strings as input and flushes them to a text file named during the constructor.  Periodically the buffer will be flushed, to clear the iostream cache and to preserve some data in the event of a total program crash.  The was implemented using pthreads and is not guaranteed to be completely thread safe.
+
+-- Added the bank demo from the book.  This demonstrates some of the new featues of the simulation kernel and was a great help in understanding the various deficiencies of the current implementation.  It appears to be working in a sasitsafactory fashion, including the queue jumping functionality.
+
+-- File layout and directory structure were completely overhauled.  Previously all the files, demos included, were stored in a single flat direstory.  Now the simulation engine code is stored in a directory called src.  The demos are stored in a directory called demo.  Other directories include a scripts directory that holds useful scripts, a docs directory that holds any documentation, an archive directory that holds various code archives (tarballs or .tar.bz2 files), a backup directory that holds snapshots of the code at various points in time. and a rand directory which holds the binary files for the FileRNG generator.
+
+-- A new generator was introduced.  This generator uses a file loaded from the hard disk during the constructor of the RNG object, and then, based on a number from the LocalRNG imbedded within, to create a new random number based upon the random bytes contained in the loaded file.  The benefits of this are not known, but it would be possible to create a tail-made source of randomness.  The period, assuming that the entire file contains on of the 256 permutations of a single byte, would approach the period of the Merssene Twister that LocalRNG is based on.  However, this would be siginificantly lower, so should a large period be desired, then it would be better to use the LocalRNG.  The only benefit of this generator is that the actual creation of a number is very quick (8 simple lookups are required for a single double value), and that one could create custom random data to feed it.  The random files can be gathered from random.org, and must be stored in the rand directory with a name that must be a number between 000 and 999, three characters long, and has the extension of ".bin".  The number of the file will be the seed number to use that file.  The files may be of any size, but the larger the better.
+
+-- The class logic behind the RNGs and the value distributions has been changed.  First off all the distributions have now been given a name that represents that they are distributions rather then generators.  Also, the generators are now accessed through a factory class contained in the files "RNGFactory.*".  All RNGs are now derived from a virtual base class, as are the Distributions.  Each distribution has the ability to select which RNG it wants to pull it's randomness from, and gathers it from the factory.
+
+-- NetRNG has been depricated, and by association so has the HTTPHeader class.  They are not useful for simulation purposes.  They are still in the source tree, and could be used as source of randomness, but it would be unreliable at best and totally useless for a primary source.
+
+-- The makefile has been reworked to use the new directory structure and provide for efficient rule definition to add a new project.  Right now, to add a new project one must modify the makefile by hand and add two rules, one to build the binary, and another to build the source code in the project directory.  One cavet of this is that no two files can have the same name.  If they do, the first file encountered will be compiled, which may or may not be the correct file.  To aleviate this problem, automake should be explored in the future.
+
+-- Added a M/M/1 demo to the source tree.  This is the simplest queue/server model avaliable, and demonstrates the basics of a project.  Seems to work ok.  Uses a uniform distribution to control entity arrival, so the stats may seem odd, but this was more to show how a program would be layed out, rather then a beneficial simulation.
+
+-- Added error checking to the SimPLus::timing() function to make sure that if no event is found in the queue, the function fails gracefully (exit NULL).
+
+-- In the directory marked "lib" a copy of a good utility library for profiling pthread applications is avaliable.  To profile something the command: "LD_PRELOAD=lib/gprof-helper.so [executeable name]" should be exectuted.  And don't forget to compile the library with the -pg option before you invoke the command.
+
+-- Added support to the SampST class to track and store the samples.  Also added was a calculate of the Std Dev and the Variance.  Sum, max, and min, are still tracked in dependently of the vector holding the samples, to save computational time when reporting them.
+
+-- Got the BinomialDist to work correctly.  Also added a BernoulliDist class, which generates either a 0 or 1 pased on a probality value.

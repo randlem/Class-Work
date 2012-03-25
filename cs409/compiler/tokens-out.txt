@@ -1,0 +1,32 @@
+Tokens in file tokens.mini
+
+TKsymbol       book12 (215960)
+TKsymbol       Book12 (215984)
+TKsymbol       BOOK12 (216008)
+TKliteral      6d (235864)
+TKliteral      6d (235864)
+TKliteral      6d (235864)
+TKliteral      6d (235864)
+TKrelOp        <=
+TKrelOp        <
+TKleft         (
+TKrelOp        =
+TKarith        /
+TKarith        /
+TKarith        +
+TKassign       ->
+TKarith        *
+TKarith        /
+TKliteral      -5 (235896)
+TKarith        -
+TKliteral      5 (235928)
+TKsymbol       a (216032)
+TKarith        -
+TKliteral      5 (235928)
+TKleft         (
+TKliteral      -2d (235960)
+TKsymbol       Tab (216056)
+TKliteral      7fffffff (235992)
+TKend          endprogram
+TKend          endif
+TKendFile      *EOF*

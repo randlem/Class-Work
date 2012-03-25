@@ -1,0 +1,212 @@
+Mean Interarrival Time
+Single-server queueing system
+
+Mean interarrival time      2.000 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.175 minutes
+Average number in queue     0.087
+Server utilization          0.237
+Time simulation ended    2024.996 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.500 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.236 minutes
+Average number in queue     0.158
+Server utilization          0.325
+Time simulation ended    1497.945 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.493 minutes
+Average number in queue     0.506
+Server utilization          0.508
+Time simulation ended     975.401 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.800 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.699 minutes
+Average number in queue     0.868
+Server utilization          0.619
+Time simulation ended     805.252 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.700 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      1.129 minutes
+Average number in queue     1.643
+Server utilization          0.747
+Time simulation ended     687.639 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.600 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      1.498 minutes
+Average number in queue     2.501
+Server utilization          0.827
+Time simulation ended     599.034 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.500 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue     11.069 minutes
+Average number in queue    21.809
+Server utilization          0.971
+Time simulation ended     511.354 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.400 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue     50.913 minutes
+Average number in queue   128.631
+Server utilization          0.995
+Time simulation ended     511.848 minutes
+
+Single-server queueing system
+
+Mean interarrival time      0.200 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue    142.912 minutes
+Average number in queue   701.617
+Server utilization          0.999
+Time simulation ended     478.175 minutes
+-------------------------------------
+Mean Service Time
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.200 minutes
+Number of customers          1000
+
+Average delay in queue      0.061 minutes
+Average number in queue     0.060
+Server utilization          0.192
+Time simulation ended    1006.799 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.437 minutes
+Average number in queue     0.438
+Server utilization          0.489
+Time simulation ended     997.530 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.700 minutes
+Number of customers          1000
+
+Average delay in queue      1.826 minutes
+Average number in queue     1.884
+Server utilization          0.720
+Time simulation ended     969.060 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.800 minutes
+Number of customers          1000
+
+Average delay in queue      3.510 minutes
+Average number in queue     3.686
+Server utilization          0.811
+Time simulation ended    1004.378 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.900 minutes
+Number of customers          1000
+
+Average delay in queue      5.519 minutes
+Average number in queue     5.441
+Server utilization          0.880
+Time simulation ended    1019.787 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           1.000 minutes
+Number of customers          1000
+
+Average delay in queue     41.073 minutes
+Average number in queue    43.188
+Server utilization          0.972
+Time simulation ended    1053.721 minutes
+------------------------------------
+Number of Customers
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers           500
+
+Average delay in queue      0.399 minutes
+Average number in queue     0.395
+Server utilization          0.461
+Time simulation ended     504.857 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers          1000
+
+Average delay in queue      0.621 minutes
+Average number in queue     0.626
+Server utilization          0.521
+Time simulation ended     993.506 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers          1500
+
+Average delay in queue      0.499 minutes
+Average number in queue     0.519
+Server utilization          0.513
+Time simulation ended    1440.544 minutes
+
+Single-server queueing system
+
+Mean interarrival time      1.000 minutes
+Mean service time           0.500 minutes
+Number of customers          2000
+
+Average delay in queue      0.508 minutes
+Average number in queue     0.508
+Server utilization          0.503
+Time simulation ended    1999.980 minutes
+------------------------------------

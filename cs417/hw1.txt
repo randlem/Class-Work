@@ -1,0 +1,138 @@
+Mark Randles CS417 Homework Assignment #1 Parallel Computers & Networks
+
+    One of the largest problems facing a designer of a parallel computing
+cluster is to use either a static network or a dynamic network based
+around personal computer clustering.  The static network I would like
+to contrast against the PC clustering is a mesh network.  A mesh network
+is probably the most versatile network in terms of embedding and routing
+and therefore most likely the best contender to a PC cluster network.
+
+    The topology of a static mesh network is this; each node is connected
+to 4 (2d topology) other nodes.  The links between nodes are usually
+bi-directional so that each node can send/receive messages from each
+of the other nodes it is connected to.  There could be variances in the
+mesh topology where the so-called end nodes, nodes con the edges of the
+mesh, are connected therefor forming rings on the rows and columns of
+the mesh.  Also you could connect the nodes of the mesh in 6 directions
+or 8 directions using a 3d or 4d topology.
+
+    Also the topology of the static mesh network allows for various other
+types of static networks to be easily embedded into the mesh.  One such
+example would be a tree network embedded into a 2d mesh.  Each node of the
+tree would get mapped to a node in the mesh, in a standard way, therefor
+allowing a user to exploit the power of a tree network while using a
+mesh networked computer.  As mentioned above you can have variations of a
+mesh network.  This is logically true that these variations are just 1d,
+3d, and 4d variations of the mesh network, but they are considered to
+be their own type of network and are usually embedded in a 2d mesh network.
+
+    The routing of a static network is usually very easy.  Since the
+network is static you are able to exploit the fixed nodes and usually
+routing can be handled with a bitwise operation or a simple function.
+A static network usually allows for very little network overhead.  Also a
+static network allows you to use a type of routing called wormhole
+routing.  Wormhole routing is where you divide the message into very
+small packages called flits.  By using flits you can reduce the amount of
+storage at each node and also reduces latency regardless of path length.
+This last feature is very important.  Latency is the time it takes one
+part of the message to get from point A to point B.  This is important
+because latency can kill the performance of algorithms that need to
+communicate with other nodes in the network before processing their data.
+
+    Traditional routing is called store-and-forward routing.  The entire
+message is received before the message is sent to the next network.  This
+is also called packet-switching.  Packet-switching in the best case is
+linearly related to the distance between the sending and receiving nodes.
+However there is another type of switching called circuit-switching.
+Circuit-switching creates a virtual circuit between two nodes that all
+subsequent packets follow.  Essentially circuit-switching has constant
+latency despite the distance between nodes.  The same holds true for
+wormhole routing.  Wormhole routing is approximately constant despite the
+length between nodes because a flit is such a small piece of the entire
+message and is proportional to the amount of bandwidth between nodes.
+
+    Static networks, especially those with adaptive routing algorithms,
+are very susceptible to two conditions.  The first condition is called
+livelock.  This is a condition where a packet continually gets passed
+around a network without ever finding it's intended node.  Livelock is
+usually a problem with an adaptive routing, where it's adaption prevents
+the packet from every getting to the host due to network usage or some
+other factor.  The other condition, deadlock, plagues all types of static
+network routing.  A deadlock occurs when a node wants to send a message
+to another node, who wants to send a message to a 3rd node and so on till
+each node is waiting for each other node to send a message, but no node is
+ever able to send a message.  A deadlock condition is usually alleviated
+by using virtual channels over the physical hardware.  Each virtual
+channel has it's own send/receive buffer.  The virtual channels would
+be multiplexed across the physical link between nodes.  This alleviates
+the deadlock problem by keeping the hardware from deadlocking therefor
+allowing the nodes to still communicate even if one of the virtual channels
+are deadlocked.
+
+   To contrast a static mesh network I will use a dynamic cluster.
+A cluster is a group of usually commodity personal computers networked
+using common network equipment.  The most common network equipment
+is Ethernet, as it's widely available and has decent bandwidth for
+high speed packet switching.  There are other networks types, such as
+token ring, but these are less common, and have been phased out in past
+years.  I will contrast using a Ethernet type network of workstations.
+Each workstation will only have one network interface controller (NIC)
+card and therefore only one physical link to the network.
+
+   The topology of a cluster is usually that of the network hardware.
+A Ethernet network is based upon the principal of a single wire
+connection all the computer.  Each NIC must wait for the line to clear
+before sending it's message across the wire.  A Ethernet network in
+available in a variety of speeds.  The most common speeds are 10Mbps
+(approx. 1280KBps peak transfer) and 100Mbps (approx. 12800KBps peak
+transfer).  Ethernet hardware is also available in 1000Mbps (Gigabit,
+approx. 128000KBps peak transfer).  The most comment Ethernet network
+in modern clusters is Gigabit Ethernet.
+
+   Since Ethernet is assumed to have only one wire there exists some
+special problems with transmitting data at high rates of speed.
+Since there is only one wire, you run the risk of two NICs trying
+to send a data packet (called a frame) on the wire at the same time.
+This condition is called a collision.  If a collision occurs each packet
+must be resent correctly, since in the collision the data was mangled
+beyond recovery.  Most Ethernet networks alleviate this problem by using
+either smart switches or routers to connect the machines to each other.
+A smart switch essentially allows multiple computers to broadcast frames
+at the same moment, but avoiding collision because the wire is broken
+into smaller segments.  The switch then handles the transmission of the
+frames to the other nodes connected to the switch.  A router works by
+striping the headers from the frame and passing the frames along to the
+right part of the network.  A router could isolate parts of the network
+from other parts of the network, therefore removing the risk of collision.
+
+   One of the limiting factors of a Ethernet based cluster is the
+latency across the network.  On average a Ethernet has a latency of 500
+nanoseconds (Wilkinson, 1999).  Also a cluster has significant overhead
+in the message passing software that is needed on each node.  Most all
+clusters are based upon a message passing interface (MPI) between nodes.
+This can create considerable network traffic, which is why the large
+transfer rates capable with Gigabit Ethernet are desirable.  However if
+the Ethernet network is well designed with a suitable number of hardware
+routers and a lack of hubs (hubs are dumb devices, they essentially repeat
+the frame across all connected wires) the latency and delay associated
+with a Ethernet network can be kept to a minimum.
+
+   One benefit of a cluster over a static network is flexibility.
+A cluster allows for the adaptation of the logical topology of the
+nodes.  In a static network your nodes are fixed in their topology.
+In a cluster you can have a hardware network topology independent of
+the logical (presented to the programmer) topology.  This allows for
+the programmer to adapt his algorithm to the topology that best fits
+the problem instead of adapting it to the topology of the network.
+It would be this flexibility that allows clusters to exceed a static
+networked parallel computer.
+
+   As you can see there are many difference between a networked cluster
+and a static network parallel computer.  Each has it's own benefits and
+each it's own drawbacks.  As powerful, cheap hardware becomes predominate
+in our world, you will begin to see a glut of networked clusters instead
+of static network parallel computers.  This is manly due to advances in
+hardware speeds for the interconnection networks and the cost of the
+machines used in the cluster.  Also the flexibility that a cluster
+provides over a static network allows the cluster to adapt to new and
+never-before-seen problems.

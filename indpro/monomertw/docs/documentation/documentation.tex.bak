@@ -1,0 +1,96 @@
+\documentclass[12pt]{report}
+\usepackage{fancyheadings}
+\usepackage[american]{babel}
+\usepackage{alltt}
+\usepackage{pslatex}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{graphics}
+
+\textwidth  14cm
+\textheight 21cm
+\topmargin -20pt
+\oddsidemargin  20pt
+\evensidemargin 20pt
+
+\setlength{\parindent}{0pt}
+
+\setlength{\parskip}{1ex plus0.1ex minus0.1ex}
+
+% copied from the BWP4 docs
+\setlength{\headrulewidth}{0.8pt}
+\setlength{\footrulewidth}{0.4pt}
+\setlength{\headwidth}{\textwidth}
+
+\pagestyle{fancy}
+
+\lfoot{Mark Randles}
+\cfoot{Edward Ondieki}
+\rfoot{Mark Limes}
+\lhead[\thepage]{\textit \rightmark}
+\rhead[\textit \leftmark]{\thepage}
+
+\newcommand{\mychapter}[1]{\chapter{#1} \label{ch:#1} \thispagestyle{fancy}}
+\newcommand{\bslash}{\verb=\=}
+\newcommand{\myitem}[1]{\item{\textbf{#1:}}}
+\newcommand{\mycode}[1]{\section{#1} \small{\input{#1}} \newpage}
+
+\newsavebox{\tempboxa}
+\newenvironment{file}[1]{ \textbf{File:} \texttt{#1} \\ \label{file:#1} \nobreak \hrule \begin{alltt} }{ \end{alltt} \hrule \vspace{0.5cm} }
+\newenvironment{code}[2]{ \textbf{Code:} \texttt{#1} \\ \label{code:#2} \nobreak \hrule \begin{alltt} }{ \end{alltt} \hrule \vspace{0.5cm} }
+
+\begin{document}
+
+% title page
+\begin{titlepage}
+\vspace{9cm}
+\begin{center}
+    \huge Synchronous Relaxation and Time Warp Algorithms: A Study
+\end{center}
+\vspace{1.0cm}
+
+\vspace{1cm}
+
+\vspace {1cm}
+\centerline{
+\begin{tabular}{ccc}
+Mark Randles & Edward Ondieki & Mark Limes \\
+randlem@bgsu.edu & edwardo@bgsu.edu & elimes@bgsu.edu \\
+\end{tabular}
+}
+\vspace{1cm}
+\centerline{Academic Supervisor}
+\centerline{Hassan Rajaei, Ph.D}
+
+\vspace{1cm}
+\centerline{\large Department of Computer Science}
+\vspace{0.2cm}
+\centerline{\large Bowling Green State University, Ohio}
+\vspace{0.2cm}
+\centerline{\large 05 May 2005}
+
+\clearpage
+\end{titlepage}
+% end copy
+
+% abstract page
+\begin{abstract}
+There were a variety of ideas and goals pursued during the course of this project.  First and formost was an overriding goal of pulling the problem away from the system that it ran on.  Previous implementations were dependent upon a certain architecure, and thus the system defined the problem size.  This would need to change, the problem must become independent of the architecture.  To do this, a variety of things were looked at.  First we contemplated rewriting the intital work done on synchronous relaxation (SR).  This accomplished it's goal of making the problem size independent of the architecture.  However, there were still bottlenecks inherent in the system, so the use of Time Warp (TW) was stuidied.  This also should accomplish the goal of making the problem size independent of the underlying architecture.  Also discussed have been the use of logical processes and hybrid OpenMP/MPI mechinisms.
+\end{abstract}
+
+% table of contents
+\tableofcontents
+\newpage
+
+\include{introduction}
+\include{sr}
+\include{timewarp}
+\include{futurework}
+
+\appendix
+
+\include{sr-code}
+\include{tw-code}
+
+\end{document}

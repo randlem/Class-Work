@@ -1,0 +1,11 @@
+book12 Book12 /* ignore * comments */ BOOK12
+0155 0x6d 109 'm' <= <(
+= // + -> * /
+-5-5 /* negative literal followed by minus sign */
+a-5
+( -45
+Tab	0x7FFFFFFF  /* largest integer */
+
+endprogram
+endif
+

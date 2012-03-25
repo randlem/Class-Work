@@ -1,0 +1,607 @@
+{\ttfamily \raggedright \footnotesize
+\#include\ "{}lattice.h"{}
+
+Lattice::Lattice()\ :\ localTime(MINIMUM\underline\ TIME),\ minGlobalTime(0.0),
+\ \ \ \ \ \ \ \ \ \ \ depositionRate(1.0),\ diffusionRate(1.0e6),
+\ \ \ \ \ \ \ \ \ \ \ countDiffusion(0),\ countEvents(0),\ countBoundry(0),\ countRemote(0),\ countRollback(0),\ rng(10000,7)\ \{
+
+\ \ lattice\ =\ new\ site*[DIM\underline\ X+GHOST+GHOST];
+
+\ \ \textsl{//\ set\ up\ the\ lattice\ array}
+\ \ for(int\ i=0;\ i\ <{}\ DIM\underline\ X\ +\ GHOST\ +\ GHOST;\ i++)\ \{
+\ \ \ \ lattice[i]\ =\ new\ site[DIM\underline\ Y];
+\ \ \
+\ \ \ \ for(int\ j=0;\ j\ <{}\ DIM\underline\ Y;\ j++)\ \{
+\ \ \ \ \ \ lattice[i][j].p.x\ =\ i;
+\ \ \ \ \ \ lattice[i][j].p.y\ =\ j;
+\ \ \ \ \ \ lattice[i][j].h\ =\ 0;
+\ \ \ \ \ \ lattice[i][j].listIndex\ =\ -{}1;
+\ \ \ \ \}
+\ \ \}
+
+\ \ \textsl{//\ set\ the\ directions}
+\ \ movementDir[0].y=\ 1;\ \ movementDir[0].x=\ 0;
+\ \ movementDir[1].y=\ 0;\ \ movementDir[1].x=\ 1;
+\ \ movementDir[2].y=-{}1;\ \ movementDir[2].x=\ 0;
+\ \ movementDir[3].y=\ 0;\ \ movementDir[3].x=-{}1;
+\ \ movementDir[4].y=\ 1;\ \ movementDir[4].x=\ 1;
+\ \ movementDir[5].y=\ 1;\ \ movementDir[5].x=-{}1;
+\ \ movementDir[6].y=-{}1;\ \ movementDir[6].x=\ 1;
+\ \ movementDir[7].y=-{}1;\ \ movementDir[7].x=-{}1;
+\}
+
+Lattice::\textasciitilde Lattice()\ \{
+\ \ for(int\ i=0;\ i\ <{}\ DIM\underline\ X\ +\ GHOST\ +\ GHOST;\ ++i)\ \{
+\ \ \ \ delete\ []\ lattice[i];\
+\ \ \}
+\ \ delete\ []\ lattice;
+\}
+
+void\ Lattice::cleanup(fstream\&\ logFile)\ \{
+\ \ vector<{}message>{}\ m;
+
+\ \ logFile\ <{}<{}\ ((mpi.isMessage())\ ?\ "{}messages\ waiting"{}\ :\ "{}message\ queue\ empty"{})\ <{}<{}\ endl;
+\ \ logFile\ <{}<{}\ ((mpi.isAntiMessage())\ ?\ "{}messages\ waiting"{}\ :\ "{}message\ queue\ empty"{})\ <{}<{}\ endl;
+\
+\ \ if(mpi.isMessage())\ \{
+\ \ \ \ mpi.recvMessages(\&m);
+\ \ \ \ m.empty();
+\ \ \}
+\
+\ \ if(mpi.isAntiMessage())\ \{
+\ \ \ \ mpi.recvAntiMessages(\&m);
+\ \ \ \ m.empty();
+\ \ \}
+\}
+
+bool\ Lattice::doNextEvent()\ \{
+\ \ double\ nextKMCTime\ =\ computeTime();
+\ \ EventType\ nextEventType;
+
+\ \ if(remoteEventList.empty()\ ||\ nextKMCTime\ <{}\ remoteEventList.top()-{}>{}time)\ \{
+\ \ \ \ \textsl{//\ set\ the\ local\ time\ to\ the\ nextKMCTime}
+\ \ \ \ localTime\ =\ nextKMCTime;
+
+\ \ \ \ \textsl{//\ get\ the\ event\ type}
+\ \ \ \ nextEventType\ =\ getNextEventType();
+
+\ \ \ \ \textsl{//\ depending\ on\ the\ event\ type\ commit\ different\ events}
+\ \ \ \ switch(nextEventType)\ \{
+\ \ \ \ \ \ case\ eventDeposition:\ \{
+\ \ \ \ \ \ \ \ point\ p;
+
+\ \ \ \ \ \ \ \ \textsl{//\ set\ up\ the\ new\ site\ object}
+\ \ \ \ \ \ \ \ p.x\ =\ (int)(rng.getRandom(localTime)\ *\ (DIM\underline\ X));
+\ \ \ \ \ \ \ \ p.y\ =\ (int)(rng.getRandom(localTime)\ *\ DIM\underline\ Y);
+
+\ \ \ \ \ \ \ \ \textsl{//\ commit\ the\ event}
+\ \ \ \ \ \ \ \ commitEvent(new\ Event(\&lattice[p.x][p.y],localTime,true,nextEventType));
+\ \ \ \ \ \ \}\ break;
+\ \ \ \ \ \ case\ eventDiffusion:\ \{
+\ \ \ \ \ \ \ \ site\ *oldSite,\ *newSite;
+\ \ \ \ \ \ \ \ int\ index\ =\ (int)(rng.getRandom(localTime)\ *\ monomerList.size());
+
+\ \ \ \ \ \ \ \ \textsl{//\ make\ sure\ there\ actually\ a\ monomer\ in\ the\ system\ to\ diffuse}
+\ \ \ \ \ \ \ \ if(monomerList.size()\ >{}\ 0)\ \{
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ set\ the\ old\ site\ (random\ monomer\ from\ the\ list)\ and\ get\ a\ new\ site}
+\ \ \ \ \ \ \ \ \ \ oldSite\ =\ monomerList[index];
+\ \ \ \ \ \ \ \ \ \ newSite\ =\ randomMove(oldSite);
+\ \ \ \ \ \ \ \ \ \ monomerList.add(newSite,localTime);
+\ \ \ \ \ \ \ \ \ \ monomerList.remove(index,localTime);
+
+
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ set\ the\ index\ of\ the\ new\ site\ and\ update\ our\ entry\ in\ the\ monomerList}
+\ \ \ \ \ \ \ \ \ \ newSite-{}>{}listIndex\ =\ index;
+\ \ \ \ \ \ \ \ \ \ monomerList[index]\ =\ newSite;
+
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ clear\ the\ listIndex\ of\ the\ old\ site}
+\ \ \ \ \ \ \ \ \ \ oldSite-{}>{}listIndex\ =\ -{}1;
+
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ commit\ the\ event}
+\ \ \ \ \ \ \ \ \ \ commitEvent(new\ Event(oldSite,newSite,localTime,true,nextEventType,index));
+
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \}\ break;
+\ \ \ \ \}
+\ \ \}\ else\ \{
+\ \ \ \ \textsl{//\ see\ if\ there\ is\ a\ waiting\ anti-{}event\ for\ this\ remote\ event}
+\ \ \ \ if(hasAntiEvent(remoteEventList.top()))\ \{
+\ \ \ \ \ \ \textsl{//\ delete\ the\ remote\ event\ to\ play\ nice\ with\ memory}
+\ \ \ \ \ \ delete\ remoteEventList.top();
+
+\ \ \ \ \ \ \textsl{//\ remove\ the\ remote\ event\ from\ the\ queue}
+\ \ \ \ \ \ remoteEventList.pop();
+
+\ \ \ \ \ \ \textsl{//\ return\ false\ abandoning\ trying\ to\ do\ an\ event\ this\ cycle}
+\ \ \ \ \ \ return(false);
+\ \ \ \ \}
+
+\ \ \ \ \textsl{//\ set\ nextKMCTime\ to\ the\ remote\ time}
+\ \ \ \ localTime\ =\ remoteEventList.top()-{}>{}time;
+
+\ \ \ \ \textsl{//\ commit\ the\ remote\ event\ to\ the\ simulation}
+\ \ \ \ commitEvent(remoteEventList.top());
+
+\ \ \ \ \textsl{//\ remove\ the\ remote\ event\ from\ the\ queue}
+\ \ \ \ remoteEventList.pop();
+
+\ \ \ \ countRemote++;
+\ \ \}
+
+\ \ \textsl{//\ incriment\ the\ event\ counter}
+\ \ ++countEvents;
+
+\ \ return(true);
+\}
+
+double\ Lattice::computeTime()\ \{
+\ \ double\ Drate\ =\ diffusionRate\ *\ monomerList.size()\ *\ 0.25f;
+\ \ double\ totaldep\ =\ depositionRate\ *\ SIZE;
+\ \ double\ dt\ =\ -{}log(rng.getRandom(localTime))/(Drate+totaldep);
+
+\ \ return(localTime\ +\ dt);
+\}
+
+EventType\ Lattice::getNextEventType()\ \{
+\ \ float\ Drate\ =\ 0.25f\ *\ monomerList.size()\ *\ diffusionRate;
+\ \ float\ Trate\ =\ Drate\ +\ (depositionRate\ *\ SIZE);
+\ \ float\ prob\ =\ (Drate\ /\ Trate);
+
+\ \ \textsl{//\ if\ the\ next\ random\ number\ from\ the\ stream\ is\ less\ then\ the\ probality}
+\ \ \textsl{//\ the\ the\ next\ event\ is\ a\ eventDiffusion,\ return\ a\ diffusion\ event}
+\ \ if(rng.getRandom(localTime)\ <{}\ prob)
+\ \ \ \ \ return(eventDiffusion);
+
+\ \ \textsl{//\ catch-{}all\ is\ the\ deposition\ event}
+\ \ return(eventDeposition);
+\}
+
+bool\ Lattice::commitEvent(Event*\ event)\ \{
+
+\ \ if(event\ ==\ NULL)
+\ \ \ \ throw(Exception("{}NULL\ event\ passed\ to\ Lattice::commitEvent()!"{}));
+
+\ \ \textsl{//\ process\ the\ event\ based\ on\ the\ event\ type}
+\ \ switch(event-{}>{}eventType)\ \{
+\ \ \ \ case\ eventDeposition:\ \{
+\ \ \ \ \ \ \textsl{///\ incriment\ the\ height\ up}
+\ \ \ \ \ \ ++(event-{}>{}newSite-{}>{}h);
+
+\ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomer\ falls\ on\ the\ boundry\ (x\ ==\ LEFT\underline\ X\underline\ BOUNDRY\ ||\ x\ ==\ RIGHT\underline\ X\underline\ BOUNDRY)}
+\ \ \ \ \ \ if(isBoundry(event-{}>{}newSite-{}>{}p)\ \&\&\ event-{}>{}isLocal)\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ send\ the\ event\ off\ to\ the\ correct\ neighbor}
+\ \ \ \ \ \ \ \ mpi.sendMessage(makeMessage(event),GET\underline\ DIR(event-{}>{}newSite-{}>{}p.x));
+
+\ \ \ \ \ \ \ \ \textsl{//\ set\ the\ boundry\ event\ flag}
+\ \ \ \ \ \ \ \ event-{}>{}isBoundry\ =\ true;
+
+\ \ \ \ \ \ \ \ \textsl{//\ incriment\ the\ countBoundry}
+\ \ \ \ \ \ \ \ ++countBoundry;
+\ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomer\ will\ bond}
+\ \ \ \ \ \ if(!isBound(event-{}>{}newSite))\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ no\ bond\ was\ formed\ so\ move\ on}
+\ \ \ \ \ \ \ \ event-{}>{}newSite-{}>{}listIndex\ =\ monomerList.add(event-{}>{}newSite,event-{}>{}time);
+\ \ \ \ \ \ \}
+
+\ \ \ \ \}\ break;
+\ \ \ \ case\ eventDiffusion:\ \{
+\ \ \ \ \ \ \textsl{//\ incriment\ the\ new\ site\ height\ up}
+\ \ \ \ \ \ ++(event-{}>{}newSite-{}>{}h);
+
+\ \ \ \ \ \ \textsl{//\ incriment\ the\ old\ site\ height\ down}
+\ \ \ \ \ \ -{}-{}(event-{}>{}oldSite-{}>{}h);
+
+\ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomers\ new\ site\ falls\ on\ the\ boundry\ (x\ ==\ 1\ ||\ x\ ==\ DIM\ -{}\ 1)}
+\ \ \ \ \ \ if(isBoundry(event-{}>{}newSite-{}>{}p)\ \&\&\ event-{}>{}isLocal)\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ send\ the\ event\ off\ to\ the\ correct\ neighbor}
+\ \ \ \ \ \ \ \ mpi.sendMessage(makeMessage(event),GET\underline\ DIR(event-{}>{}newSite-{}>{}p.x));
+
+\ \ \ \ \ \ \ \ \textsl{//\ set\ the\ boundry\ event\ flag}
+\ \ \ \ \ \ \ \ event-{}>{}isBoundry\ =\ true;
+
+\ \ \ \ \ \ \ \ \textsl{//\ incriment\ the\ countBoundry}
+\ \ \ \ \ \ \ \ ++countBoundry;
+\ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomer\ will\ bond}
+\ \ \ \ \ \ if(isBound(event-{}>{}newSite))\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ remove\ the\ current\ monomer\ from\ the\ monomer\ list}
+\ \ \ \ \ \ \ \ site*\ s\ =\ monomerList.remove(event-{}>{}newSite-{}>{}listIndex,event-{}>{}time);
+
+\ \ \ \ \ \ \ \ \textsl{//\ because\ of\ the\ way\ RewindList\ works\ remove()\ returns\ the\ value\ of}
+\ \ \ \ \ \ \ \ \textsl{//\ the\ new\ element\ at\ the\ position,\ and\ we'll\ need\ to\ change\ it's}
+\ \ \ \ \ \ \ \ \textsl{//\ listIndex\ value\ to\ reflect\ it's\ new\ index}
+\ \ \ \ \ \ \ \ if(s\ !=\ NULL)
+\ \ \ \ \ \ \ \ \ \ s-{}>{}listIndex\ =\ event-{}>{}newSite-{}>{}listIndex;
+
+\ \ \ \ \ \ \ \ \textsl{//\ invalidate\ the\ index\ of\ the\ newSite}
+\ \ \ \ \ \ \ \ event-{}>{}newSite-{}>{}listIndex\ =\ -{}1;
+
+\ \ \ \ \ \ \ \ \textsl{//\ clear\ any\ neighbors\ that\ could\ be\ unbound\ monomers\ from\ the\ list}
+\ \ \ \ \ \ \ \ clearBonded(event-{}>{}newSite,event-{}>{}time);
+\ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \textsl{//\ incriment\ the\ diffusion\ counter}
+\ \ \ \ \ \ ++countDiffusion;
+\ \ \ \ \}\ break;
+\ \ \ \ default:\ throw(Exception("{}commitEvent():\ Invalid\ Event\ type!"{}));
+\ \ \}
+
+\ \ \textsl{//\ push\ the\ event\ into\ the\ event\ list}
+\ \ eventList.push(event);
+
+\ \ return(true);
+\}
+
+site*\ Lattice::randomMove(site*\ oldSite)\ \{
+\ \ point\ newPoint;
+\ \ int\ i\ =\ (int)(rng.getRandom(localTime)\ *\ 4);
+
+\ \ \textsl{//\ randomly\ move\ in\ a\ random\ direction\ with\ help\ from\ our\ direction\ array}
+\ \ newPoint.x\ =\ oldSite-{}>{}p.x\ +\ movementDir[i].x;
+\ \ newPoint.y\ =\ oldSite-{}>{}p.y\ +\ movementDir[i].y;
+
+\ \ \textsl{//\ make\ sure\ we\ don't\ leave\ our\ domain}
+\ \ if(newPoint.x\ >{}=\ RIGHT\underline\ X\underline\ BOUNDRY)
+\ \ \ \ newPoint.x\ -{}=\ 2;
+\ \ if(newPoint.x\ <{}=\ LEFT\underline\ X\underline\ BOUNDRY)
+\ \ \ \ newPoint.x\ +=\ 2;
+
+\ \ if(newPoint.y\ >{}=\ DIM\underline\ Y)
+\ \ \ \ newPoint.y\ -{}=\ 2;
+\ \ if(newPoint.y\ <{}\ 0)
+\ \ \ \ newPoint.y\ +=\ 2;
+
+\ \ \textsl{//\ return\ the\ new\ site\ on\ the\ lattice\ (where\ the\ monomer\ moved\ to)}
+\ \ return(\&lattice[newPoint.x][newPoint.y]);
+\}
+
+bool\ Lattice::isBoundry(point\ p)\ \{
+\ \ \textsl{//\ if\ p.x\ falls\ in\ the\ ghost\ (0,\ DIM-{}1)\ or\ boundry\ (1,\ DIM-{}2)\ return\ true}
+\ \ if(p.x\ <{}\ LEFT\underline\ X\underline\ BOUNDRY\ ||\ p.x\ >{}\ RIGHT\underline\ X\underline\ BOUNDRY)
+\ \ \ \ return(true);
+
+\ \ \textsl{//\ default\ is\ false}
+\ \ return(false);
+\}
+
+bool\ Lattice::isBound(site*\ s)\ \{
+\ \ point\ p;
+
+\ \ \textsl{//\ loop\ and\ check\ each\ direction,\ returning\ true\ if\ a\ neighbor\ is\ at\ the}
+\ \ \textsl{//\ same\ height\ or\ higher}
+\ \ for(int\ i=0;\ i\ <{}\ NUM\underline\ DIR;\ ++i)\ \{
+\ \ \ \ p\ =\ s-{}>{}p;
+\ \ \ \ p.x\ +=\ movementDir[i].x;
+\ \ \ \ p.y\ +=\ movementDir[i].y;
+
+\ \ \ \ if(p.x\ >{}=\ 0\ \&\&\ p.x\ <{}\ DIM\underline\ X+GHOST+GHOST\ \&\&\ p.y\ >{}=\ 0\ \&\&\ p.y\ <{}\ DIM\underline\ Y)
+\ \ \ \ \ \ if(lattice[p.x][p.y].h\ >{}=\ s-{}>{}h)
+\ \ \ \ \ \ \ \ return(true);
+\ \ \}
+
+\ \ \textsl{//\ default\ is\ false}
+\ \ return(false);
+\}
+
+bool\ Lattice::clearBonded(site*\ s,\ const\ double\ t)\ \{
+\ \ point\ p;
+
+\ \ \textsl{//\ loop\ and\ inspect\ the\ neighbors\ marking\ any\ bonded\ and}
+\ \ for(int\ i=0;\ i\ <{}\ NUM\underline\ DIR;\ ++i)\ \{
+\ \ \ \ p\ =\ s-{}>{}p;
+\ \ \ \ p.x\ +=\ movementDir[i].x;
+\ \ \ \ p.y\ +=\ movementDir[i].y;
+
+\ \ \ \ \textsl{//\ if\ the\ point\ is\ a\ valid\ point\ and\ if\ the\ point\ is\ going\ to\ bound,}
+\ \ \ \ \textsl{//\ and\ if\ the\ listIndex\ is\ valid\ then\ delete\ it\ from\ the\ monomer\ list}
+\ \ \ \ if(p.x\ >{}=\ RIGHT\underline\ X\underline\ BOUNDRY\ \&\&\ p.x\ <{}\ RIGHT\underline\ X\underline\ BOUNDRY\ \&\&\ p.y\ >{}=\ 0\ \&\&\ p.y\ <{}\ DIM\underline\ Y)
+\ \ \ \ \ \ if(lattice[p.x][p.y].h\ >{}=\ s-{}>{}h)
+\ \ \ \ \ \ \ \ if(lattice[p.x][p.y].listIndex\ !=\ -{}1)\ \{
+\ \ \ \ \ \ \ \ \ \ monomerList.remove(lattice[p.x][p.y].listIndex,t);
+\ \ \ \ \ \ \ \ \ \ lattice[p.x][p.y].listIndex\ =\ -{}1;
+\ \ \ \ \ \ \ \ \}
+\ \ \}
+
+\ \ return(true);
+\}
+
+bool\ Lattice::createHeightMap(string\ filename)\ \{
+\ \ int\ x,\ y;
+\ \ \ \ int\ width=DIM\underline\ X,\ height=DIM\underline\ Y;
+\ \ \ \ png\underline\ byte\ color\underline\ type=PNG\underline\ COLOR\underline\ TYPE\underline\ RGBA;
+\ \ \ \ png\underline\ byte\ bit\underline\ depth=8;
+\ \ \ \ png\underline\ structp\ png\underline\ ptr;
+\ \ \ \ png\underline\ infop\ info\underline\ ptr;
+\ \ \ \ int\ number\underline\ of\underline\ passes=1;
+\ \ \ \ png\underline\ bytep\ *\ row\underline\ pointers;
+\ \ \ \ FILE*\ fp;
+
+\ \ \ \ row\underline\ pointers\ =\ (png\underline\ bytep*)\ malloc(sizeof(png\underline\ bytep)\ *\ height);
+\ \ \ \ for\ (y=0;\ y<{}height;\ y++)
+\ \ \ \ \ \ \ \ row\underline\ pointers[y]\ =\ (png\underline\ byte*)\ malloc(width*((bit\underline\ depth/8)*4));
+
+\ \ \ \ for\ (y=0;\ y<{}height;\ y++)\ \{
+\ \ \ \ \ \ \ \ png\underline\ byte*\ row\ =\ row\underline\ pointers[y];
+\ \ \ \ \ \ \ \ for\ (x=0;\ x<{}width;\ x++)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ png\underline\ byte*\ ptr\ =\ \&(row[x*4]);
+\ \ \ \ \ \ \ \ \ \ \ \ if(lattice[x][y].h\ >{}\ 0)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr[0]\ =\ 255\ -{}\ ((lattice[x][y].h*10)\%255);\ ptr[1]\ =\ 255\ -{}\ ((lattice[x][y].h*10)\%255);\ ptr[2]\ =\ 255\ -{}\ ((lattice[x][y].h*10)\%255);\ ptr[3]\ =\ 255;
+\ \ \ \ \ \ \ \ \ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr[0]\ =\ 0;\ ptr[1]\ =\ 0;\ ptr[2]\ =\ 0;\ ptr[3]\ =\ 255;
+\ \ \ \ \ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \}
+
+\ \ \ \ fp\ =\ fopen(filename.c\underline\ str(),\ "{}wb"{});
+\ \ \ \ if(fp\ ==\ NULL)\ \{
+\ \ \ \ throw\ Exception("{}Couldn't\ open\ height\ map\ file!"{});
+\ \ \ \ return(false);
+\ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ png\underline\ ptr\ =\ png\underline\ create\underline\ write\underline\ struct(PNG\underline\ LIBPNG\underline\ VER\underline\ STRING,\ NULL,\ NULL,\ NULL);
+\ \ \ \ \ \ \ \ info\underline\ ptr\ =\ png\underline\ create\underline\ info\underline\ struct(png\underline\ ptr);
+\ \ \ \ \ \ \ \ png\underline\ init\underline\ io(png\underline\ ptr,\ fp);
+\ \ \ \ \ \ \ \ png\underline\ set\underline\ IHDR(png\underline\ ptr,\ info\underline\ ptr,\ width,\ height,
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bit\underline\ depth,\ color\underline\ type,\ PNG\underline\ INTERLACE\underline\ NONE,
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PNG\underline\ COMPRESSION\underline\ TYPE\underline\ BASE,\ PNG\underline\ FILTER\underline\ TYPE\underline\ BASE);
+\ \ \ \ \ \ \ \ png\underline\ write\underline\ info(png\underline\ ptr,\ info\underline\ ptr);
+\ \ \ \ \ \ \ \ png\underline\ write\underline\ image(png\underline\ ptr,\ row\underline\ pointers);
+\ \ \ \ \ \ \ \ png\underline\ write\underline\ end(png\underline\ ptr,\ NULL);
+\ \ \ \ \}
+
+\ \ return(true);
+\}
+
+bool\ Lattice::rollback(double\ t)\ \{
+
+\ \ if(t\ <{}\ minGlobalTime)
+\ \ \ \ t\ =\ minGlobalTime;
+
+\ \ \textsl{//\ rewind\ the\ lattice\ using\ the\ eventList\ stack}
+\ \ while(!eventList.empty()\ \&\&\ localTime\ >{}\ t)\ \{
+\ \ \ \ Event*\ event\ =\ eventList.top();
+
+\ \ \ \ switch(event-{}>{}eventType)\ \{
+\ \ \ \ \ \ case\ eventDeposition:\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ decrease\ the\ height\ of\ the\ deposition\ site}
+\ \ \ \ \ \ \ \ -{}-{}event-{}>{}newSite-{}>{}h;
+
+\ \ \ \ \ \ \ \ \textsl{//\ clear\ the\ listIndex\ just\ in\ case}
+\ \ \ \ \ \ \ \ event-{}>{}newSite-{}>{}listIndex\ =\ -{}1;
+
+\ \ \ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomers\ new\ site\ falls\ on\ the\ boundry\ (x\ ==\ 1\ ||\ x\ ==\ DIM\ -{}\ 1)}
+\ \ \ \ \ \ \ \ if(isBoundry(event-{}>{}newSite-{}>{}p))\ \{
+\ \ \ \ \ \ \ \ \ \ if(event-{}>{}isLocal)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ send\ the\ anti-{}message}
+\ \ \ \ \ \ \ \ \ \ \ \ mpi.sendAntiMessage(makeMessage(event),GET\underline\ DIR(event-{}>{}newSite-{}>{}p.x));
+\ \ \ \ \ \ \ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ store\ the\ event\ back\ in\ the\ remoteEvents\ list}
+\ \ \ \ \ \ \ \ \ \ \ \ remoteEventList.push(event);
+\ \ \ \ \ \ \ \ \ \ \ \ countRemote-{}-{};
+\ \ \ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ decriment\ the\ countBoundry}
+\ \ \ \ \ \ \ \ \ \ -{}-{}countBoundry;
+\ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \}break;
+\ \ \ \ \ \ case\ eventDiffusion:\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ decrease\ the\ height\ of\ the\ new\ site}
+\ \ \ \ \ \ \ \ -{}-{}event-{}>{}newSite-{}>{}h;
+
+\ \ \ \ \ \ \ \ \textsl{//\ increase\ the\ height\ of\ the\ old\ site}
+\ \ \ \ \ \ \ \ ++event-{}>{}oldSite-{}>{}h;
+
+\ \ \ \ \ \ \ \ \textsl{//\ clear\ the\ listIndex\ just\ in\ case}
+\ \ \ \ \ \ \ \ event-{}>{}newSite-{}>{}listIndex\ =\ -{}1;
+\ \ \ \ \ \ \ \ event-{}>{}oldSite-{}>{}listIndex\ =\ -{}1;
+
+\ \ \ \ \ \ \ \ \textsl{//\ see\ if\ the\ monomers\ new\ site\ falls\ on\ the\ boundry\ (x\ ==\ 1\ ||\ x\ ==\ DIM\ -{}\ 1)}
+\ \ \ \ \ \ \ \ if(isBoundry(event-{}>{}newSite-{}>{}p))\ \{
+\ \ \ \ \ \ \ \ \ \ if(event-{}>{}isLocal)\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ send\ the\ anti-{}message}
+\ \ \ \ \ \ \ \ \ \ \ \ mpi.sendAntiMessage(makeMessage(event),GET\underline\ DIR(event-{}>{}newSite-{}>{}p.x));
+\ \ \ \ \ \ \ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ \ \ \ \ \textsl{//\ store\ the\ event\ back\ in\ the\ remoteEvents\ list}
+\ \ \ \ \ \ \ \ \ \ \ \ remoteEventList.push(event);
+\ \ \ \ \ \ \ \ \ \ \ \ countRemote-{}-{};
+\ \ \ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ \ \ \textsl{//\ decriment\ the\ countBoundry}
+\ \ \ \ \ \ \ \ \ \ -{}-{}countBoundry;
+\ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ \textsl{//\ decriment\ the\ countDiffusion\ stat}
+\ \ \ \ \ \ \ \ -{}-{}countDiffusion;
+\ \ \ \ \ \ \}break;
+\ \ \ \ \}
+
+\ \ \ \ \textsl{//\ set\ the\ local\ clock\ to\ the\ event\ time}
+\ \ \ \ localTime\ =\ event-{}>{}time;
+
+\ \ \ \ \textsl{//\ decriment\ the\ countEvents;}
+\ \ \ \ -{}-{}countEvents;
+
+\ \ \ \ \textsl{//\ if\ it's\ a\ local\ event\ clean\ up\ the\ memory}
+\ \ \ \ if(event-{}>{}isLocal)
+\ \ \ \ \ \ delete\ event;
+
+\ \ \ \ \textsl{//\ pop\ the\ top\ of\ the\ event\ list}
+\ \ \ \ eventList.pop();
+\ \ \}
+
+\ \ \textsl{//\ rewind\ the\ RNG}
+\ \ rng.rewind(t);
+
+\ \ \textsl{//\ rewind\ the\ monomerList}
+\ \ monomerList.rewind(t);
+
+\ \ \textsl{//\ off\ by\ one\ error}
+\ \ ++countEvents;
+
+\ \ \textsl{//\ fix\ all\ of\ the\ listIndex\ entries}
+\ \ for(int\ i=0;\ i\ <{}\ monomerList.size();\ ++i)\ \{
+\ \ \ \ monomerList[i]-{}>{}listIndex\ =\ i;
+\ \ \}
+
+\ \ ++countRollback;
+
+\ \ return(true);
+\}
+
+bool\ Lattice::negoitateEvents(fstream\&\ logFile)\ \{
+\ \ vector<{}message>{}\ messages;
+\ \ vector<{}message>{}\ antiMessages;
+\ \ vector<{}Event*>{}\ remoteEvents;
+\ \ float\ pastTime\ =\ 0.0;
+\ \ bool\ isRollback\ =\ false;
+
+\ \ \textsl{//\ get\ any\ waiting\ message}
+\textsl{//\ \ logFile\ <{}<{}\ "{}lattice.mpi.recvMessages()"{}\ <{}<{}\ endl;\ logFile.flush();}
+\ \ mpi.recvMessages(\&messages);
+
+\ \ \textsl{//\ get\ any\ waiting\ anti-{}messages}
+\textsl{//\ \ logFile\ <{}<{}\ "{}lattice.mpi.recvAntiMessages()"{}\ <{}<{}\ endl;\ logFile.flush();}
+\ \ mpi.recvAntiMessages(\&antiMessages);
+
+\ \ \textsl{//\ process\ waiting\ antimessages}
+\ \ if(!antiMessages.empty())\ \{
+\textsl{//\ \ \ \ logFile\ <{}<{}\ "{}processing\ anti-{}messages!"{}\ <{}<{}\ endl;\ logFile.flush();}
+\ \ \ \ \textsl{//\ get\ the\ lowest\ time\ of\ any\ past\ antimessages}
+\ \ \ \ for(vector<{}message>{}::iterator\ i=antiMessages.begin();\ i\ <{}\ antiMessages.end();\ ++i)\ \{
+\ \ \ \ \ \ if((*i).time\ <{}=\ localTime)\ \{
+\ \ \ \ \ \ \ \ if((*i).time\ <{}\ pastTime\ ||\ !isRollback)\ \{
+\ \ \ \ \ \ \ \ \ \ pastTime\ =\ (*i).time;
+\ \ \ \ \ \ \ \ \ \ isRollback\ =\ true;
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \}
+\ \ \ \ \}
+
+\ \ \ \ \textsl{//\ if\ there\ is\ a\ past\ event\ rollback\ to\ the\ minimum\ past\ event\ type}
+\ \ \ \ if(isRollback)\ \{
+\ \ \ \ \ \ \textsl{//\ rollback\ to\ the\ time\ of\ this\ antimessage}
+\ \ \ \ \ \ rollback(pastTime);
+\ \ \ \ \}
+
+\ \ \ \ \textsl{//\ translate\ the\ antimessages\ and\ insert\ them\ into\ the\ antiEvent\ vector}
+\ \ \ \ translateMessages(\&antiEvents,\&antiMessages);
+\ \ \}
+
+\ \ \textsl{//\ if\ we\ don't\ have\ any\ waiting\ messages\ just\ exit\ out}
+\ \ if(messages.empty())
+\ \ \ \ return(true);
+
+\textsl{//\ \ logFile\ <{}<{}\ "{}processing\ messages!"{}\ <{}<{}\ endl;\ logFile.flush();}
+
+\ \ \textsl{//\ translate\ the\ remote\ messages\ into\ events4}
+\ \ translateMessages(\&remoteEvents,\&messages);
+
+\ \ \textsl{//\ loop\ through\ all\ the\ recieved\ events\ and\ push\ them\ into\ the}
+\ \ isRollback\ =\ false;\ pastTime\ =\ 0.0;
+\ \ for(vector<{}Event*>{}::iterator\ i=remoteEvents.begin();\ i\ <{}\ remoteEvents.end();\ ++i)\ \{
+\ \ \ \ if((*i)-{}>{}time\ <{}\ localTime)\ \{
+\ \ \ \ \ \ if((*i)-{}>{}time\ <{}\ pastTime\ ||\ !isRollback)\ \{
+\ \ \ \ \ \ \ \ pastTime\ =\ (*i)-{}>{}time;
+\ \ \ \ \ \ \ \ isRollback\ =\ true;
+\ \ \ \ \ \ \}
+\ \ \ \ \}
+\ \ \}
+
+\ \ \textsl{//\ if\ we\ need\ to\ rollback\ then\ do\ a\ rollback}
+\ \ if(isRollback)
+\ \ \ \ rollback(pastTime);
+
+\ \ \textsl{//\ push\ all\ the\ future\ events\ onto\ the\ remote\ event\ list}
+\ \ for(vector<{}Event*>{}::iterator\ i=remoteEvents.begin();\ i\ <{}\ remoteEvents.end();\ ++i)
+\ \ \ \ remoteEventList.push(*i);
+
+\ \ return(true);
+\}
+
+bool\ Lattice::translateMessages(vector<{}Event*>{}*\ events,\ vector<{}message>{}*\ messages)\ \{
+\ \ vector<{}message>{}::iterator\ i;
+\ \ message\ m;
+
+\ \ for(i=messages-{}>{}begin();\ i\ <{}\ messages-{}>{}end();\ ++i)\ \{
+\ \ \ \ m\ =\ *i;
+
+\ \ \ \ \textsl{//\ make\ an\ event\ from\ it\ <{}sarcasm>{}this\ should\ be\ fun<{}/sarcasm>{}}
+\ \ \ \ switch(m.type)\ \{
+\ \ \ \ \ \ case\ eventDiffusion:\ \{
+\ \ \ \ \ \ \ \ \textsl{//\ translate\ the\ oldSite\ and\ newSite\ coords}
+\ \ \ \ \ \ \ \ if(m.newSite.p.x\ <{}\ LEFT\underline\ X\underline\ BOUNDRY)\ \{
+\ \ \ \ \ \ \ \ \ \ m.newSite.p.x\ =\ DIM\underline\ X\ -{}\ 1\ -{}\ m.newSite.p.x;
+\ \ \ \ \ \ \ \ \ \ m.oldSite.p.x\ =\ DIM\underline\ X\ -{}\ 1\ -{}\ m.oldSite.p.x;
+\ \ \ \ \ \ \ \ \}\ else\ \{
+\ \ \ \ \ \ \ \ \ \ m.newSite.p.x\ -{}=\ DIM\underline\ X\ -{}\ 1;
+\ \ \ \ \ \ \ \ \ \ m.oldSite.p.x\ -{}=\ DIM\underline\ X\ -{}\ 1;
+\ \ \ \ \ \ \ \ \}
+
+\ \ \ \ \ \ \ \ \textsl{//\ push\ an\ event\ into\ the\ return\ vector}
+\ \ \ \ \ \ \ \ events-{}>{}push\underline\ back(new\ Event(\&lattice[m.oldSite.p.x][m.oldSite.p.y],
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&lattice[m.newSite.p.x][m.newSite.p.y],m.time,false,m.type,0));
+\ \ \ \ \ \ \}\ break;
+\ \ \ \ \ \ case\ eventDeposition:\ \{
+\ \ \ \ \ \ \ \ if(m.newSite.p.x\ <{}\ LEFT\underline\ X\underline\ BOUNDRY)
+\ \ \ \ \ \ \ \ \ \ m.newSite.p.x\ =\ DIM\underline\ X\ -{}\ 1\ -{}\ m.newSite.p.x;
+\ \ \ \ \ \ \ \ else
+\ \ \ \ \ \ \ \ \ \ m.newSite.p.x\ -{}=\ DIM\underline\ X\ -{}\ 1;
+
+\ \ \ \ \ \ \ \ \textsl{//\ push\ an\ event\ into\ the\ return\ vector}
+\ \ \ \ \ \ \ \ events-{}>{}push\underline\ back(new\ Event(\&lattice[m.newSite.p.x][m.newSite.p.y],m.time,false,m.type));
+\ \ \ \ \ \ \}\ break;
+\ \ \ \ \ \ default:throw(Exception("{}Bad\ event\ type\ encountered\ in\ Lattice::translateMessages()"{}));
+\ \ \ \ \}
+\ \ \}
+
+\ \ return(true);
+\}
+
+message*\ Lattice::makeMessage(Event*\ event)\ \{
+
+\ \ switch(event-{}>{}eventType)\ \{
+\ \ \ \ case\ eventDiffusion:\ \{
+\ \ \ \ \ \ m.oldSite.p.x\ =\ event-{}>{}oldSite-{}>{}p.x;
+\ \ \ \ \ \ m.oldSite.p.y\ =\ event-{}>{}oldSite-{}>{}p.y;
+\ \ \ \ \ \ m.oldSite.h\ =\ event-{}>{}oldSite-{}>{}h;
+\ \ \ \ \ \ \textsl{//m.oldSite\ =\ *(event-{}>{}oldSite);}
+\ \ \ \ \}\ \textsl{//\ fall\ through}
+\ \ \ \ case\ eventDeposition:\ \{
+\ \ \ \ \ \ m.newSite.p.x\ =\ event-{}>{}newSite-{}>{}p.x;
+\ \ \ \ \ \ m.newSite.p.y\ =\ event-{}>{}newSite-{}>{}p.y;
+\ \ \ \ \ \ m.newSite.h\ =\ event-{}>{}newSite-{}>{}h;
+\ \ \ \ \ \ \textsl{//m.newSite\ =\ *(event-{}>{}newSite);}
+\ \ \ \ \}break;
+\ \ \}
+\ \ m.time\ =\ event-{}>{}time;
+\ \ m.type\ =\ event-{}>{}eventType;
+
+\ \ return(\&m);
+\}
+
+bool\ Lattice::hasAntiEvent(Event*\ event)\ \{
+
+\ \ \textsl{//\ if\ there\ are\ no\ antiEvents\ just\ bail}
+\ \ if(antiEvents.empty())
+\ \ \ \ return(false);
+
+\ \ \textsl{//\ loop\ through\ the\ avaliable\ antiEvents}
+\ \ for(vector<{}Event*>{}::iterator\ i=antiEvents.begin();\ i\ <{}\ antiEvents.end();\ ++i)\ \{
+\ \ \ \ \textsl{//\ if\ the\ time\ of\ the\ event\ is\ the\ same\ as\ the\ time\ of\ the\ antievent}
+\ \ \ \ \textsl{//\ we\ can\ return\ true\ and\ erase\ the\ antievent}
+\ \ \ \ if(event-{}>{}time\ ==\ (*i)-{}>{}time)\ \{
+\ \ \ \ \ \ delete\ *i;\ \textsl{//\ clean\ up\ the\ allocated\ memeory}
+\ \ \ \ \ \ antiEvents.erase(i);
+\ \ \ \ \ \ return(true);
+\ \ \ \ \}
+\ \ \}
+
+\ \ \textsl{//\ no\ matching\ antievent\ was\ found\ to\ return\ false}
+\ \ return(false);
+\}
+
+ }
+\normalfont\normalsize
+

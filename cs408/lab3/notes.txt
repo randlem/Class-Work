@@ -1,0 +1,15 @@
+Notes about the project:
+
+1) There's a few lines in the main.cpp that need uncommented so SJN and HRRN work. Commented out because I never stubbed the damn things.
+
+2) Don't print any of the SimLib stuff.  It's a waste of paper.  Instead, we should provide a paragraph describing what it does and include the whole project file on a disk including SimLib.  It's too well intertwined to try to unravel all of the dependencies for the 3 parts we actually use and we've both got better things to do.
+
+3) I'm fairly confident that each of my simualtions are working correcly.  The only one I'd have concerns about is RR, but I can't think of anything majorly wrong with it.
+
+4) The numbers are all fucked up because I don't have good data to feed the statistical distributions that drive the random arrival times and processing times.  Currently the default arrival time is every 10 time units.  For the processing times it's 100.  Since I'm using exponential distributions, these numbers can go really, really big or really, really small, but if you average enough of them out they should meet 10 and 100 respecitvly.  Tweaking these numbers may be a good idea, but try to keep them the same for all the algorithms.
+
+5) I encountered an odd error in SRTN.  Something about deallocating memory twice.  I debugged it and it had something to do with pthread, so to fix it I just commented out the delete call in the schedule() function.  Nothing major since the code still works, but the bug is there and I have no reason for it.
+
+6) The main() now takes some parameters on the command line.  If you pass in the name of the algorithm abbrv. in lower case, it will allocate an object of that type.  Otherwise it'll allocate an object of type Dummy.  I'm too lazy to overhaul all my classes so we can actually set the defaults in the process classes, but most of that code is there and it wouldn't require much work to change it so we could modify the running parameters from the command-line.
+
+7) Can you please send me a copy of your project files and the report when it's all done?  Any archive will do.  Thanks!

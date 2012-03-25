@@ -1,0 +1,1198 @@
+%!PS-Adobe-3.0
+%%Title: ddr.photo
+%%For: 
+%%Creator: a2ps version 4.13c
+%%CreationDate: Mon Mar 20 16:59:57 2006
+%%BoundingBox: 24 24 571 818
+%%DocumentData: Clean7Bit
+%%Orientation: Landscape
+%%Pages: 4
+%%PageOrder: Ascend
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontMatrix get 3 get 1000 mul
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Define these in case they're not in the FontInfo (also, here
+    % they're easier to get to.
+    /UnderlinePosition 1 def
+    /UnderlineThickness 1 def
+    
+    % Get the underline position and thickness if they're defined.
+    currentdict /FontInfo known {
+      FontInfo
+      
+      dup /UnderlinePosition known {
+	dup /UnderlinePosition get
+	0 exch FontMatrix transform exch pop
+	/UnderlinePosition exch def
+      } if
+      
+      dup /UnderlineThickness known {
+	/UnderlineThickness get
+	0 exch FontMatrix transform exch pop
+	/UnderlineThickness exch def
+      } if
+      
+    } if
+    currentdict 
+  end 
+} bind def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 595 def
+/sw 842 def
+/llx 24 def
+/urx 818 def
+/ury 571 def
+/lly 24 def
+/#copies 1 def
+/th 15.000000 def
+/fnfs 11 def
+/bfs 8.005733 def
+/cw 4.803440 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   501.959430 th add
+def
+/pmw urx llx sub pw 2 mul sub 1 div def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+  dup pmw add pw add
+] def
+/y [
+  pmh ph add 0 mul ph add
+  dup
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1-2) 1
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(/************************************************) p n
+(* lab2.cpp) N
+(*) N
+(* Name:  Mark Randles) N
+(* Class: CS408) N
+(* Date:  2006-02-28) N
+(*) N
+(* Description: Real-time simulation of disk) N
+(*  access, based on a total service time for) N
+(*  1000 disk access requests.) N
+(************************************************/) N
+() N
+(/**********************************************************) N
+(* INCLUDES) N
+(**********************************************************/) N
+(#include <iostream>) N
+(using std::cout;) N
+(using std::cerr;) N
+(using std::endl;) N
+() N
+(#include <map>) N
+(using std::map;) N
+() N
+(#include <unistd.h>) N
+(#include <pthread.h>) N
+() N
+(#include "ddr.h") N
+() N
+(/**********************************************************) N
+(* GLOBALS) N
+(**********************************************************/) N
+(bool) S 8 T () S 16 T () S 24 T (done = false;) S 40 T () S 48 T () S 56 T (// set to true if the di) N
+(sk drive has completed REQUESTS requests) N
+(RequestQueue) S 16 T (*request_queue = NULL;) S 40 T (// the request queue for the disk drive) N
+(pthread_mutex_t mutex_request_queue = PTHREAD_MUTEX_INITIALIZER;) N
+(bool ) S 8 T () S 16 T () S 24 T (complete[N];) S 40 T () S 48 T () S 56 T (// set to true when the ) N
+(disk_drive has completed the last request) N
+() N
+(/**********************************************************) N
+(* PROTOTYPES) N
+(**********************************************************/) N
+(void *disk_drive\(\);) N
+(void *request_thread\(void*\);) N
+() N
+(/**********************************************************) N
+(* MAIN FUNCTION) N
+(**********************************************************/) N
+(int main\(int argc, char* argv[]\) {) N
+() S 8 T (pthread_t threads[N];) S 32 T (// index of threads) N
+() N
+() S 8 T (request_queue = NULL;) N
+() N
+() S 8 T (cout << argc << endl;) N
+() N
+() S 8 T (if\(argc > 1 && \(strcmp\(argv[1],"--debug"\) == 0 || strcmp\(argv[1],"-d"\) =) N
+(= 0\)\) {) N
+() S 8 T () S 16 T (debug = true;) N
+() S 8 T () S 16 T (DEBUG_PRINT\("Debug ON" << endl\)) N
+() S 8 T () S 16 T (if\(argc >= 3\) {) N
+() S 8 T () S 16 T () S 24 T (if\(strcmp\(argv[2],"--scan"\) == 0\)) N
+() S 8 T () S 16 T () S 24 T () S 32 T (request_queue = new RequestQueueSCAN\(\);) N
+() S 8 T () S 16 T (} else) N
+(ddr.photo) (Page 1/8) (Mar 20, 06 16:52) title
+border
+/v 1 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S 16 T () S 24 T (request_queue = new RequestQueueFIFO\(\);) N
+() S 8 T (} else if\(argc > 1 && \(strcmp\(argv[1],"--scan"\) == 0\)\)) N
+() S 8 T () S 16 T (request_queue = new RequestQueueSCAN\(\);) N
+() S 8 T (else) N
+() S 8 T () S 16 T (request_queue = new RequestQueueFIFO\(\);) N
+() N
+() S 8 T (// make sure a request queue exists) N
+() S 8 T (if\(request_queue == NULL\) {) N
+() S 8 T () S 16 T (cerr << "No request queue created!";) N
+() S 8 T () S 16 T (return\(1\);) N
+() S 8 T (}) N
+() N
+() S 8 T (// seed the random # generator) N
+() S 8 T (srand\(0\);) N
+() N
+() S 8 T (// create the request threads) N
+() S 8 T (for\(int i=0; i < N; i++\)) N
+() S 8 T () S 16 T (pthread_create\(&threads[i], NULL, request_thread, \(void *\)i\);) N
+() N
+() S 8 T (// run the disk_drive\(\) process, so we've only got N+1 threads) N
+() S 8 T (disk_drive\(\);) N
+() N
+() S 8 T (// wait for all the threads to rejoin) N
+() S 8 T (for\(int i=0; i < N; i++\)) N
+() S 8 T () S 16 T (pthread_join\(threads[i],NULL\);) N
+() N
+() S 8 T (// print some stats for the queue) N
+() S 8 T (request_queue->print_stats\(\);) N
+() N
+() S 8 T (return\(0\);) N
+(}) N
+() N
+(/**********************************************************) N
+(* FUNCTIONS) N
+(**********************************************************/) N
+(void *disk_drive\(\) {) N
+() S 8 T (double total_time = 0.0; // sum of all the times) N
+() S 8 T (int served = 0; // the total number of request processed, should = REQUE) N
+(STS) N
+() S 8 T (double seek_time = 0.0; // the seek time for the request) N
+() S 8 T (request *r = NULL;) N
+() N
+() S 8 T (// do a service loop until we've processed N requests) N
+() S 8 T (while\(served < REQUESTS\) {) N
+() S 8 T () S 16 T (// see if there's a waiting request) N
+() S 8 T () S 16 T (while\(request_queue->request_count\(\) <= 0\) {) N
+() S 8 T () S 16 T () S 24 T (usleep\(1\); // sleep the thread for a bit if there is no ) N
+(request) N
+() S 8 T () S 16 T (}) N
+() N
+() S 8 T () S 16 T (// get the next request) N
+() S 8 T () S 16 T (pthread_mutex_lock\(&mutex_request_queue\);) N
+() S 8 T () S 16 T (r = request_queue->next_request\(\);) N
+() S 8 T () S 16 T (DEBUG_PRINT\("Service #: " << served << " \(" << r->thread << "," ) N
+(<< r->track << "," << r->time_offset << "\)" << endl\);) N
+(//) S 8 T () S 16 T (request_queue->queue_dump\(\);) N
+() S 8 T () S 16 T (pthread_mutex_unlock\(&mutex_request_queue\);) N
+() N
+() S 8 T () S 16 T (// get the seek time) N
+() S 8 T () S 16 T (seek_time = V + \(r->track * M\);) N
+() N
+() S 8 T () S 16 T (// add the current seek time to the total service time) N
+(ddr.photo) (Page 2/8) (Mar 20, 06 16:52) title
+border
+grestore
+(Printed by ) rhead
+(ddr.photo) (1/4) (Monday March 20, 2006) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3-4) 2
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S 16 T (total_time += seek_time;) N
+() N
+() S 8 T () S 16 T (// since we've successfully served one request, inc our counter) N
+() S 8 T () S 16 T (served++;) N
+() N
+() S 8 T () S 16 T (// sleep for the seek time) N
+() S 8 T () S 16 T (SLEEP\(seek_time\);) N
+() N
+() S 8 T () S 16 T (// set the request completed flag) N
+() S 8 T () S 16 T (complete[r->thread] = true;) N
+() S 8 T (}) N
+() N
+() S 8 T (// set the done flag to signal the request processes to terminate) N
+() S 8 T (done = true;) N
+() N
+() S 8 T (// unblock all of the request threads that are still blocked) N
+() S 8 T (memset\(&complete,true,sizeof\(bool\) * N\);) N
+() N
+() S 8 T (// print out the average service time) N
+() S 8 T (cout << "Average Service Time = " << \(float\)\(total_time / served\) << end) N
+(l;) N
+(//) S 8 T (request_queue->queue_dump\(\);) N
+() N
+() S 8 T (// exit the thread) N
+() S 8 T (return\(0\);) N
+(//) S 8 T (pthread_exit\(NULL\);) N
+(}) N
+() N
+(void *request_thread\(void *thread_id\) {) N
+() S 8 T (double delay = 0.0;) N
+() S 8 T (double total_delay = 0.0;) N
+() S 8 T (int total_requests = 0;) N
+() S 8 T (request *r = NULL;) N
+() N
+() S 8 T (while\(!done\) {) N
+() S 8 T () S 16 T (// create a new request object) N
+() S 8 T () S 16 T (r = NULL;) N
+() S 8 T () S 16 T (r = new request;) N
+() N
+() S 8 T () S 16 T (// setup the new request) N
+() S 8 T () S 16 T (delay = \(double\)\(RANDOM\(\) * S\);) N
+() S 8 T () S 16 T (r->track = \(int\)\(RANDOM\(\) * T\);) N
+() S 8 T () S 16 T (r->time_offset = delay;) N
+() S 8 T () S 16 T (r->thread = \(int\)thread_id;) N
+() S 8 T () S 16 T (complete[\(int\)thread_id] = false;) N
+() N
+() S 8 T () S 16 T (// add the delay time to the total delay time for this thread) N
+() S 8 T () S 16 T (total_delay += delay;) N
+() N
+() S 8 T () S 16 T (// sleep until the request needs to be posted) N
+() S 8 T () S 16 T (SLEEP\(delay\);) N
+() N
+() S 8 T () S 16 T (// insert the new request into the queue) N
+() S 8 T () S 16 T (pthread_mutex_lock\(&mutex_request_queue\);) N
+() S 8 T () S 16 T (request_queue->new_request\(r\);) N
+() S 8 T () S 16 T (DEBUG_PRINT\("Thread " << \(int\)thread_id << " created new request) N
+( \(" << r->track << "," << delay << "\)" << endl\);) N
+(//) S 8 T () S 16 T (request_queue->queue_dump\(\);) N
+() S 8 T () S 16 T (pthread_mutex_unlock\(&mutex_request_queue\);) N
+() N
+() S 8 T () S 16 T (// incriment the total requests count for this thread) N
+() S 8 T () S 16 T (total_requests++;) N
+(ddr.photo) (Page 3/8) (Mar 20, 06 16:52) title
+border
+/v 1 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p n
+() S 8 T (}) N
+() N
+() S 8 T (cout << "Thread id: " << \(int\)thread_id << "; Average Request Time: " <<) N
+( \(double\)\(total_delay / \(double\)total_requests\) << "; Total Requests Made: " << ) N
+(total_requests << endl;) N
+() N
+() S 8 T (// exit the thread) N
+() S 8 T (pthread_exit\(NULL\);) N
+(}) N
+(#ifndef __DDR_H__) N
+(#define __DDR_H__) N
+() N
+(/**********************************************************) N
+(* INCLUDES) N
+(**********************************************************/) N
+(#include <queue>) N
+(using std::queue;) N
+() N
+(#include <vector>) N
+(using std::vector;) N
+() N
+(#include <map>) N
+(using std::map;) N
+() N
+(#include <string>) N
+(using std::string;) N
+() N
+(#include <math.h>) N
+(#include <stdlib.h>) N
+(#include <unistd.h>) N
+() N
+(/**********************************************************) N
+(* MACROS) N
+(**********************************************************/) N
+(#define RANDOM\(\) \(\(double\)\(rand\(\) / \(double\)RAND_MAX\)\)) N
+(#define DEBUG_PRINT\(a\) if\(debug\) { cout << a; }) N
+(#define SLEEP\(a\) usleep\(\(useconds_t\)\(double\)\(a * \(double\)1000\)\)) N
+() N
+(/**********************************************************) N
+(* CONSTANTS) N
+(**********************************************************/) N
+(const int) S 16 T (N = 8;) S 24 T () S 32 T () S 40 T () S 48 T (// number of processes) N
+(const float) S 16 T (S = 120.0;) S 32 T () S 40 T () S 48 T (// request time) N
+(const int   T = 256;) S 24 T () S 32 T () S 40 T (// number of tracks) N
+(const float) S 16 T (M = 0.05;) S 32 T () S 40 T () S 48 T (// track seek time) N
+(const float V = 3.0;) S 24 T () S 32 T () S 40 T (// overhead time per request) N
+(const int) S 16 T (REQUESTS = 10;) S 32 T (// number of requests to run the sim for) N
+() N
+(/**********************************************************) N
+(* GLOBALS) N
+(**********************************************************/) N
+(bool) S 8 T () S 16 T () S 24 T (debug = false; ) S 40 T () S 48 T () S 56 T (// set to true then debu) N
+(g info will print) N
+() N
+(/**********************************************************) N
+(* STRUCTURES) N
+(**********************************************************/) N
+() N
+(// a structure to hold information about a request to the disk drive) N
+(typedef struct request {) N
+() S 8 T (int) S 16 T () S 24 T (thread;) S 32 T () S 40 T () S 48 T (// thread id of the requesting t) N
+(ddr.photo) (Page 4/8) (Mar 20, 06 16:52) title
+border
+grestore
+(Printed by ) rhead
+(ddr.photo) (2/4) (Monday March 20, 2006) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (5-6) 3
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(hread) p n
+() S 8 T (int) S 16 T () S 24 T (track;) S 32 T () S 40 T () S 48 T (// track # of the request) N
+() S 8 T (double) S 16 T (time_offset;) S 32 T (// time offset from the last request) N
+(};) N
+() N
+(// abstract base class for request queues) N
+(class RequestQueue {) N
+(public:) N
+() S 8 T (// base constructor) N
+() S 8 T (RequestQueue\(\) {) N
+() S 8 T () S 16 T (total = 0;) N
+() S 8 T (}) N
+() N
+() S 8 T (// base destructor) N
+() S 8 T (virtual ~RequestQueue\(\) {) N
+() N
+() S 8 T (};) N
+() N
+() S 8 T (// returns the next requests that should be processed) N
+() S 8 T (virtual request* next_request\(\) = 0;) N
+() N
+() S 8 T (// returns the current # of requests pending) N
+() S 8 T (virtual int request_count\(\) = 0;) N
+() N
+() S 8 T (// returns the total requests processed;) N
+() S 8 T (int request_total\(\) {) N
+() S 8 T () S 16 T (return\(total\);) N
+() S 8 T (}) N
+() N
+() S 8 T (// adds a new request to the queue) N
+() S 8 T (virtual bool new_request\(request *r\) = 0;) N
+() N
+() S 8 T (// performs a dump of the current queue state) N
+() S 8 T (virtual void queue_dump\(\) = 0;) N
+() N
+() S 8 T (virtual void print_stats\(\) = 0;) N
+() N
+(protected:) N
+() S 8 T (int total;) N
+() S 8 T (string name;) N
+(};) N
+() N
+(// a request queue which implements a first-in, first-out priority) N
+(class RequestQueueFIFO : public RequestQueue {) N
+(public:) N
+() S 8 T (RequestQueueFIFO\(\) {) N
+() S 8 T () S 16 T (name = "FIFO";) N
+() S 8 T (}) N
+() N
+() S 8 T (virtual ~RequestQueueFIFO\(\) {) N
+() S 8 T () S 16 T (// clean up any requests left in the queue) N
+() S 8 T () S 16 T (while\(!fifo.empty\(\)\) {) N
+() S 8 T () S 16 T () S 24 T (delete fifo.front\(\);) N
+() S 8 T () S 16 T () S 24 T (fifo.pop\(\);) N
+() S 8 T () S 16 T (}) N
+() S 8 T (}) N
+() N
+() S 8 T (request* next_request\(\) {) N
+() S 8 T () S 16 T (request *r;) S 32 T (// temp request pointer) N
+() N
+() S 8 T () S 16 T (// get the top request and pop the value off the queue) N
+() S 8 T () S 16 T (r = fifo.front\(\);) N
+(ddr.photo) (Page 5/8) (Mar 20, 06 16:52) title
+border
+/v 1 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S 16 T (fifo.pop\(\);) N
+() N
+() S 8 T () S 16 T (// return the value of the pointer) N
+() S 8 T () S 16 T (return\(r\);) N
+() S 8 T (}) N
+() N
+() S 8 T (int request_count\(\) {) N
+() S 8 T () S 16 T (// return the count) N
+() S 8 T () S 16 T (return\(fifo.size\(\)\);) N
+() S 8 T (}) N
+() N
+() S 8 T (bool new_request\(request* r\) {) N
+() S 8 T () S 16 T (// make sure we didn't get a null object) N
+() S 8 T () S 16 T (if\(r == NULL\)) N
+() S 8 T () S 16 T () S 24 T (return\(false\);) N
+() N
+() S 8 T () S 16 T (// push the new request into the queue) N
+() S 8 T () S 16 T (fifo.push\(r\);) N
+() N
+() S 8 T () S 16 T (// incriment the total counter) N
+() S 8 T () S 16 T (total++;) N
+() N
+() S 8 T () S 16 T (// well everything work so return something that represents that) N
+() S 8 T () S 16 T (return\(true\);) N
+() S 8 T (}) N
+() N
+() S 8 T (void queue_dump\(\) {) N
+() S 8 T () S 16 T (queue<request*> t = this->fifo;) N
+() S 8 T () S 16 T (request* r = NULL;) N
+() S 8 T () S 16 T (int i = 0;) N
+() S 8 T () S 16 T (cout << "BEGIN QUEUE DUMP -------------------------" << endl;) N
+() S 8 T () S 16 T (while\(!t.empty\(\)\) {) N
+() S 8 T () S 16 T () S 24 T (r = t.front\(\);) N
+() S 8 T () S 16 T () S 24 T (t.pop\(\);) N
+() N
+() S 8 T () S 16 T () S 24 T (cout << "#" << i << ": request = \(" << r->thread << ", ") N
+( << r->track << ", " << r->time_offset << "\)" << endl;) N
+() S 8 T () S 16 T () S 24 T (i++;) N
+() S 8 T () S 16 T (}) N
+() S 8 T () S 16 T (cout << "END QUEUE DUMP ---------------------------" << endl;) N
+() S 8 T (}) N
+() N
+() S 8 T (void print_stats\(\) {) N
+() S 8 T () S 16 T (cout << "Queue Type: " << name << endl;) N
+() S 8 T () S 16 T (cout << "Total Requests: " << total << endl;) N
+() S 8 T (}) N
+() N
+(private:) N
+() S 8 T (queue<request*> fifo;) S 32 T (// STL queue class which is a FIFO queue) N
+() N
+(};) N
+() N
+(// A request queue which implements the SCAN priority algorithm) N
+(class RequestQueueSCAN : public RequestQueue {) N
+(public:) N
+() S 8 T (RequestQueueSCAN\(\) {) N
+() S 8 T () S 16 T (head_position = 0;) N
+() S 8 T () S 16 T (direction = 1;) N
+() S 8 T () S 16 T (name = "SCAN";) N
+() S 8 T (}) N
+() N
+() S 8 T (virtual ~RequestQueueSCAN\(\) {) N
+(ddr.photo) (Page 6/8) (Mar 20, 06 16:52) title
+border
+grestore
+(Printed by ) rhead
+(ddr.photo) (3/4) (Monday March 20, 2006) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (7-8) 4
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T () S 16 T (// clean up any requests left in the queue) N
+() S 8 T () S 16 T (for\(int i=0; i < T; i++\)) N
+() S 8 T () S 16 T () S 24 T (for\(vector<request*>::iterator j=requests[i].begin\(\); j ) N
+(!= requests[i].end\(\); ++j\)) N
+() S 8 T () S 16 T () S 24 T () S 32 T (delete *j;) N
+() S 8 T (}) N
+() N
+() S 8 T (request* next_request\(\) {) N
+() S 8 T () S 16 T (request *r;) S 32 T (// temp request pointer) N
+() N
+() S 8 T () S 16 T (while\(requests[head_position].size\(\) <= 0\) {) N
+() S 8 T () S 16 T () S 24 T (head_position += direction;) N
+() N
+() S 8 T () S 16 T () S 24 T (if\(head_position < 0\) {) N
+() S 8 T () S 16 T () S 24 T () S 32 T (head_position = 0;) N
+() S 8 T () S 16 T () S 24 T () S 32 T (direction *= -1;) N
+() S 8 T () S 16 T () S 24 T (}) N
+() N
+() S 8 T () S 16 T () S 24 T (if\(head_position >= T\) {) N
+() S 8 T () S 16 T () S 24 T () S 32 T (head_position = T - 1;) N
+() S 8 T () S 16 T () S 24 T () S 32 T (direction *= -1;) N
+() S 8 T () S 16 T () S 24 T (}) N
+() S 8 T () S 16 T (}) N
+() N
+() S 8 T () S 16 T (// get the first element in the) N
+() S 8 T () S 16 T (r = requests[head_position].front\(\);) N
+() S 8 T () S 16 T (requests[head_position].erase\(requests[head_position].begin\(\)\);) N
+() N
+() S 8 T () S 16 T (// decriment the counter) N
+() S 8 T () S 16 T (count--;) N
+() N
+() S 8 T () S 16 T (// return the value of the pointer) N
+() S 8 T () S 16 T (return\(r\);) N
+() S 8 T (}) N
+() N
+() S 8 T (int request_count\(\) {) N
+() S 8 T () S 16 T (// return the count) N
+() S 8 T () S 16 T (return\(count\);) N
+() S 8 T (}) N
+() N
+() S 8 T (bool new_request\(request* r\) {) N
+() S 8 T () S 16 T (// make sure we didn't get a null object) N
+() S 8 T () S 16 T (if\(r == NULL\)) N
+() S 8 T () S 16 T () S 24 T (return\(false\);) N
+() N
+() S 8 T () S 16 T (// insert the request into the vector for that track) N
+() S 8 T () S 16 T (requests[r->track].push_back\(r\);) N
+() N
+() S 8 T () S 16 T (// incriment the total counter) N
+() S 8 T () S 16 T (total++;) N
+() S 8 T () S 16 T (count++;) N
+() N
+() S 8 T () S 16 T (DEBUG_PRINT\(requests[r->track].size\(\) << endl\);) N
+() N
+() S 8 T () S 16 T (// well everything work so return something that represents that) N
+() S 8 T () S 16 T (return\(true\);) N
+() S 8 T (}) N
+() N
+() S 8 T (void queue_dump\(\) {) N
+() N
+() S 8 T (}) N
+() N
+(ddr.photo) (Page 7/8) (Mar 20, 06 16:52) title
+border
+/v 1 store
+/x0 x v get 3.362408 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+() p 8 T (void print_stats\(\) {) N
+() S 8 T () S 16 T (cout << "Queue Type: " << name << endl;) N
+() S 8 T () S 16 T (cout << "Total Requests: " << total << endl;) N
+() S 8 T (}) N
+() N
+(private:) N
+() S 8 T (map<int, vector<request*> > requests;) N
+() S 8 T (int head_position;) N
+() S 8 T (int direction;) N
+() S 8 T (int count;) N
+(};) N
+() N
+(#endif) N
+(FLAGS = -g) N
+(LIBS = -lpthread) N
+() N
+(ddr: ddr.o) N
+() S 8 T ($\(CXX\) $\(CXXFLAGS\) $\(FLAGS\) -o ddr ddr.o $\(LIBS\)) N
+() N
+(ddr.o: ddr.cpp ddr.h) N
+() S 8 T ($\(CXX\) $\(CXXFLAGS\) $\(FLAGS\) -c -o ddr.o ddr.cpp) N
+() N
+(.PHONY: clean) N
+(clean:) N
+() S 8 T (@rm -f *.o ddr) N
+(1) N
+(Average Service Time = 9.915) N
+(Thread id: 2; Average Request Time: 51.7728; Total Requests Made: 4) N
+(Thread id: 0; Average Request Time: 74.3906; Total Requests Made: 3) N
+(Thread id: 6; Average Request Time: 42.8138; Total Requests Made: 5) N
+(Thread id: 3; Average Request Time: 34.9343; Total Requests Made: 6) N
+(Thread id: 5; Average Request Time: 58.642; Total Requests Made: 4) N
+(Thread id: 4; Average Request Time: 45.1473; Total Requests Made: 5) N
+(Thread id: 1; Average Request Time: 92.4354; Total Requests Made: 3) N
+(Thread id: 7; Average Request Time: 73.3606; Total Requests Made: 4) N
+(Queue Type: FIFO) N
+(Total Requests: 34) N
+(2) N
+(Average Service Time = 10.885) N
+(Thread id: 2; Average Request Time: 51.7728; Total Requests Made: 4) N
+(Thread id: 0; Average Request Time: 74.3906; Total Requests Made: 3) N
+(Thread id: 6; Average Request Time: 42.8138; Total Requests Made: 5) N
+(Thread id: 3; Average Request Time: 34.9343; Total Requests Made: 6) N
+(Thread id: 5; Average Request Time: 58.642; Total Requests Made: 4) N
+(Thread id: 4; Average Request Time: 45.1473; Total Requests Made: 5) N
+(Thread id: 1; Average Request Time: 92.4354; Total Requests Made: 3) N
+(Thread id: 7; Average Request Time: 73.3606; Total Requests Made: 4) N
+(Queue Type: SCAN) N
+(Total Requests: 34) N
+(ddr.photo) (Page 8/8) (Mar 20, 06 16:52) title
+border
+grestore
+(Printed by ) rhead
+(ddr.photo) (4/4) (Monday March 20, 2006) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF

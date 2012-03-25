@@ -1,0 +1,120 @@
+{\ttfamily \raggedright \footnotesize
+\#include\ <{}iostream>{}
+using\ std::cout;
+using\ std::cerr;
+using\ std::endl;
+\ \\
+\#include\ <{}fstream>{}
+using\ std::ofstream;
+\ \\
+\#include\ "{}exception.h"{}
+\#include\ "{}lattice.h"{}
+\#include\ "{}mpiwrapper.h"{}
+\ \\
+const\ int\ globalSyncThreshold\ =\ 1000;
+\ \\
+string\ makeFileName(string,string,int);
+\ \\
+int\ main(int\ argc,\ char* \ argv[])\ \{
+\ \ Lattice\ lattice;
+\ \ string\ pngFilename\ =\ "{}"{};
+\ \ string\ logFilename\ =\ "{}"{};
+\ \ fstream\ logFile;
+\ \ double\ minGlobalTime\ =\ 0.0;
+\ \ double\ maxGlobalTime\ =\ 0.0;
+\ \ int\ globalTimeCounter\ =\ 0;
+\ \ double\ gConvergence\ =\ 0.0;
+\ \ int\ eventCount\ =\ 0;
+\ \\
+\ \ \textsl{//\ setup\ the\ lattice\ mpi\ stuff}
+\ \ lattice.mpi.init(\&argc,\&argv);
+\ \\
+\ \ try\ \{
+\ \\
+\ \ \ \ pngFilename\ =\ makeFileName("{}height-{}node"{},"{}png"{},lattice.mpi.getRank());
+\ \ \ \ logFilename\ =\ makeFileName("{}log"{},"{}txt"{},lattice.mpi.getRank());
+\ \\
+\ \ \ \ logFile.open(logFilename.c\underline\ str(),fstream::out|fstream::trunc);
+\ \\
+\ \ \ \ if(!logFile)\ \{
+\ \ \ \ \ \ string\ error\ =\ "{}Couldn't\ open\ log\ file\ "{}\ +\ logFilename;
+\ \ \ \ \ \ throw(Exception(error));
+\ \ \ \ \}
+\ \\
+\ \ \ \ lattice.setMinGlobalTime(0.0);
+\ \\
+\ \ \ \ lattice.mpi.barrier();
+\ \\
+\ \ \ \ \textsl{//\ MAIN\ LOOP}
+\ \ \ \ while(gConvergence\ <{}\ 1.0)\ \{
+\ \ \ \ \ \ \textsl{//\ retrive\ any\ remote\ events}
+\ \ \ \ \ \ lattice.negoitateEvents(logFile);
+\ \\
+\ \ \ \ \ \ \textsl{//\ do\ the\ next\ event}
+\ \ \ \ \ \ lattice.doNextEvent();
+\ \ \ \ \ \
+\ \ \ \ \ \ \textsl{//\ see\ if\ it's\ time\ for\ a\ global\ sync}
+\ \ \ \ \ \ if(globalTimeCounter\ >{}\ globalSyncThreshold)\ \{
+\ \ \ \ \ \ \ \ lattice.mpi.barrier();
+\ \\
+\ \ \ \ \ \ \ \ lattice.negoitateEvents(logFile);
+\ \\
+\ \ \ \ \ \ \ \ \textsl{//\ allreduce\ to\ find\ the\ min\ time}
+\ \ \ \ \ \ \ \ minGlobalTime\ =\ lattice.mpi.allReduceDouble(lattice.getLocalTime(),MPI\underline\ MIN);
+\ \ \ \ \ \ \ \ maxGlobalTime\ =\ lattice.mpi.allReduceDouble(lattice.getLocalTime(),MPI\underline\ MAX);
+\ \ \ \ \ \ \ \ eventCount\ =\ lattice.mpi.allReduceInt(lattice.getEventCount(),MPI\underline\ SUM);
+\ \\
+\ \ \ \ \ \ \ \ \textsl{//\ set\ the\ global\ time\ in\ the\ lattice}
+\ \ \ \ \ \ \ \ lattice.setMinGlobalTime(minGlobalTime);
+\ \\
+\ \ \ \ \ \ \ \ \textsl{//\ clear\ the\ counter}
+\ \ \ \ \ \ \ \ globalTimeCounter\ =\ 0;
+\ \\
+\ \ \ \ \ \ \ \ \textsl{//\ calculate\ the\ global\ convergence}
+\ \ \ \ \ \ \ \ gConvergence\ =\ (double)eventCount/(double)(lattice.mpi.getNodeCount()\ *\ SIZE);
+\ \\
+\ \ \ \ \ \ \ \ if(lattice.mpi.isRoot())\ \{
+\ \ \ \ \ \ \ \ \ \ cout\ <{}<{}\ minGlobalTime\ <{}<{}\ "{}\ "{}\ <{}<{}\ maxGlobalTime\ <{}<{}\ "{}\ "{}\ <{}<{}\ gConvergence\ <{}<{}\ endl;
+\ \ \ \ \ \ \ \ \ \ cout.flush();
+\ \ \ \ \ \ \ \ \}
+\ \ \ \ \ \ \}\ else
+\ \ \ \ \ \ \ \ ++globalTimeCounter;
+\ \ \ \ \}
+\ \\
+\ \ \ \ logFile\ <{}<{}\ "{}exit\ main\ loop"{}\ <{}<{}\ endl;
+\ \ \ \ logFile.flush();
+\ \\
+\ \ \ \ lattice.mpi.barrier();
+\ \\
+\ \ \ \ \textsl{//\ rollback\ to\ minimum\ global\ time}
+\ \\
+\ \ \ \ \textsl{//lattice.printLatticeHeight(logFile);}
+\ \ \ \ logFile\ <{}<{}\ "{}gCovergence\ =\ "{}\ <{}<{}\ gConvergence\ <{}<{}\ endl;
+\ \ \ \ lattice.printStats(logFile);
+\ \ \ \ lattice.createHeightMap(pngFilename);
+\ \ \ \ lattice.mpi.printStats(logFile);
+\ \\
+\ \ \ \ lattice.cleanup(logFile);
+\ \\
+\ \ \ \ logFile.close();
+\ \\
+\ \ \ \ lattice.mpi.barrier();
+\ \\
+\ \ \}\ catch(Exception\ err)\ \{
+\ \ \ \ cerr\ <{}<{}\ err.error\ <{}<{}\ endl;
+\ \ \}
+\ \\
+\ \ \textsl{//\ close\ the\ mpi\ stuff}
+\ \ lattice.mpi.shutdown();
+\ \ return(0);
+\}
+\ \\
+string\ makeFileName(string\ prefix,\ string\ ext,\ int\ rank)\ \{
+\ \ string\ output\ =\ prefix\ +\ "{}."{};
+\ \ output\ +=\ (char)('a'\ +\ rank);
+\ \ return(output\ +\ "{}."{}\ +\ ext);
+\}
+\ \\
+ }
+\normalfont\normalsize
+

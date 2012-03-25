@@ -1,0 +1,4 @@
+program testwrite;
+	int test0=1,test1=2;
+	write test0,test1;write test1,test0;
+endprogram;

@@ -1,0 +1,2 @@
+Tokens in file invalid_symbol.mini
+

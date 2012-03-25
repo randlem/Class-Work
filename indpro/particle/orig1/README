@@ -1,0 +1,3 @@
+FIRST ITERATION
+
+This is a pointerless (at least in the particle struct) version of the original particle struct.  I acceptable for use with MPI.

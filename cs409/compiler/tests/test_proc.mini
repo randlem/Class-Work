@@ -1,0 +1,13 @@
+program testproc;
+	int one=1,two=2;
+
+	proc myproc;
+		int three=3;
+		write one,three;
+	endproc;
+
+	break;
+	one + two -> one;
+	call myproc;
+
+endprogram;

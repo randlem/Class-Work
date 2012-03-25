@@ -1,0 +1,8 @@
+/*  A program with a duplicate symbol declaration */
+program test14;
+int i=3, j, i;
+
+    5 -> i;
+endprogram
+
+

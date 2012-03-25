@@ -1,0 +1,7 @@
+gcc -Wall -funroll-loops -O3 particle_problem_single.c -o particle.out -lm
+1 threads --------------------
+
+real	0m5.767s
+user	0m5.288s
+sys	0m0.034s
+-------------------------------

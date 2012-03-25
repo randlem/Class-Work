@@ -1,0 +1,43 @@
+/* Test nested structures */
+program test09;
+int i = 0, n0=0, n1=1, n2=2, n3=3, n4=4;
+
+   while(i <= 21)
+      if(i <= 5)
+         write n0;
+         if(i = 0)
+            i + 2 -> i;
+         endif;
+      else
+         if(i = 8)
+            i + 2 -> i;
+         else
+            write n1;
+         endif;
+      endif;
+      if(8 < i)
+         if(i = 10)
+            write n2;
+         else
+            if(i = 14)
+               i + 3 -> i;
+            else
+               i + 2 -> i;
+            endif;
+         endif;
+      else
+         if(i = 5)
+            write n3;
+         else
+            if(i = 4)
+               write n4;
+            else
+               i + 1 -> i;
+            endif;
+         endif;
+      endif;
+      i + 2 -> i;
+   endwhile;
+
+endprogram
+

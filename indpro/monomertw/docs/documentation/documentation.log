@@ -1,0 +1,789 @@
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2005.3.13)  7 JUN 2005 00:35
+**documentation.tex
+(./documentation.tex{/usr/share/texmf/pdftex/config/pdftex.cfg}
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/fancyheadings/fancyheadings.sty
+\headrulewidth=\dimen103
+\footrulewidth=\dimen104
+\plainheadrulewidth=\dimen105
+\plainfootrulewidth=\dimen106
+\headwidth=\dimen107
+\footruleskip=\dimen108
+)
+(/usr/share/texmf/tex/generic/babel/babel.sty
+Package: babel 2001/03/01 v3.7h The Babel package
+
+(/usr/share/texmf/tex/generic/babel/english.ldf
+Language: english 2001/04/15 v3.3l English support from the babel system
+
+(/usr/share/texmf/tex/generic/babel/babel.def
+File: babel.def 2001/03/01 v3.7h Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen109
+)
+\l@canadian = a dialect from \language\l@english 
+))
+(/usr/share/texmf/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/share/texmf/tex/latex/misc/pslatex.sty
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+(/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2002/01/22 v2.2d
+
+(/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\@emptytoks=\toks14
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+))
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2001/08/31 v1.1 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 80.
+
+(/usr/share/texmf/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count89
+))
+\Gin@req@height=\dimen110
+\Gin@req@width=\dimen111
+)
+\tempboxa=\box26
+ (./documentation.aux
+(./introduction.aux) (./sr.aux) (./timewarp.aux) (./futurework.aux)
+(./sr-code.aux) (./tw-code.aux))
+\openout1 = `documentation.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 43.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 43
+.
+ (/usr/share/texmf/tex/latex/psnfss/omspzccm.fd
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+ (/usr/share/texmf/tex/context/base/supp-pdf.tex
+(/usr/share/texmf/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Missing
+\protectiondepth=\count90
+\scratchcounter=\count91
+\scratchtoks=\toks16
+\scratchdimen=\dimen112
+\scratchskip=\skip43
+\scratchmuskip=\muskip10
+\scratchbox=\box27
+\scratchread=\read1
+\scratchwrite=\write3
+\zeropoint=\dimen113
+\minusone=\count92
+\thousandpoint=\dimen114
+\emptytoks=\toks17
+\nextbox=\box28
+\nextdepth=\dimen115
+\everyline=\toks18
+\!!counta=\count93
+\!!countb=\count94
+\recursecounter=\count95
+)
+loading : Context Support Macros / PDF
+\nofMPsegments=\count96
+\nofMParguments=\count97
+\everyMPtoPDFconversion=\toks19
+)
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 62
+.
+ (/usr/share/texmf/tex/latex/psnfss/ot1ptmcm.fd
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 62
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omlptmcm.fd
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 62
+.
+
+(/usr/share/texmf/tex/latex/psnfss/omxpsycm.fd
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 62.
+LaTeX Font Info:    Try loading font information for U+msa on input line 62.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 62.
+
+(/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+) [1
+
+{/usr/share/texmf/dvips/config/pdftex.map}] [1
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 84.
+ (./documentation.toc [1
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[2])
+\tf@toc=\write4
+\openout4 = `documentation.toc'.
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[3]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[4]
+\openout2 = `introduction.aux'.
+
+ (./introduction.tex
+Chapter 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[5
+
+
+]
+Overfull \hbox (1.53403pt too wide) in paragraph at lines 18--18
+[]/ptmb7t@17.28pt/Modeling Thin Film Growth Us-ing Ki-netic Monte
+ []
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 20.
+Missing character: There is no ^^ce in font zptmcmr!
+Missing character: There is no ^^a3 in font zptmcmr!
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[6]
+Missing character: There is no ^^ce in font zptmcmr!
+Missing character: There is no ^^a3 in font zptmcmr!
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[7]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[8])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[9]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[10
+
+]
+\openout2 = `sr.aux'.
+
+ (./sr.tex
+Chapter 2.
+<srright.png, id=59, 294.09875pt x 698.61pt>
+File: srright.png Graphic file (type png)
+ <use srright.png>
+<srleft.png, id=60, 294.09875pt x 698.61pt>
+File: srleft.png Graphic file (type png)
+ <use srleft.png>
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[11
+
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 36.
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 36.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[12]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[13 <./srright.png> <./srleft.png>]
+Overfull \hbox (4.05865pt too wide) in paragraph at lines 64--66
+/ptmr7t@10.95pt/This was tak-ing place es-pe-cially in the /pcrr7tn@10.95pt/Upn
+bhd() /ptmr7t@10.95pt/func-tion where a sin-gle call from /pcrr7tn@10.95pt/Upnb
+hd()
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[14]
+Overfull \hbox (78.3221pt too wide) in paragraph at lines 74--81
+[][] 
+ []
+
+
+Overfull \hbox (42.40572pt too wide) in paragraph at lines 88--95
+[][] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[15]
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 146.
+
+ (/usr/share/texmf/tex/latex/psnfss/omspcr.fd
+File: omspcr.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 146.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[16])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[17]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[18
+
+]
+\openout2 = `timewarp.aux'.
+
+ (./timewarp.tex
+Chapter 3.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[19
+
+
+] <timewarp_flowchart.png, id=94, 577.49083pt x 758.16583pt>
+File: timewarp_flowchart.png Graphic file (type png)
+
+<use timewarp_flowchart.png>
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[20]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[21 <./timewarp_flowchart.png>]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[22]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[23]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[24]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[25])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[26]
+\openout2 = `futurework.aux'.
+
+ (./futurework.tex
+Chapter 4.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[27
+
+
+
+])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[28]
+\openout2 = `sr-code.aux'.
+
+ (./sr-code.tex
+Appendix A.
+(./srcode/main.cpp.tex
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 6.
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[29
+
+
+
+]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 45.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 45.
+) (./srcode/lattice.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[30]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[31]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[32]) (./srcode/lattice.cpp.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[33]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[34]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[35]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[36]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[37]
+Overfull \hbox (94.26079pt too wide) in paragraph at lines 264--264
+/pcrr7tn/checksite(location[x][y]);/pcrro7t///bond=checkupdatebonds(location[bo
+ndpt[i].x][bondpt[i].y]);[]  
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[38]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[39]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[40]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[41]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[42]
+Overfull \hbox (40.25932pt too wide) in paragraph at lines 536--536
+/pcrr7tn/addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],
+time,diffevent);[]  
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[43]
+Overfull \hbox (40.25932pt too wide) in paragraph at lines 541--541
+/pcrr7tn/addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],
+time,diffevent);[]  
+ []
+
+
+Overfull \hbox (40.25932pt too wide) in paragraph at lines 547--547
+/pcrr7tn/addbdyevent(location[oldloc.x][oldloc.y],location[newloc.x][newloc.y],
+time,diffevent);[]  
+ []
+
+
+Overfull \hbox (9.65947pt too wide) in paragraph at lines 560--560
+/pcrr7tn/monomerloc[location[oldloc.x][oldloc.y].index]=location[newloc.x][newl
+oc.y].pos;[]  
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[44]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[45]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[46]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[47]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[48]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[49]) (./srcode/synch.cpp.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[50]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[51]
+Overfull \hbox (105.66142pt too wide) in paragraph at lines 95--95
+/pcrro7t///cout<<"subcycle************************"<<newlatt->redoflag<<"flag**
+************** 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[52]) (./srcode/comm.cpp.tex
+Overfull \hbox (65.7592pt too wide) in paragraph at lines 7--7
+/pcrr7tn/mpi.sendboundaryevent(newlatt->bdyevent[left],newlatt->bdycount[left],
+newlatt->nbhr[left]);[]  
+ []
+
+
+Overfull \hbox (75.95915pt too wide) in paragraph at lines 8--8
+/pcrr7tn/mpi.sendboundaryevent(newlatt->bdyevent[right],newlatt->bdycount[left]
+,newlatt->nbhr[right]);[]  
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[53]))
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[54]
+\openout2 = `tw-code.aux'.
+
+ (./tw-code.tex
+Appendix B.
+(./twcode/main.cpp.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[55
+
+
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[56])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[57] (./twcode/lattice.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[58]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[59]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[60]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[61]) (./twcode/latconst.h.tex)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[62] (./twcode/latprim.h.tex) (./twcode/lattice.cpp.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[63]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[64]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[65]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[66]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[67]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[68]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[69]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[70]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[71]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[72]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[73]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[74]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[75]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[76]) (./twcode/event.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[77]) (./twcode/rewindlist.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[78]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[79]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[80]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[81]) (./twcode/randgen.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[82]
+Overfull \hbox (27.70134pt too wide) in paragraph at lines 72--72
+/pcrro7t//*-------------------------------------------------------------------*
+/[]  
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[83]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[84]) (./twcode/mpiwrapper.h.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[85]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[86])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[87] (./twcode/mpiwrapper.cpp.tex
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[88]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[89]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[90]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[91]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[92]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[93]) (./twcode/exception.h.tex))
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[94] (./documentation.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 10--14
+[]/ptmr7t@10.95pt/Paul Cod-ding-ton.  Monte carlo sim-u-la-tion for sta-tis-ti-
+cal physics.
+ []
+
+) [95
+
+
+] (./documentation.aux (./introduction.aux) (./sr.aux) (./timewarp.aux)
+(./futurework.aux) (./sr-code.aux) (./tw-code.aux)) ) 
+Here is how much of TeX's memory you used:
+ 2045 strings out of 95437
+ 25172 string characters out of 1190233
+ 72131 words of memory out of 1000001
+ 4920 multiletter control sequences out of 10000+50000
+ 54004 words of font info for 121 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 28i,11n,26p,1382b,590s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 337 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 15 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/dvips/ps
+nfss/8r.enc}</usr/share/texmf/fonts/type1/urw/courier/ucrr8a.pfb>{/usr/share/te
+xmf/dvips/tetex/bbad153f.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pf
+b>{/usr/share/texmf/dvips/tetex/f7b6d320.enc}</usr/share/texmf/fonts/type1/blue
+sky/cm/cmr10.pfb>{/usr/share/texmf/dvips/tetex/aae443f0.enc}</usr/share/texmf/f
+onts/type1/bluesky/cm/cmmi10.pfb>
+Output written on documentation.pdf (97 pages, 222025 bytes).

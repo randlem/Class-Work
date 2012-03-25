@@ -1,0 +1,13 @@
+/* Simple procedure declaration */
+program test05;
+int a = 1, b = 6, c;
+
+proc OUT;
+   12 -> a;
+   write a, b, c;
+endproc;
+
+2 -> c;
+call OUT;
+write a;
+endprogram

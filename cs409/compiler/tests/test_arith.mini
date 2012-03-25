@@ -1,0 +1,35 @@
+program testarith;
+	int one=1,two=2,three=3,result=0;
+
+	/* test + */
+	one + two -> result;
+	write result;
+
+	/* test - */
+	two - one -> result;
+	write result;
+
+	/* test * */
+	two * three -> result;
+	write result;
+
+	/* test / */
+	three / two -> result;
+	write result;
+
+	/* test stringing */
+	two * three -> result;
+	write result;
+	result + one + two -> result;
+	write result;
+	result / two + one -> result;
+	write result;
+
+
+	/* test literal */
+	1 + 2 + 3 + 4 -> result;
+	write result;
+	4 / 2 + 4 -> result;
+	write result;
+
+endprogram;

@@ -1,0 +1,75 @@
+STATS FOR ROUTER #1
+	outstanding events = 3
+CLIENT #1
+	GENERAL STATS
+		mean hops = 2.05977
+		mean travel time = 0.730727
+	SEND STATS
+		count = 691
+		mean size = 9.36179
+		max size = 64
+		min size = 0
+		recipient counts by address:
+			0101 211
+			0201 228
+			0301 252
+	RECV STATS
+		count = 686
+		mean size = 9.27114
+		max size = 64
+		min size = 0
+		sender counts by address:
+			0101 210
+			0201 225
+			0301 251
+
+STATS FOR ROUTER #2
+	outstanding events = 5
+CLIENT #1
+	GENERAL STATS
+		mean hops = 1.70769
+		mean travel time = 0.671905
+	SEND STATS
+		count = 615
+		mean size = 9.34797
+		max size = 64
+		min size = 0
+		recipient counts by address:
+			0101 227
+			0201 190
+			0301 198
+	RECV STATS
+		count = 650
+		mean size = 9.03077
+		max size = 64
+		min size = 0
+		sender counts by address:
+			0101 226
+			0201 190
+			0301 234
+
+STATS FOR ROUTER #3
+	outstanding events = 3
+CLIENT #1
+	GENERAL STATS
+		mean hops = 2.01898
+		mean travel time = 0.736287
+	SEND STATS
+		count = 726
+		mean size = 9.40634
+		max size = 64
+		min size = 0
+		recipient counts by address:
+			0101 252
+			0201 236
+			0301 238
+	RECV STATS
+		count = 685
+		mean size = 9.87445
+		max size = 64
+		min size = 0
+		sender counts by address:
+			0101 251
+			0201 196
+			0301 238
+

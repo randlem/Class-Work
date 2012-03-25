@@ -1,0 +1,6 @@
+#  Please do not remove this file.  This file might be necessaary if you ever 
+#  have a job checkpointed on an IRIX system at OSC.
+
+CKPT * * {
+        FORK: ANY
+}

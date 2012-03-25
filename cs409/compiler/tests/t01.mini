@@ -1,0 +1,69 @@
+/*
+   This is the distributed selection sort program.
+*/
+program test01;
+
+int i, I, limit = 50,
+    listLength=5, list[50] = ('x', 'X', 20, 020, 0x20),
+    negOne, value;
+
+proc GetList;
+    int value;
+    read value;
+    while (value < 1000)
+        if (limit <= listLength)
+            break;
+        endif;
+        value -> list[listLength];
+        call IncrementLength;
+        read value;
+    endwhile;
+endproc;
+
+proc IncrementLength;
+    listLength - negOne -> listLength;
+endproc;
+
+proc SortList;
+   int largest, largestIndex, temp;
+   -1 + listLength -> I;
+   while (0 < I)
+      list[0] -> largest;
+      0 -> largestIndex;
+      1 -> i;
+      while (i <= I)
+         if(largest < list[i])
+            list[i] -> largest;
+            i -> largestIndex;
+         endif;
+         i + 1 -> i;
+      endwhile;
+      if (largestIndex < I)
+         list[largestIndex] - list[I] / 2 + value -> value;
+         list[I] -> temp;
+         list[largestIndex] -> list[I];
+         temp -> list[largestIndex];
+      endif;
+      I + negOne -> I;
+   endwhile;
+endproc;
+
+/* Beginning of main program */
+
+1234 -> value;
+0xf423D - 03641077 / 2 -> negOne;  /* (999997 - 999999)/2 */
+call GetList;
+call SortList;
+write listLength, value;
+0 -> i;
+while (i < listLength)
+    if (list[i] < 50)
+       write list[i];
+    else
+       write i;
+       i + 1 -> i;
+    endif;
+    i + 1 -> i;
+endwhile;
+
+endprogram

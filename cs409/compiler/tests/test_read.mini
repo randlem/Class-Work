@@ -1,0 +1,4 @@
+program testread;
+	int test=1;
+	read test;
+endprogram;

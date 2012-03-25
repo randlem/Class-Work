@@ -1,0 +1,4 @@
+program testary;
+	int ary[101];
+
+endprogram;

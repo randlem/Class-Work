@@ -1,0 +1,22 @@
+program test08;
+/* Simple while loops */
+
+int i = 4, j, k;
+
+while (i < 10)
+   write i;
+   i + 3 -> i;
+endwhile;
+
+4 -> i;
+while (i < 10)
+   5 -> j;
+   while (j < 10)
+      i - j -> k;
+      write k;
+      j + 4 -> j;
+   endwhile;
+   i + 3 -> i;
+endwhile;
+
+endprogram

@@ -1,0 +1,1250 @@
+./lab1 2 2
+Parent created child process with pid 27481
+Parent created child process with pid 27482
+Parent created child process with pid 27483
+P0: The number 134 being passed is for P1
+P1: The number 134 is even.
+P1: The number 318 being passed is for P0
+P0: The number 318 is even.
+P0: The number 243 being passed is for P1
+P1: The number 243 is odd.
+P1: The number 243 being passed is for P0
+P0: The number 243 is odd.
+P0: Sent all messages.
+
+./lab1 100 15
+Parent created child process with pid 27485
+Parent created child process with pid 27486
+Parent created child process with pid 27487
+P0: The number 134 being passed is for P1
+P1: The number 134 is even.
+P1: The number 318 being passed is for P0
+P0: The number 318 is even.
+P0: The number 243 being passed is for P1
+P1: The number 243 is odd.
+P1: The number 243 being passed is for P0
+P0: The number 243 is odd.
+P0: The number 229 being passed is for P3
+P3: The number 229 is odd.
+P3: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 229 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 229 is odd.
+P2: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 35 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 35 is odd.
+P2: The number 965 being passed is for P0
+P0: The number 965 is odd.
+P0: The number 35 being passed is for P3
+P3: The number 35 is odd.
+P3: The number 965 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 965 is odd.
+P2: The number 229 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 229 is odd.
+P1: The number 849 being passed is for P0
+P0: The number 849 is odd.
+P0: The number 495 being passed is for P1
+P1: The number 495 is odd.
+P1: The number 121 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 121 is odd.
+P3: The number 21 being passed is for P0
+P0: The number 21 is odd.
+P0: The number 58 being passed is for P3
+P3: The number 58 is even.
+P3: The number 683 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 683 is odd.
+P2: The number 495 being passed is for P0
+P0: The number 495 is odd.
+P0: The number 121 being passed is for P2
+P2: The number 121 is odd.
+P2: The number 58 being passed is for P0
+P0: The number 58 is even.
+P0: The number 517 being passed is for P2
+P2: The number 517 is odd.
+P2: The number 121 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 121 is odd.
+P3: The number 278 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 278 is even.
+P2: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 849 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 849 is odd.
+P1: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 789 being passed is for P0
+P0: The number 789 is odd.
+P0: The number 897 being passed is for P1
+P1: The number 897 is odd.
+P1: The number 897 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 897 is odd.
+P3: The number 92 being passed is for P0
+P0: The number 92 is even.
+P0: The number 703 being passed is for P3
+P3: The number 703 is odd.
+P3: The number 356 being passed is for P0
+P0: The number 356 is even.
+P0: The number 124 being passed is for P2
+P2: The number 124 is even.
+P2: The number 897 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 897 is odd.
+P3: The number 732 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 732 is even.
+P2: The number 703 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 703 is odd.
+P1: The number 703 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 703 is odd.
+P3: The number 790 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 790 is even.
+P1: The number 754 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 754 is even.
+P3: The number 708 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 708 is even.
+P2: The number 124 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 124 is even.
+P1: The number 843 being passed is for P0
+P0: The number 843 is odd.
+P0: The number 708 being passed is for P3
+P3: The number 708 is even.
+P3: The number 209 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 209 is odd.
+P1: The number 732 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 732 is even.
+P3: The number 824 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 824 is even.
+P1: The number 366 being passed is for P0
+P0: The number 366 is even.
+P0: The number 209 being passed is for P1
+P1: The number 209 is odd.
+P1: The number 141 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 141 is odd.
+P3: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 398 being passed is for P1
+P1: The number 398 is even.
+P1: The number 921 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 921 is odd.
+P2: The number 708 being passed is for P0
+P0: The number 708 is even.
+P0: The number 366 being passed is for P2
+P2: The number 366 is even.
+P2: The number 732 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 732 is even.
+P0: Recieved ACK packet from P2
+P0: The number 141 being passed is for P3
+P3: The number 141 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 921 being passed is for P1
+P1: The number 921 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 872 being passed is for P3
+P3: The number 872 is even.
+P0: Recieved ACK packet from P3
+P0: The number 417 being passed is for P3
+P3: The number 417 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 427 being passed is for P3
+P3: The number 427 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 106 being passed is for P2
+P2: The number 106 is even.
+P2: The number 824 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 824 is even.
+P0: Recieved ACK packet from P2
+P0: The number 52 being passed is for P1
+P1: The number 52 is even.
+P0: Recieved ACK packet from P1
+P0: The number 927 being passed is for P1
+P1: The number 927 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 582 being passed is for P2
+P2: The number 582 is even.
+P2: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 299 being passed is for P1
+P1: The number 299 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 965 being passed is for P2
+P2: The number 965 is odd.
+P2: The number 500 being passed is for P0
+P0: The number 500 is even.
+P0: The number 741 being passed is for P3
+P3: The number 741 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 617 being passed is for P3
+P3: The number 617 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 403 being passed is for P2
+P2: The number 403 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 772 being passed is for P3
+P3: The number 772 is even.
+P0: Recieved ACK packet from P3
+P0: The number 971 being passed is for P3
+P3: The number 971 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 619 being passed is for P3
+P3: The number 619 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 999 being passed is for P1
+P1: The number 999 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 41 being passed is for P1
+P1: The number 41 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 100 being passed is for P2
+P2: The number 100 is even.
+P0: Recieved ACK packet from P2
+P0: The number 30 being passed is for P3
+P3: The number 30 is even.
+P0: Recieved ACK packet from P3
+P0: The number 655 being passed is for P3
+P3: The number 655 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 783 being passed is for P3
+P3: The number 783 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 1 being passed is for P2
+P2: The number 1 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 108 being passed is for P3
+P3: The number 108 is even.
+P0: Recieved ACK packet from P3
+P0: The number 703 being passed is for P1
+P1: The number 703 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 425 being passed is for P2
+P2: The number 425 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 95 being passed is for P2
+P2: The number 95 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 744 being passed is for P2
+P2: The number 744 is even.
+P0: Recieved ACK packet from P2
+P0: The number 408 being passed is for P2
+P2: The number 408 is even.
+P0: Recieved ACK packet from P2
+P0: The number 968 being passed is for P1
+P1: The number 968 is even.
+P0: Recieved ACK packet from P1
+P0: The number 132 being passed is for P1
+P1: The number 132 is even.
+P0: Recieved ACK packet from P1
+P0: The number 269 being passed is for P2
+P2: The number 269 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 780 being passed is for P2
+P2: The number 780 is even.
+P0: Recieved ACK packet from P2
+P0: The number 249 being passed is for P3
+P3: The number 249 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 480 being passed is for P3
+P3: The number 480 is even.
+P0: Recieved ACK packet from P3
+P0: The number 788 being passed is for P3
+P3: The number 788 is even.
+P0: Recieved ACK packet from P3
+P0: The number 711 being passed is for P3
+P3: The number 711 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 418 being passed is for P1
+P1: The number 418 is even.
+P0: Recieved ACK packet from P1
+P0: The number 989 being passed is for P3
+P3: The number 989 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 714 being passed is for P1
+P1: The number 714 is even.
+P0: Recieved ACK packet from P1
+P0: The number 300 being passed is for P2
+P2: The number 300 is even.
+P0: Recieved ACK packet from P2
+P0: The number 486 being passed is for P1
+P1: The number 486 is even.
+P0: Recieved ACK packet from P1
+P0: The number 179 being passed is for P1
+P1: The number 179 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 594 being passed is for P1
+P1: The number 594 is even.
+P0: Recieved ACK packet from P1
+P0: The number 449 being passed is for P3
+P3: The number 449 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 964 being passed is for P2
+P2: The number 964 is even.
+P0: Recieved ACK packet from P2
+P0: The number 852 being passed is for P1
+P1: The number 852 is even.
+P0: Recieved ACK packet from P1
+P0: The number 765 being passed is for P2
+P2: The number 765 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 893 being passed is for P2
+P2: The number 893 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 214 being passed is for P3
+P3: The number 214 is even.
+P0: Recieved ACK packet from P3
+P0: The number 644 being passed is for P3
+P3: The number 644 is even.
+P0: Recieved ACK packet from P3
+P0: The number 209 being passed is for P2
+P2: The number 209 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 274 being passed is for P3
+P3: The number 274 is even.
+P0: Recieved ACK packet from P3
+P0: The number 769 being passed is for P3
+P3: The number 769 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 855 being passed is for P2
+P2: The number 855 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 304 being passed is for P3
+P3: The number 304 is even.
+P0: Recieved ACK packet from P3
+P0: The number 619 being passed is for P3
+P3: The number 619 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 900 being passed is for P1
+P1: The number 900 is even.
+P0: Recieved ACK packet from P1
+P0: The number 371 being passed is for P3
+P3: The number 371 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 87 being passed is for P2
+P2: The number 87 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 758 being passed is for P2
+P2: The number 758 is even.
+P0: Recieved ACK packet from P2
+P0: The number 454 being passed is for P1
+P1: The number 454 is even.
+P0: Recieved ACK packet from P1
+P0: The number 986 being passed is for P2
+P2: The number 986 is even.
+P0: Recieved ACK packet from P2
+P0: The number 592 being passed is for P2
+P2: The number 592 is even.
+P0: Recieved ACK packet from P2
+P0: The number 583 being passed is for P2
+P2: The number 583 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 953 being passed is for P3
+P3: The number 953 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 509 being passed is for P1
+P1: The number 509 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 932 being passed is for P3
+P3: The number 932 is even.
+P0: Recieved ACK packet from P3
+P0: The number 490 being passed is for P3
+P3: The number 490 is even.
+P0: Recieved ACK packet from P3
+P0: The number 395 being passed is for P3
+P3: The number 395 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 181 being passed is for P3
+P3: The number 181 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 202 being passed is for P1
+P1: The number 202 is even.
+P0: Recieved ACK packet from P1
+P0: The number 839 being passed is for P2
+P2: The number 839 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 652 being passed is for P3
+P3: The number 652 is even.
+P0: Recieved ACK packet from P3
+P0: The number 297 being passed is for P3
+P3: The number 297 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 731 being passed is for P3
+P3: The number 731 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 492 being passed is for P1
+P1: The number 492 is even.
+P0: Recieved ACK packet from P1
+P0: The number 663 being passed is for P3
+P3: The number 663 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 754 being passed is for P3
+P3: The number 754 is even.
+P0: Recieved ACK packet from P3
+P0: The number 410 being passed is for P3
+P3: The number 410 is even.
+P0: Recieved ACK packet from P3
+P0: The number 114 being passed is for P1
+P1: The number 114 is even.
+P0: Recieved ACK packet from P1
+P0: The number 562 being passed is for P3
+P3: The number 562 is even.
+P0: Recieved ACK packet from P3
+P0: The number 226 being passed is for P1
+P1: The number 226 is even.
+P0: Recieved ACK packet from P1
+P0: The number 107 being passed is for P3
+P3: The number 107 is odd.
+P0: Recieved ACK packet from P3
+P0: Sent all messages.
+
+./lab1 99 33
+Parent created child process with pid 27489
+Parent created child process with pid 27490
+Parent created child process with pid 27491
+P0: The number 134 being passed is for P1
+P1: The number 134 is even.
+P1: The number 318 being passed is for P0
+P0: The number 318 is even.
+P0: The number 243 being passed is for P1
+P1: The number 243 is odd.
+P1: The number 243 being passed is for P0
+P0: The number 243 is odd.
+P0: The number 229 being passed is for P3
+P3: The number 229 is odd.
+P3: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 229 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 229 is odd.
+P2: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 35 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 35 is odd.
+P2: The number 965 being passed is for P0
+P0: The number 965 is odd.
+P0: The number 35 being passed is for P3
+P3: The number 35 is odd.
+P3: The number 965 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 965 is odd.
+P2: The number 229 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 229 is odd.
+P1: The number 849 being passed is for P0
+P0: The number 849 is odd.
+P0: The number 495 being passed is for P1
+P1: The number 495 is odd.
+P1: The number 121 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 121 is odd.
+P3: The number 21 being passed is for P0
+P0: The number 21 is odd.
+P0: The number 58 being passed is for P3
+P3: The number 58 is even.
+P3: The number 683 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 683 is odd.
+P2: The number 495 being passed is for P0
+P0: The number 495 is odd.
+P0: The number 121 being passed is for P2
+P2: The number 121 is odd.
+P2: The number 58 being passed is for P0
+P0: The number 58 is even.
+P0: The number 517 being passed is for P2
+P2: The number 517 is odd.
+P2: The number 121 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 121 is odd.
+P3: The number 278 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 278 is even.
+P2: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 849 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 849 is odd.
+P1: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 789 being passed is for P0
+P0: The number 789 is odd.
+P0: The number 897 being passed is for P1
+P1: The number 897 is odd.
+P1: The number 897 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 897 is odd.
+P3: The number 92 being passed is for P0
+P0: The number 92 is even.
+P0: The number 703 being passed is for P3
+P3: The number 703 is odd.
+P3: The number 356 being passed is for P0
+P0: The number 356 is even.
+P0: The number 124 being passed is for P2
+P2: The number 124 is even.
+P2: The number 897 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 897 is odd.
+P3: The number 732 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 732 is even.
+P2: The number 703 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 703 is odd.
+P1: The number 703 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 703 is odd.
+P3: The number 790 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 790 is even.
+P1: The number 754 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 754 is even.
+P3: The number 708 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 708 is even.
+P2: The number 124 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 124 is even.
+P1: The number 843 being passed is for P0
+P0: The number 843 is odd.
+P0: The number 708 being passed is for P3
+P3: The number 708 is even.
+P3: The number 209 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 209 is odd.
+P1: The number 732 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 732 is even.
+P3: The number 824 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 824 is even.
+P1: The number 366 being passed is for P0
+P0: The number 366 is even.
+P0: The number 209 being passed is for P1
+P1: The number 209 is odd.
+P1: The number 141 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 141 is odd.
+P3: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 398 being passed is for P1
+P1: The number 398 is even.
+P1: The number 921 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 921 is odd.
+P2: The number 708 being passed is for P0
+P0: The number 708 is even.
+P0: The number 366 being passed is for P2
+P2: The number 366 is even.
+P2: The number 732 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 732 is even.
+P1: The number 872 being passed is for P0
+P0: The number 872 is even.
+P0: The number 141 being passed is for P3
+P3: The number 141 is odd.
+P3: The number 500 being passed is for P0
+P0: The number 500 is even.
+P0: The number 921 being passed is for P1
+P1: The number 921 is odd.
+P1: The number 258 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 258 is even.
+P2: The number 824 being passed is for P1
+Routing packet from P1 to P1
+P1: The number 824 is even.
+P1: The number 263 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 263 is odd.
+P3: The number 735 being passed is for P1
+Routing packet from P1 to P1
+P1: The number 735 is odd.
+P1: The number 52 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 52 is even.
+P2: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 872 being passed is for P3
+P3: The number 872 is even.
+P3: The number 417 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 417 is odd.
+P1: The number 568 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 568 is even.
+P2: The number 500 being passed is for P0
+P0: The number 500 is even.
+P0: The number 417 being passed is for P3
+P3: The number 417 is odd.
+P3: The number 427 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 427 is odd.
+P2: The number 735 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 735 is odd.
+P3: The number 106 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 106 is even.
+P1: The number 299 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 299 is odd.
+P3: The number 927 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 927 is odd.
+P1: The number 965 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 965 is odd.
+P2: The number 150 being passed is for P0
+P0: The number 150 is even.
+P0: The number 427 being passed is for P3
+P3: The number 427 is odd.
+P3: The number 175 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 175 is odd.
+P2: The number 258 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 258 is even.
+P1: The number 741 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 741 is odd.
+P3: The number 636 being passed is for P0
+P0: The number 636 is even.
+P0: The number 106 being passed is for P2
+P2: The number 106 is even.
+P2: The number 484 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 484 is even.
+P3: The number 423 being passed is for P0
+P0: The number 423 is odd.
+P0: The number 52 being passed is for P1
+P1: The number 52 is even.
+P1: The number 617 being passed is for P0
+P0: The number 617 is odd.
+P0: The number 927 being passed is for P1
+P1: The number 927 is odd.
+P1: The number 403 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 403 is odd.
+P2: The number 226 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 226 is even.
+P3: The number 672 being passed is for P0
+P0: The number 672 is even.
+P0: The number 582 being passed is for P2
+P2: The number 582 is even.
+P2: The number 582 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 582 is even.
+P3: The number 949 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 949 is odd.
+P2: The number 965 being passed is for P0
+P0: The number 965 is odd.
+P0: The number 299 being passed is for P1
+P1: The number 299 is odd.
+P1: The number 772 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 772 is even.
+P3: The number 15 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 15 is odd.
+P2: The number 672 being passed is for P0
+P0: The number 672 is even.
+P0: The number 965 being passed is for P2
+P2: The number 965 is odd.
+P2: The number 949 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 949 is odd.
+P3: The number 265 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 265 is odd.
+P2: The number 120 being passed is for P0
+P0: The number 120 is even.
+P0: The number 741 being passed is for P3
+P3: The number 741 is odd.
+P3: The number 892 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 892 is even.
+P2: The number 619 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 619 is odd.
+P3: The number 842 being passed is for P0
+P0: The number 842 is even.
+P0: The number 617 being passed is for P3
+P3: The number 617 is odd.
+P3: The number 768 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 768 is even.
+P2: The number 999 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 999 is odd.
+P1: The number 971 being passed is for P0
+P0: The number 971 is odd.
+P0: The number 403 being passed is for P2
+P2: The number 403 is odd.
+P2: The number 41 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 41 is odd.
+P3: The number 30 being passed is for P0
+P0: The number 30 is even.
+P0: The number 772 being passed is for P3
+P3: The number 772 is even.
+P3: The number 655 being passed is for P0
+P0: The number 655 is odd.
+P0: The number 971 being passed is for P3
+P3: The number 971 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 619 being passed is for P3
+P3: The number 619 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 999 being passed is for P1
+P1: The number 999 is odd.
+P1: The number 619 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 619 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 41 being passed is for P1
+P1: The number 41 is odd.
+P1: The number 999 being passed is for P0
+P0: The number 999 is odd.
+P0: The number 100 being passed is for P2
+P2: The number 100 is even.
+P2: The number 100 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 100 is even.
+P1: The number 768 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 768 is even.
+P0: Recieved ACK packet from P2
+P0: The number 30 being passed is for P3
+P3: The number 30 is even.
+P0: Recieved ACK packet from P3
+P0: The number 655 being passed is for P3
+P3: The number 655 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 783 being passed is for P3
+P3: The number 783 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 1 being passed is for P2
+P2: The number 1 is odd.
+P2: The number 557 being passed is for P0
+P0: The number 557 is odd.
+P0: The number 108 being passed is for P3
+P3: The number 108 is even.
+P0: Recieved ACK packet from P3
+P0: The number 703 being passed is for P1
+P1: The number 703 is odd.
+P1: The number 819 being passed is for P0
+P0: The number 819 is odd.
+P0: The number 425 being passed is for P2
+P2: The number 425 is odd.
+P2: The number 783 being passed is for P0
+P0: The number 783 is odd.
+P0: The number 95 being passed is for P2
+P2: The number 95 is odd.
+P2: The number 1 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 1 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 744 being passed is for P2
+P2: The number 744 is even.
+P2: The number 108 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 108 is even.
+P0: Recieved ACK packet from P2
+P0: The number 408 being passed is for P2
+P2: The number 408 is even.
+P0: Recieved ACK packet from P2
+P0: The number 968 being passed is for P1
+P1: The number 968 is even.
+P1: The number 655 being passed is for P0
+P0: The number 655 is odd.
+P0: The number 132 being passed is for P1
+P1: The number 132 is even.
+P1: The number 783 being passed is for P0
+P0: The number 783 is odd.
+P0: The number 269 being passed is for P2
+P2: The number 269 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 780 being passed is for P2
+P2: The number 780 is even.
+P0: Recieved ACK packet from P2
+P0: The number 249 being passed is for P3
+P3: The number 249 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 480 being passed is for P3
+P3: The number 480 is even.
+P0: Recieved ACK packet from P3
+P0: The number 788 being passed is for P3
+P3: The number 788 is even.
+P0: Recieved ACK packet from P3
+P0: The number 711 being passed is for P3
+P3: The number 711 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 418 being passed is for P1
+P1: The number 418 is even.
+P0: Recieved ACK packet from P1
+P0: The number 989 being passed is for P3
+P3: The number 989 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 714 being passed is for P1
+P1: The number 714 is even.
+P0: Recieved ACK packet from P1
+P0: The number 300 being passed is for P2
+P2: The number 300 is even.
+P0: Recieved ACK packet from P2
+P0: The number 486 being passed is for P1
+P1: The number 486 is even.
+P0: Recieved ACK packet from P1
+P0: The number 179 being passed is for P1
+P1: The number 179 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 594 being passed is for P1
+P1: The number 594 is even.
+P0: Recieved ACK packet from P1
+P0: The number 449 being passed is for P3
+P3: The number 449 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 964 being passed is for P2
+P2: The number 964 is even.
+P0: Recieved ACK packet from P2
+P0: The number 852 being passed is for P1
+P1: The number 852 is even.
+P0: Recieved ACK packet from P1
+P0: The number 765 being passed is for P2
+P2: The number 765 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 893 being passed is for P2
+P2: The number 893 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 214 being passed is for P3
+P3: The number 214 is even.
+P0: Recieved ACK packet from P3
+P0: The number 644 being passed is for P3
+P3: The number 644 is even.
+P0: Recieved ACK packet from P3
+P0: The number 209 being passed is for P2
+P2: The number 209 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 274 being passed is for P3
+P3: The number 274 is even.
+P0: Recieved ACK packet from P3
+P0: The number 769 being passed is for P3
+P3: The number 769 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 855 being passed is for P2
+P2: The number 855 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 304 being passed is for P3
+P3: The number 304 is even.
+P0: Recieved ACK packet from P3
+P0: The number 619 being passed is for P3
+P3: The number 619 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 900 being passed is for P1
+P1: The number 900 is even.
+P0: Recieved ACK packet from P1
+P0: The number 371 being passed is for P3
+P3: The number 371 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 87 being passed is for P2
+P2: The number 87 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 758 being passed is for P2
+P2: The number 758 is even.
+P0: Recieved ACK packet from P2
+P0: The number 454 being passed is for P1
+P1: The number 454 is even.
+P0: Recieved ACK packet from P1
+P0: The number 986 being passed is for P2
+P2: The number 986 is even.
+P0: Recieved ACK packet from P2
+P0: The number 592 being passed is for P2
+P2: The number 592 is even.
+P0: Recieved ACK packet from P2
+P0: The number 583 being passed is for P2
+P2: The number 583 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 953 being passed is for P3
+P3: The number 953 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 509 being passed is for P1
+P1: The number 509 is odd.
+P0: Recieved ACK packet from P1
+P0: The number 932 being passed is for P3
+P3: The number 932 is even.
+P0: Recieved ACK packet from P3
+P0: The number 490 being passed is for P3
+P3: The number 490 is even.
+P0: Recieved ACK packet from P3
+P0: The number 395 being passed is for P3
+P3: The number 395 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 181 being passed is for P3
+P3: The number 181 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 202 being passed is for P1
+P1: The number 202 is even.
+P0: Recieved ACK packet from P1
+P0: The number 839 being passed is for P2
+P2: The number 839 is odd.
+P0: Recieved ACK packet from P2
+P0: The number 652 being passed is for P3
+P3: The number 652 is even.
+P0: Recieved ACK packet from P3
+P0: The number 297 being passed is for P3
+P3: The number 297 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 731 being passed is for P3
+P3: The number 731 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 492 being passed is for P1
+P1: The number 492 is even.
+P0: Recieved ACK packet from P1
+P0: The number 663 being passed is for P3
+P3: The number 663 is odd.
+P0: Recieved ACK packet from P3
+P0: The number 754 being passed is for P3
+P3: The number 754 is even.
+P0: Recieved ACK packet from P3
+P0: The number 410 being passed is for P3
+P3: The number 410 is even.
+P0: Recieved ACK packet from P3
+P0: The number 114 being passed is for P1
+P1: The number 114 is even.
+P0: Recieved ACK packet from P1
+P0: The number 562 being passed is for P3
+P3: The number 562 is even.
+P0: Recieved ACK packet from P3
+P0: The number 226 being passed is for P1
+P1: The number 226 is even.
+P0: Recieved ACK packet from P1
+P0: Sent all messages.
+
+./lab1 30 100
+Parent created child process with pid 27493
+Parent created child process with pid 27494
+Parent created child process with pid 27495
+P0: The number 134 being passed is for P1
+P1: The number 134 is even.
+P1: The number 318 being passed is for P0
+P0: The number 318 is even.
+P0: The number 243 being passed is for P1
+P1: The number 243 is odd.
+P1: The number 243 being passed is for P0
+P0: The number 243 is odd.
+P0: The number 229 being passed is for P3
+P3: The number 229 is odd.
+P3: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 229 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 229 is odd.
+P2: The number 318 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 318 is even.
+P1: The number 35 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 35 is odd.
+P2: The number 965 being passed is for P0
+P0: The number 965 is odd.
+P0: The number 35 being passed is for P3
+P3: The number 35 is odd.
+P3: The number 965 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 965 is odd.
+P2: The number 229 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 229 is odd.
+P1: The number 849 being passed is for P0
+P0: The number 849 is odd.
+P0: The number 495 being passed is for P1
+P1: The number 495 is odd.
+P1: The number 121 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 121 is odd.
+P3: The number 21 being passed is for P0
+P0: The number 21 is odd.
+P0: The number 58 being passed is for P3
+P3: The number 58 is even.
+P3: The number 683 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 683 is odd.
+P2: The number 495 being passed is for P0
+P0: The number 495 is odd.
+P0: The number 121 being passed is for P2
+P2: The number 121 is odd.
+P2: The number 58 being passed is for P0
+P0: The number 58 is even.
+P0: The number 517 being passed is for P2
+P2: The number 517 is odd.
+P2: The number 121 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 121 is odd.
+P3: The number 278 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 278 is even.
+P2: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 849 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 849 is odd.
+P1: The number 517 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 517 is odd.
+P3: The number 789 being passed is for P0
+P0: The number 789 is odd.
+P0: The number 897 being passed is for P1
+P1: The number 897 is odd.
+P1: The number 897 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 897 is odd.
+P3: The number 92 being passed is for P0
+P0: The number 92 is even.
+P0: The number 703 being passed is for P3
+P3: The number 703 is odd.
+P3: The number 356 being passed is for P0
+P0: The number 356 is even.
+P0: The number 124 being passed is for P2
+P2: The number 124 is even.
+P2: The number 897 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 897 is odd.
+P3: The number 732 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 732 is even.
+P2: The number 703 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 703 is odd.
+P1: The number 703 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 703 is odd.
+P3: The number 790 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 790 is even.
+P1: The number 754 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 754 is even.
+P3: The number 708 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 708 is even.
+P2: The number 124 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 124 is even.
+P1: The number 843 being passed is for P0
+P0: The number 843 is odd.
+P0: The number 708 being passed is for P3
+P3: The number 708 is even.
+P3: The number 209 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 209 is odd.
+P1: The number 732 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 732 is even.
+P3: The number 824 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 824 is even.
+P1: The number 366 being passed is for P0
+P0: The number 366 is even.
+P0: The number 209 being passed is for P1
+P1: The number 209 is odd.
+P1: The number 141 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 141 is odd.
+P3: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 398 being passed is for P1
+P1: The number 398 is even.
+P1: The number 921 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 921 is odd.
+P2: The number 708 being passed is for P0
+P0: The number 708 is even.
+P0: The number 366 being passed is for P2
+P2: The number 366 is even.
+P2: The number 732 being passed is for P1
+Routing packet from P2 to P1
+P1: The number 732 is even.
+P1: The number 872 being passed is for P0
+P0: The number 872 is even.
+P0: The number 141 being passed is for P3
+P3: The number 141 is odd.
+P3: The number 500 being passed is for P0
+P0: The number 500 is even.
+P0: The number 921 being passed is for P1
+P1: The number 921 is odd.
+P1: The number 258 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 258 is even.
+P2: The number 824 being passed is for P1
+Routing packet from P1 to P1
+P1: The number 824 is even.
+P1: The number 263 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 263 is odd.
+P3: The number 735 being passed is for P1
+Routing packet from P1 to P1
+P1: The number 735 is odd.
+P1: The number 52 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 52 is even.
+P2: The number 605 being passed is for P0
+P0: The number 605 is odd.
+P0: The number 872 being passed is for P3
+P3: The number 872 is even.
+P3: The number 417 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 417 is odd.
+P1: The number 568 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 568 is even.
+P2: The number 500 being passed is for P0
+P0: The number 500 is even.
+P0: The number 417 being passed is for P3
+P3: The number 417 is odd.
+P3: The number 427 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 427 is odd.
+P2: The number 735 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 735 is odd.
+P3: The number 106 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 106 is even.
+P1: The number 299 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 299 is odd.
+P3: The number 927 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 927 is odd.
+P1: The number 965 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 965 is odd.
+P2: The number 150 being passed is for P0
+P0: The number 150 is even.
+P0: The number 427 being passed is for P3
+P3: The number 427 is odd.
+P3: The number 175 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 175 is odd.
+P2: The number 258 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 258 is even.
+P1: The number 741 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 741 is odd.
+P3: The number 636 being passed is for P0
+P0: The number 636 is even.
+P0: The number 106 being passed is for P2
+P2: The number 106 is even.
+P2: The number 484 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 484 is even.
+P3: The number 423 being passed is for P0
+P0: The number 423 is odd.
+P0: The number 52 being passed is for P1
+P1: The number 52 is even.
+P1: The number 617 being passed is for P0
+P0: The number 617 is odd.
+P0: The number 927 being passed is for P1
+P1: The number 927 is odd.
+P1: The number 403 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 403 is odd.
+P2: The number 226 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 226 is even.
+P3: The number 672 being passed is for P0
+P0: The number 672 is even.
+P0: The number 582 being passed is for P2
+P2: The number 582 is even.
+P2: The number 582 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 582 is even.
+P3: The number 949 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 949 is odd.
+P2: The number 965 being passed is for P0
+P0: The number 965 is odd.
+P0: The number 299 being passed is for P1
+P1: The number 299 is odd.
+P1: The number 772 being passed is for P3
+Routing packet from P1 to P3
+P3: The number 772 is even.
+P3: The number 15 being passed is for P2
+Routing packet from P1 to P2
+P2: The number 15 is odd.
+P2: The number 672 being passed is for P0
+P0: The number 672 is even.
+P0: The number 965 being passed is for P2
+P2: The number 965 is odd.
+P2: The number 949 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 949 is odd.
+P3: The number 265 being passed is for P2
+Routing packet from P2 to P2
+P2: The number 265 is odd.
+P2: The number 120 being passed is for P0
+P0: The number 120 is even.
+P0: The number 741 being passed is for P3
+P3: The number 741 is odd.
+P3: The number 892 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 892 is even.
+P2: The number 619 being passed is for P3
+Routing packet from P3 to P3
+P3: The number 619 is odd.
+P3: The number 842 being passed is for P0
+P0: The number 842 is even.
+P0: The number 617 being passed is for P3
+P3: The number 617 is odd.
+P3: The number 768 being passed is for P2
+Routing packet from P3 to P2
+P2: The number 768 is even.
+P2: The number 999 being passed is for P1
+Routing packet from P3 to P1
+P1: The number 999 is odd.
+P1: The number 971 being passed is for P0
+P0: The number 971 is odd.
+P0: The number 403 being passed is for P2
+P2: The number 403 is odd.
+P2: The number 41 being passed is for P3
+Routing packet from P2 to P3
+P3: The number 41 is odd.
+P3: The number 30 being passed is for P0
+P0: The number 30 is even.
+P0: The number 772 being passed is for P3
+P3: The number 772 is even.
+P3: The number 655 being passed is for P0
+P0: The number 655 is odd.
+P0: Sent all messages.

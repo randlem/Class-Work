@@ -1,0 +1,6 @@
+bezier-test.png 256 256
+color 0 0 0
+fill
+color 255 255 255
+bezier 10 10 10 100 246 10 246 10
+end

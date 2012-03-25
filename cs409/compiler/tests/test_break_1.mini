@@ -1,0 +1,10 @@
+program testbreak;
+	proc myproc;
+		write 0;
+		break;
+	endproc;
+
+	call myproc;
+	break;
+	call myproc;
+endprogram;

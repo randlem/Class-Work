@@ -1,0 +1,282 @@
+{\ttfamily \raggedright \footnotesize
+\#include\ <{}vector>{}
+using\ std::vector;
+
+\#include\ <{}mpi.h>{}
+\#include\ <{}stdlib.h>{}
+
+\#include\ "{}mpiwrapper.h"{}
+\#include\ "{}latprim.h"{}
+\#include\ "{}exception.h"{}
+\#include\ "{}event.h"{}
+
+MPIWrapper::MPIWrapper()\ :\ rank(-{}1),\ nodeCount(-{}1),\ isInit(false),\ left(-{}1),\ right(-{}1),\ countSend(0),\ countRecv(0),countSendAnti(0),countRecvAnti(0)\ \{\ ;\ \}
+
+MPIWrapper::\textasciitilde MPIWrapper()\ \{
+\ \ \textsl{//if(isInit)}
+\ \ \textsl{//\ \ shutdown();}
+\}
+
+bool\ MPIWrapper::init(int*\ argv,\ char**\ argc[])\ \{
+\ \ MPI\underline\ Aint*\ displacements;
+\ \ MPI\underline\ Datatype*\ dataTypes;
+\ \ int*\ blockLength;
+\ \ MPI\underline\ Aint\ startAddress;
+\ \ MPI\underline\ Aint\ address;
+\ \ point\ p;
+\ \ site\ s;
+
+\ \ \textsl{//\ see\ if\ init\ ==\ true,\ if\ that\ is\ so\ we've\ got\ big\ problems}
+\ \ if(isInit)
+\ \ \ \ throw(Exception("{}ERROR:\ Duplicate\ call\ to\ MPIWrapper::init()!"{}));
+
+\ \ \textsl{//\ call\ MPI\underline\ Init()\ to\ start\ this\ whole\ shebang}
+\ \ MPI\underline\ Init(argv,argc);
+
+\ \ \textsl{//\ get\ the\ process\ rank\ and\ the\ number\ of\ nodes}
+\ \ MPI\underline\ Comm\underline\ rank(MPI\underline\ COMM\underline\ WORLD,\&rank);
+\ \ MPI\underline\ Comm\underline\ size(MPI\underline\ COMM\underline\ WORLD,\&nodeCount);
+
+\ \ \textsl{//\ make\ sure\ the\ shit\ didn't\ hit\ the\ fan}
+\ \ if(rank\ <{}\ 0)\ \{
+\ \ \ \ throw(Exception("{}ERROR:\ MPI\underline\ Comm\underline\ rank()\ failed\ to\ return\ useful\ value!"{}));
+\ \ \}
+\ \ if(nodeCount\ <{}\ 0)\ \{
+\ \ \ \ throw(Exception("{}ERROR:\ MPI\underline\ Comm\underline\ size()\ filed\ to\ return\ useful\ value!"{}));
+\ \ \}
+
+\ \ \textsl{//\ create\ the\ datatype\ for\ the\ point\ structure}
+\ \ displacements\ =\ new\ MPI\underline\ Aint[2];
+\ \ dataTypes\ =\ new\ MPI\underline\ Datatype[2];
+\ \ blockLength\ =\ new\ int[2];
+
+\ \ blockLength[0]\ =\ 1;
+\ \ blockLength[1]\ =\ 1;
+\ \ dataTypes[0]\ =\ MPI\underline\ INT;
+\ \ dataTypes[1]\ =\ MPI\underline\ INT;
+
+\ \ MPI\underline\ Address(\&p.x,\&startAddress);
+\ \ displacements[0]\ =\ 0;
+\ \ MPI\underline\ Address(\&p.y,\&address);
+\ \ displacements[1]\ =\ address\ -{}\ startAddress;
+
+\ \ MPI\underline\ Type\underline\ struct(2,blockLength,displacements,dataTypes,\&typePoint);
+\ \ MPI\underline\ Type\underline\ commit(\&typePoint);
+
+\ \ delete\ []\ displacements;
+\ \ delete\ []\ dataTypes;
+\ \ delete\ []\ blockLength;
+
+\ \ \textsl{//\ create\ the\ datatype\ for\ the\ site\ structure}
+\ \ displacements\ =\ new\ MPI\underline\ Aint[3];
+\ \ dataTypes\ =\ new\ MPI\underline\ Datatype[3];
+\ \ blockLength\ =\ new\ int[3];
+
+\ \ blockLength[0]\ =\ 1;
+\ \ blockLength[1]\ =\ 1;
+\ \ blockLength[2]\ =\ 1;
+\ \ dataTypes[0]\ =\ typePoint;
+\ \ dataTypes[1]\ =\ MPI\underline\ INT;
+\ \ dataTypes[2]\ =\ MPI\underline\ INT;
+
+\ \ MPI\underline\ Address(\&s.p,\&startAddress);
+\ \ displacements[0]\ =\ 0;
+\ \ MPI\underline\ Address(\&s.listIndex,\&address);
+\ \ displacements[1]\ =\ address\ -{}\ startAddress;
+\ \ MPI\underline\ Address(\&s.h,\&address);
+\ \ displacements[2]\ =\ address\ -{}\ startAddress;
+
+\ \ MPI\underline\ Type\underline\ struct(3,blockLength,displacements,dataTypes,\&typeSite);
+\ \ MPI\underline\ Type\underline\ commit(\&typeSite);
+
+\ \ delete\ []\ displacements;
+\ \ delete\ []\ dataTypes;
+\ \ delete\ []\ blockLength;
+
+\ \ \textsl{//\ create\ the\ datatype\ for\ the\ boundryEvent\ structure}
+\ \ displacements\ =\ new\ MPI\underline\ Aint[4];
+\ \ dataTypes\ =\ new\ MPI\underline\ Datatype[4];
+\ \ blockLength\ =\ new\ int[4];
+
+\ \ blockLength[0]\ =\ 1;
+\ \ blockLength[1]\ =\ 1;
+\ \ blockLength[2]\ =\ 1;
+\ \ blockLength[3]\ =\ 1;
+\ \ dataTypes[0]\ =\ typeSite;
+\ \ dataTypes[1]\ =\ typeSite;
+\ \ dataTypes[2]\ =\ MPI\underline\ DOUBLE;
+\ \ dataTypes[3]\ =\ MPI\underline\ INT;
+
+\ \ MPI\underline\ Address(\&m.oldSite,\&startAddress);
+\ \ displacements[0]\ =\ 0;
+\ \ MPI\underline\ Address(\&m.newSite,\&address);
+\ \ displacements[1]\ =\ address\ -{}\ startAddress;
+\ \ MPI\underline\ Address(\&m.time,\&address);
+\ \ displacements[2]\ =\ address\ -{}\ startAddress;
+\ \ MPI\underline\ Address(\&m.type,\&address);
+\ \ displacements[3]\ =\ address\ -{}\ startAddress;
+
+\ \ MPI\underline\ Type\underline\ struct(4,blockLength,displacements,dataTypes,\&typeMessage);
+\ \ MPI\underline\ Type\underline\ commit(\&typeMessage);
+
+\ \ delete\ []\ displacements;
+\ \ delete\ []\ dataTypes;
+\ \ delete\ []\ blockLength;
+
+\ \ \textsl{//\ attach\ the\ buffer\ to\ the\ MPI\ process}
+\ \ MPI\underline\ Buffer\underline\ attach(malloc(BUFFER\underline\ SIZE\underline\ COUNT\ *\ sizeof(message)\ +\ MPI\underline\ BSEND\underline\ OVERHEAD),\ BUFFER\underline\ SIZE\underline\ COUNT\ *\ sizeof(message)\ +\ MPI\underline\ BSEND\underline\ OVERHEAD);
+
+\ \ \textsl{//\ get\ the\ node\ on\ my\ left}
+\ \ left\ =\ LEFT(rank,nodeCount);
+
+\ \ \textsl{//\ get\ the\ node\ on\ my\ right}
+\ \ right\ =\ RIGHT(rank,nodeCount);
+
+\ \ \textsl{//\ hey,\ we\ finished\ the\ init!\ \ so\ set\ the\ flag}
+\ \ isInit\ =\ true;
+
+\ \ \textsl{//\ return\ the\ value\ of\ the\ flag\ (should\ be\ true)}
+\ \ return(isInit);
+\}
+
+bool\ MPIWrapper::shutdown()\ \{
+\ \ \textsl{//\ make\ sure\ we\ had\ a\ successful\ init()\ call}
+\ \ if(!isInit)
+\ \ \ \ return(false);
+
+\ \ \textsl{//\ detach\ the\ buffer\ from\ the\ MPI\ process\ (COULD\ STALL\ PROGRAM\ EXECUTION}
+\ \ \textsl{//\ SINCE\ ALL\ BUFFERED\ MESSAGES\ MUST\ BE\ DELIVERED\ BEFORE\ THE\ CALL\ EXITS)}
+\ \ MPI\underline\ Buffer\underline\ detach(\&buffer,\&bufferSize);
+
+\ \ \textsl{//\ free\ the\ declared\ types}
+\ \ MPI\underline\ Type\underline\ free(\&typeMessage);
+\ \ MPI\underline\ Type\underline\ free(\&typeSite);
+\ \ MPI\underline\ Type\underline\ free(\&typePoint);
+
+\ \ \textsl{//\ call\ the\ MPI\underline\ Finalize()\ function\ to\ make\ MPI\ clean\ up}
+\ \ MPI\underline\ Finalize();
+
+\ \ \textsl{//\ set\ init\ to\ false\ so\ we\ don't\ do\ anything\ stupid}
+\ \ isInit\ =\ false;
+
+\ \ \textsl{//\ return\ true\ so\ all\ is\ well}
+\ \ return(!isInit);
+\}
+
+bool\ MPIWrapper::sendMessage(message*\ m,\ Direction\ dir)\ \{
+
+\ \ \textsl{//\ send\ the\ message\ with\ a\ buffered\ send\ so\ we\ don't\ block}
+\ \ if(DIR(dir)\ !=\ -{}1)\ \{
+\ \ \ \ MPI\underline\ Bsend(m,\ 1,\ typeMessage,\ DIR(dir),\ TAG\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD);
+\ \ \ \ ++countSend;
+\ \ \}
+
+\ \ \textsl{//\ return\ true}
+\ \ return(true);
+\}
+
+bool\ MPIWrapper::recvMessages(vector<{}message>{}*\ messages)\ \{
+
+\ \ \textsl{//\ loop\ until\ we\ don't\ have\ any\ more\ messages\ waiting}
+\ \ while(isMessage())\ \{
+\ \ \ \ \textsl{//\ recieve\ the\ message}
+\ \ \ \ MPI\underline\ Recv(\&m,\ 1,\ typeMessage,\ MPI\underline\ ANY\underline\ SOURCE,\ TAG\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD,\ \&status);
+\ \ \ \ messages-{}>{}push\underline\ back(m);
+\ \ \ \ ++countRecv;
+\ \ \}
+
+\ \ \textsl{//\ return\ true}
+\ \ return(true);
+\}
+
+bool\ MPIWrapper::isMessage()\ \{
+\ \ \textsl{//\ do\ an\ iprobe\ to\ get\ the\ value\ of\ flag\ (TRUE\ OR\ FALSE)}
+\ \ MPI\underline\ Iprobe(MPI\underline\ ANY\underline\ SOURCE,\ TAG\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD,\ \&flag,\ \&status);
+
+\ \ \textsl{//\ return\ the\ value\ compared\ to\ the\ true\ equiv\ of\ 1\ (since\ it's\ an\ int)}
+\ \ return(flag\ ==\ 1);
+\}
+
+bool\ MPIWrapper::sendAntiMessage(message*\ m,\ Direction\ dir)\ \{
+
+\ \ \textsl{//\ send\ the\ message\ with\ a\ buffered\ send\ so\ we\ don't\ block}
+\ \ if(DIR(dir)\ !=\ -{}1)\ \{
+\ \ \ \ MPI\underline\ Bsend(m,\ 1,\ typeMessage,\ DIR(dir),\ TAG\underline\ ANTI\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD);
+\ \ \ \ ++countSendAnti;
+\ \ \}
+
+\ \ \textsl{//\ return\ true}
+\ \ return(true);
+\}
+
+bool\ MPIWrapper::recvAntiMessages(vector<{}message>{}*\ messages)\ \{
+
+\ \ \textsl{//\ loop\ until\ we\ don't\ have\ any\ more\ messages\ waiting}
+\ \ while(isAntiMessage())\ \{
+\ \ \ \ \textsl{//\ recieve\ the\ message}
+\ \ \ \ MPI\underline\ Recv(\&m,\ 1,\ typeMessage,\ MPI\underline\ ANY\underline\ SOURCE,\ TAG\underline\ ANTI\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD,\ \&status);
+\ \ \ \ messages-{}>{}push\underline\ back(m);
+\ \ \ \ ++countRecvAnti;
+\ \ \}
+
+\ \ \textsl{//\ return\ true}
+\ \ return(true);
+\}
+
+bool\ MPIWrapper::isAntiMessage()\ \{
+\ \ \textsl{//\ do\ an\ iprobe\ to\ get\ the\ value\ of\ flag\ (TRUE\ OR\ FALSE)}
+\ \ MPI\underline\ Iprobe(MPI\underline\ ANY\underline\ SOURCE,\ TAG\underline\ ANTI\underline\ MESSAGE,\ MPI\underline\ COMM\underline\ WORLD,\ \&flag,\ \&status);
+
+\ \ \textsl{//\ return\ the\ value\ compared\ to\ the\ true\ equiv\ of\ 1\ (since\ it's\ an\ int)}
+\ \ return(flag\ ==\ 1);
+\}
+
+float\ MPIWrapper::allReduceFloat(float\ input,\ MPI\underline\ Op\ op)\ \{
+\ \ float\ output;
+
+\ \ \textsl{//\ call\ MPI\underline\ Allreduce()\ using\ the\ provided\ input/output,\ the\ correct\ datatype}
+\ \ \textsl{//\ and\ the\ user-{}provided\ op\ for\ the\ world\ communicator}
+\ \ MPI\underline\ Allreduce(\&input,\&output,1,MPI\underline\ FLOAT,op,MPI\underline\ COMM\underline\ WORLD);
+
+\ \ \textsl{//\ return\ the\ output\ value}
+\ \ return(output);
+\}
+
+double\ MPIWrapper::allReduceDouble(double\ input,\ MPI\underline\ Op\ op)\ \{
+\ \ double\ output;
+
+\ \ \textsl{//\ call\ MPI\underline\ Allreduce()\ using\ the\ provided\ input/output,\ the\ correct\ datatype}
+\ \ \textsl{//\ and\ the\ user-{}provided\ op\ for\ the\ world\ communicator}
+\ \ MPI\underline\ Allreduce(\&input,\&output,1,MPI\underline\ DOUBLE,op,MPI\underline\ COMM\underline\ WORLD);
+
+\ \ \textsl{//\ return\ the\ output\ value}
+\ \ return(output);
+\}
+
+int\ MPIWrapper::allReduceInt(int\ input,\ MPI\underline\ Op\ op)\ \{
+\ \ int\ output;
+
+\ \ \textsl{//\ call\ MPI\underline\ Allreduce()\ using\ the\ provided\ input/output,\ the\ correct\ datatype}
+\ \ \textsl{//\ and\ the\ user-{}provided\ op\ for\ the\ world\ communicator}
+\ \ MPI\underline\ Allreduce(\&input,\&output,1,MPI\underline\ INT,op,MPI\underline\ COMM\underline\ WORLD);
+
+\ \ \textsl{//\ return\ the\ output\ value}
+\ \ return(output);
+\}
+
+bool\ MPIWrapper::isRoot()\ \{
+\ \ \textsl{//\ return\ the\ value\ of\ this\ compare}
+\ \ return(rank\ ==\ ROOT\underline\ RANK);
+\}
+
+void\ MPIWrapper::barrier()\ \{
+\ \ MPI\underline\ Barrier(MPI\underline\ COMM\underline\ WORLD);
+\}
+
+double\ MPIWrapper::wallTime()\ \{
+\ \ return(MPI\underline\ Wtime());
+\}
+
+ }
+\normalfont\normalsize
+

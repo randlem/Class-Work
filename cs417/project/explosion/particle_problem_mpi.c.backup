@@ -1,0 +1,273 @@
+/******************************************************************************
+* Particle Explosing Sim - Single Processor Version
+*
+* Mark Randles
+* CS417
+* Spring 2004
+* Dr. Hassan Rajaei
+*
+* PROBLEM DESC: To simulate the explosion of a aggrate in a vaccum.  Each piece
+* of the aggrate will be simulated with a point mass, each with a different
+* mass.  The explosing will be from a singularity, each point mass emination
+* from the same point, but with a outward velocity vector.  There will be a
+* gravatational interaction with at least one body.  There will be no "ground".
+* Each pieces motion will be tracked in 3 dimensions.
+*
+* GOAL: To test the speedup of the problem on a MPI/OMP hybred system vs. a MPI
+* implementation, a OpenMP system, and a single process system.
+*
+******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <math.h>
+#include <png.h>
+#include <mpi.h>
+#include "vector.h"
+#include "mpi_particle.h"
+
+#define GRAVITY -9.8F /* m/s^2 */
+#define PI 3.1415926F
+#define TWO_PI 6.2831852F
+#define HALF_PI 1.5707963F
+#define NEG_HALF_PI -1.5707963F
+
+#define MAX_TIME 10
+#define TIME_INC 0.03F
+#define BASE_KE 3000
+
+#define RAND_RANGE(a,b) ((a)+(rand()%((b)-(a)+1)))
+#define FP_RAND_RANGE(a,b) ((a)+((rand()/(float)RAND_MAX)*(b)))
+#define SQUARE(a) ((a)*(a))
+#define RAD_TO_DEG(a) (((a)*180.0F)/PI)
+
+void parent();
+void child();
+
+int num_particles;
+int initial_height;
+vector initial_velocity;
+particle* particles;
+int id,num_nodes;
+
+MPI_Datatype PARTICLE_TYPE;
+int blockcounts[4] = {1,3,3,3};
+MPI_Datatype types[4] = {MPI_FLOAT,MPI_FLOAT,MPI_FLOAT,MPI_FLOAT};
+MPI_Aint displs[4];
+
+int main(int argc, char* argv[]) {
+    int i;
+	MPI_Status status;
+
+	/* mpi init stuff */
+    MPI_Init(&argc,&argv);
+    MPI_Comm_rank(MPI_COMM_WORLD,&id);
+    MPI_Comm_size(MPI_COMM_WORLD,&num_nodes);
+
+	particles = (particle*)malloc(sizeof(particle));
+	MPI_Address(&particles->mass,&displs[0]);
+	MPI_Address(&particles->position,&displs[1]);
+	MPI_Address(&particles->acceleration,&displs[2]);
+	MPI_Address(&particles->velocity,&displs[3]);
+	free(particles);
+
+	for(i=3; i >= 0; i--)
+		displs[i] -= displs[0];
+	displs[0] = 0;
+
+	MPI_Type_struct(4,blockcounts,displs,types,&PARTICLE_TYPE);
+	MPI_Type_commit(&PARTICLE_TYPE);
+
+	/* have the root do the parent part, and everybody else the child part */
+	if(id == 0) {
+		/* do a bit of initilization for the cmd line stuff */
+		initial_height = 0;
+		initial_velocity.elements[0] = 0;
+		initial_velocity.elements[1] = 0;
+		initial_velocity.elements[2] = 0;
+
+		/* validate the cmd line stuff */
+		if(argc > 1) {
+			if(argc == 3) {
+				/* just a initial height */
+				initial_height = atoi(argv[2]);
+				initial_velocity.elements[0] = 0;
+				initial_velocity.elements[1] = 0;
+				initial_velocity.elements[2] = 0;
+			} else if(argc == 6) {
+				/* initial height and initial velocity */
+				initial_height = atoi(argv[2]);
+				initial_velocity.elements[0] = atof(argv[3]);
+				initial_velocity.elements[1] = atof(argv[4]);
+				initial_velocity.elements[2] = atof(argv[5]);
+			} else if(argc != 2){
+				/* otherwise it's an error and they need a message */
+				fprintf(stderr,"Please specify either an initial heigth or an inital height and velocity (in vector components).\n");
+				return(1);
+			}
+		} else {
+			/* otherwise it's an error and they need a message */
+			fprintf(stderr,"Please specify a number of particles.\n");
+			return(1);
+		}
+
+		num_particles = atoi(argv[1]);
+
+		parent();
+	} else {
+		child();
+	}
+
+	MPI_Type_free(&PARTICLE_TYPE);
+	printf("Cleaning up done %i\n",id);
+
+	/* mpi uninitilize stuff */
+	MPI_Finalize();
+
+	return(0);
+}
+
+void parent() {
+	int i,j;
+	float vel,          /* initial velocity vector */
+	      ke,           /* initial imparted kinetic energy */
+	      theta,        /* theta angle, elevation angle off the x-y plane */
+		  alpha;        /* alpha angle, azmuth on the x-y plane */
+	int file_cnt;
+	int t;
+	char filename[80];
+	int partition[num_nodes-1],leftover,offset;
+	int cycles,recv_flag;
+    MPI_Status status;
+
+	/* seed the random number generator */
+	srand((unsigned)time(NULL));
+
+	/* allocate the particles */
+	particles = (particle*)malloc(sizeof(particle)*num_particles);
+
+	/* initilize the particles */
+	for(i=0; i < num_particles; i++) {
+		particle_init(&particles[i]);
+		particles[i].acceleration[1] = GRAVITY;
+		particles[i].mass = RAND_RANGE(1,100);
+		particles[i].position[1] = initial_height;
+
+		ke = RAND_RANGE(BASE_KE,BASE_KE+500); /* generate a random inital kinetic energy */
+		theta = FP_RAND_RANGE(0,PI);          /* generate a random initial theta */
+
+		/* create the approiate alpha */
+		if(initial_height > 0) {
+			alpha = FP_RAND_RANGE(0,TWO_PI);
+		} else {
+			alpha = FP_RAND_RANGE(0,PI);
+		}
+
+		/* caculate the initial velocity */
+		vel = sqrt((2 * ke)/particles[i].mass);
+
+		/* resolve the initial velocity into x-y-z components */
+		particles[i].velocity[0] = (vel * cos(alpha) * sin(theta)) + initial_velocity.elements[0]; /* x component */
+		particles[i].velocity[1] = (vel * sin(alpha) * sin(theta)) + initial_velocity.elements[1]; /* y component */
+		particles[i].velocity[2] = (vel * cos(theta)) + initial_velocity.elements[2];              /* z component */
+	}
+
+	leftover = num_particles%(num_nodes-1);
+	cycles = MAX_TIME/TIME_INC;
+
+	memset(partition,0,sizeof(int)*(num_nodes-1));
+
+	for(i=1; i < num_nodes; i++) {
+		partition[i] = (int)((float)(num_particles-leftover))/((float)(num_nodes-1));
+	}
+	partition[num_nodes-2] += leftover;
+
+	MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Bcast(&cycles,1,MPI_INT,0,MPI_COMM_WORLD);
+
+	for(i=1; i < num_nodes; i++) {
+		MPI_Send(&partition[i],1,MPI_INT,i,0,MPI_COMM_WORLD);
+		printf("%i\n",partition[i]);
+	}
+	printf("\n");
+
+	offset = 0;
+	for(i=1; i < num_nodes; i++) {
+		printf("%i %i\n",partition[i],offset);
+		for(j=0; j < partition[i]; j++) {
+			MPI_Send(&particles[offset+j],1,PARTICLE_TYPE,i,0,MPI_COMM_WORLD);
+		}
+		offset+=partition[i];
+	}
+	printf("%i\n\n",offset);
+
+	for(t=0; t < cycles; t++) {
+		printf("%i\n",t);
+
+		//printf("\n%i\n",num_particles);
+		for(i=0; i < num_particles; i++) {
+			/*printf("%.3f %.3f %.3f\n",particles[i].position[0],particles[i].position[1],particles[i].position[2]);*/
+			/*printf("%.3f %.3f %.3f\n",particles[i].velocity[0],particles[i].velocity[1],particles[i].velocity[2]);*/
+			/*printf("%.3f %.3f %.3f\n",particles[i].acceleration[0],particles[i].acceleration[1],particles[i].acceleration[2]);*/
+		}
+		//printf("\n");
+
+		MPI_Barrier(MPI_COMM_WORLD);
+		recv_flag = 1; offset = 0;
+		for(i=1; i < num_nodes; i++) {
+			MPI_Send(&recv_flag,1,MPI_INT,i,0,MPI_COMM_WORLD);
+			MPI_Recv(&particles[offset],partition[i],PARTICLE_TYPE,i,0,MPI_COMM_WORLD,&status);
+			offset+=partition[i];
+		}
+	}
+
+	free(particles);
+}
+
+void child() {
+	int i,t;
+	int partition,cycles;
+	int recv_flag;
+    MPI_Status status;
+
+	MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Bcast(&cycles,1,MPI_INT,0,MPI_COMM_WORLD);
+	MPI_Recv(&partition,1,MPI_INT,0,0,MPI_COMM_WORLD,&status);
+
+	particles = (particle*)malloc(sizeof(particles)*partition);
+
+	for(i=0; i < partition; i++) {
+		MPI_Recv(&particles[i],1,PARTICLE_TYPE,0,0,MPI_COMM_WORLD,&status);
+	}
+
+	printf("%i %i\n",partition, cycles);
+
+	for(t=0; t < cycles; t++) {
+		for(i=0; i < partition; i++) {
+			if(particles[i].velocity[0] != 0.0F && particles[i].velocity[1] != 0.0F && particles[i].velocity[2] != 0.0F) {
+				particles[i].position[0] += (particles[i].velocity[0] * TIME_INC) + (particles[i].acceleration[0] * SQUARE(TIME_INC) * 0.5F);
+				particles[i].position[1] += (particles[i].velocity[1] * TIME_INC) + (particles[i].acceleration[1] * SQUARE(TIME_INC) * 0.5F);
+				particles[i].position[2] += (particles[i].velocity[2] * TIME_INC) + (particles[i].acceleration[2] * SQUARE(TIME_INC) * 0.5F);
+
+				particles[i].velocity[0] += (particles[i].acceleration[0] * TIME_INC);
+				particles[i].velocity[1] += (particles[i].acceleration[1] * TIME_INC);hardware/hardware/
+				particles[i].velocity[2] += (particles[i].acceleration[2] * TIME_INC);
+			}
+			if(particles[i].position[1] < 0.0F) {
+				particles[i].position[1] = 0.0F;
+				particles[i].velocity[0] = 0.0F;
+				particles[i].velocity[1] = 0.0F;
+				particles[i].velocity[2] = 0.0F;
+			}
+		}
+		printf("%i\n",t);
+
+		MPI_Barrier(MPI_COMM_WORLD);
+		MPI_Recv(&recv_flag,1,MPI_INT,0,0,MPI_COMM_WORLD,&status);
+		MPI_Send(particles,partition,PARTICLE_TYPE,0,0,MPI_COMM_WORLD);
+	}
+
+	printf("Cleaning up %i\n",id);
+	free(particles);
+}

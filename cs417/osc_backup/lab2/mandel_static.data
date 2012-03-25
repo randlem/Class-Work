@@ -1,0 +1,76 @@
+mandel_static.c:
+5 procs
+
+real	3m34.699s
+user	0m0.020s
+sys	0m0.160s
+7 procs
+
+real	2m50.863s
+user	0m0.030s
+sys	0m0.190s
+9 procs
+
+real	2m17.947s
+user	0m0.020s
+sys	0m0.200s
+11 procs
+
+real	1m53.764s
+user	0m0.000s
+sys	0m0.100s
+13 procs
+
+real	1m37.008s
+user	0m0.020s
+sys	0m0.000s
+15 procs
+
+real	1m24.002s
+user	0m0.030s
+sys	0m0.020s
+17 procs
+
+real	1m8.652s
+user	0m0.040s
+sys	0m0.320s
+19 procs
+
+real	1m1.112s
+user	0m0.020s
+sys	0m0.010s
+21 procs
+
+real	0m55.075s
+user	0m0.030s
+sys	0m0.040s
+23 procs
+
+real	0m50.377s
+user	0m0.010s
+sys	0m0.040s
+25 procs
+
+real	0m46.459s
+user	0m0.030s
+sys	0m0.000s
+27 procs
+
+real	0m43.464s
+user	0m0.030s
+sys	0m0.480s
+29 procs
+
+real	0m40.259s
+user	0m0.020s
+sys	0m0.020s
+31 procs
+
+real	0m37.602s
+user	0m0.020s
+sys	0m0.020s
+33 procs
+
+real	0m35.695s
+user	0m0.040s
+sys	0m0.040s

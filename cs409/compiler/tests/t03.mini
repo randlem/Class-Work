@@ -1,0 +1,16 @@
+/* Test expressions, assignments, write statement */
+program test03;
+
+int a = 1, b = 20, c, d, e,
+minusOne, value=0x5656, VALUE, v1 = 0x742E;
+
+a+1->c; -2*b -> d; a + 2 * b -> e;
+write c, d, e;
+45 + 'm' -> b;
+write b;
+v1 - 072057 -> minusOne;
+write minusOne;
+value + -1 -> c;
+write c, value, v1, minusOne;
+
+endprogram

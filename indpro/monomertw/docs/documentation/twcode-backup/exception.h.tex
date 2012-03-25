@@ -1,0 +1,22 @@
+{\ttfamily \raggedright \small
+\#include\ <{}string>{}\\
+using\ std::string;\\
+\ \\
+\#ifndef EXCEPTION\underline\ H\\
+\#define EXCEPTION\underline\ H\\
+\ \\
+class\ Exception\ \{\\
+public:\\
+\ \ Exception(char$\ast$\ c)\ :\ error(c)\ \{\ ;\ \}\\
+\ \ Exception(string\ \&s)\ :\ error(s)\ \{\ ;\ \}\\
+\ \ Exception()\ :\ error("{}General\ Error"{})\ \{\ ;\ \}\\
+\ \\
+\ \ string\ error;\\
+\ \\
+\};\\
+\ \\
+\#endif\\
+\ \\
+ }
+\normalfont\normalsize
+

@@ -1,0 +1,60 @@
+\select@language {american}
+\contentsline {chapter}{\numberline {1}Introduction}{5}
+\contentsline {section}{\numberline {1.1}Monte Carlo Methods}{5}
+\contentsline {section}{\numberline {1.2}Modeling Thin Film Growth Using Kinetic Monte Carlo}{6}
+\contentsline {subsection}{\numberline {1.2.1}Kinetic Monte Carlo}{6}
+\contentsline {subsection}{\numberline {1.2.2}Thin Film Growth}{7}
+\contentsline {chapter}{\numberline {2}Synchronous Relaxation}{11}
+\contentsline {section}{\numberline {2.1}Introduction}{11}
+\contentsline {section}{\numberline {2.2}Original Algorithm}{12}
+\contentsline {subsection}{\numberline {2.2.1}Boundary Events}{12}
+\contentsline {subsection}{\numberline {2.2.2}Ghost Region}{12}
+\contentsline {subsection}{\numberline {2.2.3}Data Structures}{12}
+\contentsline {subsection}{\numberline {2.2.4}Functions}{12}
+\contentsline {section}{\numberline {2.3}Improvements}{14}
+\contentsline {subsection}{\numberline {2.3.1}Multiple Files}{14}
+\contentsline {subsection}{\numberline {2.3.2}Readability}{14}
+\contentsline {subsection}{\numberline {2.3.3}Function Overheads}{15}
+\contentsline {subsection}{\numberline {2.3.4}Results}{15}
+\contentsline {subsection}{\numberline {2.3.5}Analysis}{15}
+\contentsline {subsection}{\numberline {2.3.6}Implementing the Program in C++}{16}
+\contentsline {subsubsection}{Motivation}{16}
+\contentsline {subsubsection}{Lattice Object}{16}
+\contentsline {subsubsection}{Multiple files}{17}
+\contentsline {subsubsection}{Rewind List}{17}
+\contentsline {subsubsection}{Results and Analysis}{17}
+\contentsline {chapter}{\numberline {3}Time Warp}{19}
+\contentsline {section}{\numberline {3.1}Introduction}{19}
+\contentsline {subsection}{\numberline {3.1.1}Time Warp Algorithm: Classic}{19}
+\contentsline {subsection}{\numberline {3.1.2}Time Warp Algorithm: KMC}{20}
+\contentsline {section}{\numberline {3.2}Implementation}{20}
+\contentsline {subsection}{\numberline {3.2.1}Lattice Class}{22}
+\contentsline {subsection}{\numberline {3.2.2}MPIWrapper Class}{23}
+\contentsline {subsection}{\numberline {3.2.3}Main Function and GVT}{24}
+\contentsline {section}{\numberline {3.3}Issues}{25}
+\contentsline {chapter}{\numberline {4}Future Work}{27}
+\contentsline {section}{\numberline {4.1}Synchronous Relaxation}{27}
+\contentsline {section}{\numberline {4.2}Time Warp}{27}
+\contentsline {subsection}{\numberline {4.2.1}Debugging and Validation}{27}
+\contentsline {subsection}{\numberline {4.2.2}Garbage Collection and Memory Management}{27}
+\contentsline {subsection}{\numberline {4.2.3}Logical Processes}{28}
+\contentsline {section}{\numberline {4.3}General}{28}
+\contentsline {subsection}{\numberline {4.3.1}2D Decomposition}{28}
+\contentsline {chapter}{\numberline {A}Synchronos Relaxiation Code}{29}
+\contentsline {section}{\numberline {A.1}main.cpp}{29}
+\contentsline {section}{\numberline {A.2}lattice.h}{30}
+\contentsline {section}{\numberline {A.3}lattice.cpp}{33}
+\contentsline {section}{\numberline {A.4}synch.cpp}{50}
+\contentsline {section}{\numberline {A.5}comm.cpp}{53}
+\contentsline {chapter}{\numberline {B}Time Warp Code}{55}
+\contentsline {section}{\numberline {B.1}main.cpp}{55}
+\contentsline {section}{\numberline {B.2}lattice.h}{58}
+\contentsline {section}{\numberline {B.3}latconst.h}{62}
+\contentsline {section}{\numberline {B.4}latprim.h}{63}
+\contentsline {section}{\numberline {B.5}lattice.cpp}{63}
+\contentsline {section}{\numberline {B.6}event.h}{77}
+\contentsline {section}{\numberline {B.7}rewindlist.h}{78}
+\contentsline {section}{\numberline {B.8}randgen.h}{82}
+\contentsline {section}{\numberline {B.9}mpiwrapper.h}{85}
+\contentsline {section}{\numberline {B.10}mpiwrapper.cpp}{88}
+\contentsline {section}{\numberline {B.11}exception.h}{94}

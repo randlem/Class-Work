@@ -1,0 +1,48 @@
+{\ttfamily \raggedright \small
+\#include\ "{}latprim.h"{}\\
+\ \\
+\#ifndef EVENT\underline\ H\\
+\#define EVENT\underline\ H\\
+\ \\
+enum\ EventType\ \{eventDeposition,\ eventDiffusion\};\\
+\ \\
+class\ Event\ \{\\
+public:\\
+\ \ Event(site$\ast$\ oldSite,\ site$\ast$\ newSite,\ double\ time,\ bool\ isLocal,\ EventType\ eventType,\textsl{/$\ast$\ Direction\ dir,$\ast$/}\ int\ listIndex)\ \{\\
+\ \ \ \ this-{}>{}oldSite\ =\ oldSite;\\
+\ \ \ \ this-{}>{}newSite\ =\ newSite;\\
+\ \ \ \ this-{}>{}time\ =\ time;\\
+\ \ \ \ this-{}>{}isLocal\ =\ isLocal;\\
+\ \ \ \ this-{}>{}eventType\ =\ eventType;\\
+\ \ \ \ \textsl{/$\ast$this-{}>{}dir\ =\ dir;$\ast$/}\\
+\ \ \ \ this-{}>{}listIndex\ =\ listIndex;\\
+\ \ \}\\
+\ \\
+\ \ Event(site$\ast$\ newSite,\ double\ time,\ bool\ isLocal,\ EventType\ eventType\textsl{/$\ast$,\ Direction\ dir,\ int\ listIndex$\ast$/})\ \{\\
+\ \ \ \ this-{}>{}newSite\ =\ newSite;\\
+\ \ \ \ this-{}>{}time\ =\ time;\\
+\ \ \ \ this-{}>{}isLocal\ =\ isLocal;\\
+\ \ \ \ this-{}>{}eventType\ =\ eventType;\\
+\ \ \ \ \textsl{/$\ast$this-{}>{}dir\ =\ dir;$\ast$/}\\
+\ \ \ \ \textsl{/$\ast$this-{}>{}listIndex\ =\ listIndex;$\ast$/}\\
+\ \ \}\\
+\ \\
+\ \ site$\ast$\ oldSite;\ \ \ \ \ \ \ \textsl{//\ the\ old\ site\ (diffusion\ event)}\\
+\ \ site$\ast$\ newSite;\ \ \ \ \ \ \ \textsl{//\ the\ new\ site\ (diffusion\ event)\ or\ the\ site\ for\ a\ deposition\ event}\\
+\ \ double\ time;\ \ \ \ \ \ \ \ \ \textsl{//\ event\ time}\\
+\ \ bool\ isLocal;\ \ \ \ \ \ \ \ \textsl{//\ true\ if\ a\ local\ event}\\
+\ \ bool\ isBoundry;\ \ \ \ \ \ \textsl{//\ true\ if\ a\ boundry\ event}\\
+\ \ EventType\ eventType;\ \textsl{//\ type\ of\ event}\\
+\textsl{//\ \ Direction\ dir;\ \ \ \ \ \ \ //\ important\ if\ it's\ a\ boundry\ event,\ which\ neighbor\ to\ send\ it\ too}\\
+\ \ int\ listIndex;\ \ \ \ \ \ \ \textsl{//\ index\ of\ the\ site\ in\ the\ list}\\
+private:\\
+\ \ Event()\ \{\ ;\ \}\ \textsl{//\ supress\ creating\ an\ event\ with\ a\ default\ constructor}\\
+\};\\
+\ \\
+\#endif\\
+\ \\
+\ \\
+\ \\
+ }
+\normalfont\normalsize
+

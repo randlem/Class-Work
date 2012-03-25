@@ -1,0 +1,23 @@
+\mychapter{Future Work}
+
+\section{Synchronos Relaxization}
+
+\section{Time Warp}
+
+\subsection{Debugging and Validation}
+This is by far the first and most imporant thing that will need to be done to this algorithm.  Only once this step is completed can any future work proceede.  To do this first the difference in results between runs must be identified and supressed or eleminated.  Secondly, the validity of the results should be sought.  This step could prove to be difficult, as the original SR algorithm should always produce different results then the TW algorithm.  Because of this, the validity of results will nearly always been in question, and should be studied with veracity until we are certain.  Time to complete: 10-30 hours.
+
+\subsection{Garbage Collection and Memory Managment}
+Right now, there is no garbage collection implemented in the TW algoritm.  Since this algorithm is very memory intensive, garbage collection would be a good thing.  To do this we would need to call a routine every time the GVT is calculated that will delete all of the events that occur before the GVT.  This will free memory for the next GVT cycle.  Also, if user-space memeory managment was implemented, we could reuse the memory to keep from reallocating the same chunks thus providing more speed to the algoritm. Time to complete: 10-20 hours.
+
+\subsection{Logical Processes}
+One of the primary goals of the TW algorithm was to add more processor independence to the KMC algorithm.  Thus far, the algorithm has seemed to do this, and now the limiting factor is the problem size and physical hardware restrictions such as memory.  However, we can go a step farther and apply a concept called logical processes to the algorithm to produce a truely processor independent implementataion.
+
+Logical processes esentally encapusulate a single KMC process.  Currently, each node on a cluster will execute one process.  With logical processes each node will execute tens, hundreds, or thousands of similar processes in such a way as to simulate the running of just one process on a single node.  To accomplish this, there must be a middle-ware layer between the program and the message passing interface.  This middle layer handles both external MPI communication with other nodes, and interal node communication between logical processes on the same node.  The goal of this middle layer is to make it as transparent as possible, the calling thread should not know if the process that will be recieving the message is local logical process or a remote (on another node) logical thread.
+
+To complete this task a variety of things will need to be completed.  First a formal study of the middle-ware layer as exposed by the BGTW simulation library should be undertake to judge the usefulness of this established code base.  Secondly, any changed that will need to be made to the algorithm should be performed and then the simulation revalidated to ensure that the algorithm is still correct.  Thridly, the middle-ware layer shold be integrated into the existing algorithm and validated.  This last step will produce the final logical process version of the TW algorithm. Time to complete: 20-50 hours.
+
+\section{General}
+
+\subsection{2D Decomposition}
+The current algorithms work with at 1D decompisition or strip lattice where there is at most only two neighboring lattices any given lattice.  This is limiting however in total scale of problem, as to increase the total area we must increase the height and width of the lattice.  Eventually the number of boundry events exchanged over a single boundry will slow the overall execution down.  At this point it will be beneficial to split a single sub-lattice into a 2D map of adjoining lattices.  We can then scale the problem up further till we reach the same limiting factor as before.  Time to complete: 20-40 hours.

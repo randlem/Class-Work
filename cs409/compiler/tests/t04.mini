@@ -1,0 +1,7 @@
+/* Test array implementation */
+program test04;
+   int a[3] = (10, 20, 3), i = 1;
+   write a[i];
+   a[2] - 2 * a[i] -> i;
+   write a[2], i;
+endprogram

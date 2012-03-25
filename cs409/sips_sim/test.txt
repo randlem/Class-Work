@@ -1,0 +1,4 @@
+SIPS Sim Pre-Alpha, by Mark Randles 2004
+
+Using input file test.spo
+Using output file test.txt

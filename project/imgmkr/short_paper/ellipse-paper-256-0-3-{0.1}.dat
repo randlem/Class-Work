@@ -1,0 +1,8 @@
+ellipse-paper-256-0-3-{0.1}.png 256 256
+perterb 3
+color 0 0 0
+fill
+color 255 255 255
+ellipse 128 128 64 32 0
+background {0.1}
+end

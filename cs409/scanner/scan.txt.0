@@ -1,0 +1,209 @@
+Tokens in file sample.mini
+
+TKprocProgram  program
+TKsymbol       sample (134581360)
+TKsemicolon    ;
+TKint          int
+TKsymbol       largest (134582456)
+TKrelOp        =
+TKliteral      00000000 (134582480)
+TKsymbol       i (134582512)
+TKcomma        ,
+TKsymbol       j (134582536)
+TKcomma        ,
+TKsymbol       listLength (134582560)
+TKcomma        ,
+TKsymbol       list (134582584)
+TKleft         [
+TKliteral      00000032 (134582608)
+TKright        ]
+TKrelOp        =
+TKleft         (
+TKliteral      00000078 (134582640)
+TKcomma        ,
+TKliteral      00000058 (134582672)
+TKcomma        ,
+TKliteral      00000014 (134582704)
+TKcomma        ,
+TKliteral      00000010 (134582736)
+TKcomma        ,
+TKliteral      00000020 (134582768)
+TKright        )
+TKcomma        ,
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKprocProgram  proc
+TKsymbol       GetList (134582824)
+TKsemicolon    ;
+TKint          int
+TKsymbol       limit (134582848)
+TKrelOp        =
+TKliteral      00000032 (134582608)
+TKcomma        ,
+TKsymbol       negOne (134582872)
+TKcomma        ,
+TKsymbol       NegOne (134582896)
+TKcomma        ,
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKliteral      00000000 (134582480)
+TKsymbol       f423E (134582920)
+TKarith        -
+TKliteral      000F423F (134582944)
+TKassign       ->
+TKsymbol       negOne (134582872)
+TKsemicolon    ;
+TKliteral      FFFFFFFF (134582976)
+TKassign       ->
+TKsymbol       NegOne (134582896)
+TKsemicolon    ;
+TKreadWrite    read
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKifWhile      while
+TKleft         (
+TKsymbol       negOne (134582872)
+TKrelOp        <
+TKsymbol       value (134582800)
+TKright        )
+TKifWhile      if
+TKleft         (
+TKsymbol       limit (134582848)
+TKrelOp        <=
+TKsymbol       listLength (134582560)
+TKright        )
+TKbreak        break
+TKsemicolon    ;
+TKend          endif
+TKsemicolon    ;
+TKsymbol       value (134582800)
+TKassign       ->
+TKsymbol       list (134582584)
+TKleft         [
+TKsymbol       listLength (134582560)
+TKright        ]
+TKsemicolon    ;
+TKcall         call
+TKsymbol       AddOne (134583008)
+TKsemicolon    ;
+TKreadWrite    read
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKend          endwhile
+TKsemicolon    ;
+TKsymbol       NegOne (134582896)
+TKarith        +
+TKliteral      00000001 (134583032)
+TKassign       ->
+TKsymbol       NegOne (134582896)
+TKsemicolon    ;
+TKreadWrite    write
+TKsymbol       negOne (134582872)
+TKcomma        ,
+TKsymbol       NegOne (134582896)
+TKsemicolon    ;
+TKend          endproc
+TKsemicolon    ;
+TKprocProgram  proc
+TKsymbol       AddOne (134583008)
+TKsemicolon    ;
+TKsymbol       listLength (134582560)
+TKarith        -
+TKsymbol       NegOne (134582896)
+TKassign       ->
+TKsymbol       listLength (134582560)
+TKsemicolon    ;
+TKend          endproc
+TKsemicolon    ;
+TKliteral      000004D2 (134583064)
+TKassign       ->
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKliteral      00000005 (134583096)
+TKassign       ->
+TKsymbol       listLength (134582560)
+TKsemicolon    ;
+TKcall         call
+TKsymbol       GetList (134582824)
+TKsemicolon    ;
+TKreadWrite    write
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKliteral      00000000 (134582480)
+TKassign       ->
+TKsymbol       i (134582512)
+TKsemicolon    ;
+TKifWhile      while
+TKleft         (
+TKsymbol       i (134582512)
+TKrelOp        <
+TKsymbol       listLength (134582560)
+TKright        )
+TKifWhile      if
+TKleft         (
+TKsymbol       largest (134582456)
+TKrelOp        <
+TKsymbol       list (134582584)
+TKleft         [
+TKsymbol       i (134582512)
+TKright        ]
+TKright        )
+TKsymbol       list (134582584)
+TKleft         [
+TKsymbol       i (134582512)
+TKright        ]
+TKassign       ->
+TKsymbol       largest (134582456)
+TKarith        +
+TKsymbol       list (134582584)
+TKleft         [
+TKliteral      00000001 (134583032)
+TKright        ]
+TKassign       ->
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKifWhile      if
+TKleft         (
+TKsymbol       i (134582512)
+TKrelOp        <
+TKliteral      00000004 (134583128)
+TKright        )
+TKsymbol       i (134582512)
+TKarith        +
+TKliteral      00000001 (134583032)
+TKassign       ->
+TKsymbol       j (134582536)
+TKsemicolon    ;
+TKsymbol       value (134582800)
+TKarith        +
+TKsymbol       list (134582584)
+TKleft         [
+TKsymbol       j (134582536)
+TKright        ]
+TKassign       ->
+TKsymbol       value (134582800)
+TKsemicolon    ;
+TKend          endif
+TKsemicolon    ;
+TKend          endif
+TKsemicolon    ;
+TKsymbol       i (134582512)
+TKarith        +
+TKliteral      00000001 (134583032)
+TKassign       ->
+TKsymbol       i (134582512)
+TKsemicolon    ;
+TKend          endwhile
+TKsemicolon    ;
+TKreadWrite    write
+TKsymbol       largest (134582456)
+TKcomma        ,
+TKsymbol       value (134582800)
+TKcomma        ,
+TKsymbol       list (134582584)
+TKleft         [
+TKliteral      00000001 (134583032)
+TKright        ]
+TKsemicolon    ;
+TKend          endprogram
+TKendFile      *EOF*

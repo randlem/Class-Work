@@ -1,0 +1,48 @@
+program test02;
+   /* This program implements the insertion sort algorithm.
+   */
+   int count = 7, arr[10] = (12, 7, 4, 8, -6, 9, 5);
+
+   proc ReadElement;
+      /* add one element to the end of the array */
+      read arr[count];
+      count + 1 -> count;
+   endproc;
+
+   proc SortArray;
+      /* sort arr[] using insertion sort algorithm */
+      int i = 1, j, k, more = 1, value;
+      while (i<count)
+         arr[i] -> value;
+         i -> j;
+         1 -> more;
+         while (more = 1)
+            if (j <= 0)
+               0 -> more;
+            else
+               -1 + j -> k;
+               if (arr[k] <= value)
+                  0 -> more;
+               else
+                  arr[k] -> arr[j];
+                  j - 1 -> j;
+               endif;
+            endif;
+         endwhile;
+         value -> arr[j];
+         i + 1 -> i;
+      endwhile;        
+      call PrintArray;
+   endproc;
+
+   proc PrintArray;
+      int i = 0;
+      while (i < count)
+         write arr[i];
+         i + 1 -> i;
+      endwhile;
+   endproc;
+
+   call ReadElement;
+   call SortArray;
+endprogram
